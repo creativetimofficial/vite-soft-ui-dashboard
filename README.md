@@ -92,65 +92,92 @@ The documentation for the Soft UI Dashboard is hosted at our [website](https://w
 Within the download you'll find the following directories and files:
 
 ```
-vue-soft-ui-dashboard
-    ├── public
-    │   ├── favicon.png
-    │   └── index.html
-    ├── src
-    │   ├── assets
-    │   │   ├── css
-    │   │   ├── fonts
-    │   │   ├── img
-    │   │   ├── js
-    │   │   └── scss
-    │   ├── components
-    │   │   ├── Icon.vue
-    │   │   ├── VsudAlert.vue
-    │   │   ├── VsudAvatar.vue
-    │   │   ├── VsudBadge.vue
-    │   │   ├── VsudButton.vue
-    │   │   ├── VsudCheckbox.vue
-    │   │   ├── VsudInput.vue
-    │   │   ├── VsudPagination.vue
-    │   │   ├── VsudPaginationItem.vue
-    │   │   ├── VsudProgress.vue
-    │   │   ├── VsudRadio.vue
-    │   │   ├── VsudSwitch.vue
-    │   │   └── VsudTextarea.vue
-    │   ├── examples
-    │   │   ├── Cards
-    │   │   ├── Charts
-    │   │   ├── Navbars
-    │   │   ├── PageLayout
-    │   │   ├── Sidenav
-    │   │   ├── Breadcrumbs.vue
-    │   │   ├── Configurator.vue
-    │   │   └── Footer.vue
-    │   ├── router
-    │   ├── store
-    │   ├── views
-    │   │   ├── components
-    │   │   ├── Billing.vue
-    │   │   ├── Dashboard.vue
-    │   │   ├── Home.vue
-    │   │   ├── Profile.vue
-    │   │   ├── Rtl.vue
-    │   │   ├── SignIn.vue
-    │   │   ├── SignUp.vue
-    │   │   ├── Tables.vue
-    │   │   └── VirtualReality.vue
-    │   ├── App.vue
-    │   ├── main.js
-    │   └── soft-ui-dashboard.js
-    ├── .browserslistrc
-    ├── .eslintrc.js
-    ├── .gitignore
-    ├── babel.config.js
-    ├── CHANGELOG.md
-    ├── ISSUE_TEMPLATE.md
-    ├── LICENSE.md
-    ├── package.json
-    └── README.md
+vite-soft-ui-dashboard
+├── Dockerfile
+├── LICENSE.md
+├── README.md
+├── index.html
+├── package.json
+├── public
+│   └── favicon.ico
+├── src
+│   ├── App.vue
+│   ├── assets
+│   │   ├── css
+│   │   ├── fonts
+│   │   ├── img
+│   │   ├── js
+│   │   └── scss
+│   ├── components
+│   │   ├── Icon.vue
+│   │   ├── VsudAlert.vue
+│   │   ├── VsudAvatar.vue
+│   │   ├── VsudBadge.vue
+│   │   ├── VsudButton.vue
+│   │   ├── VsudCheckbox.vue
+│   │   ├── VsudInput.vue
+│   │   ├── VsudPagination.vue
+│   │   ├── VsudPaginationItem.vue
+│   │   ├── VsudProgress.vue
+│   │   ├── VsudRadio.vue
+│   │   ├── VsudSwitch.vue
+│   │   └── VsudTextarea.vue
+│   ├── examples
+│   │   ├── Breadcrumbs.vue
+│   │   ├── Cards
+│   │   │   ├── Card.vue
+│   │   │   ├── DefaultInfoCard.vue
+│   │   │   └── MasterCard.vue
+│   │   ├── Charts
+│   │   │   ├── ActiveUsersChart.vue
+│   │   │   └── GradientLineChart.vue
+│   │   ├── Configurator.vue
+│   │   ├── Footer.vue
+│   │   ├── Navbars
+│   │   │   └── Navbar.vue
+│   │   ├── PageLayout
+│   │   │   ├── Footer.vue
+│   │   │   └── Navbar.vue
+│   │   └── Sidenav
+│   │       ├── SidenavCard.vue
+│   │       ├── SidenavCollapse.vue
+│   │       ├── SidenavList.vue
+│   │       └── index.vue
+│   ├── main.js
+│   ├── router
+│   │   └── index.js
+│   ├── soft-ui-dashboard.js
+│   ├── store
+│   │   └── index.js
+│   └── views
+│       ├── Billing.vue
+│       ├── Dashboard.vue
+│       ├── Home.vue
+│       ├── Profile.vue
+│       ├── Rtl.vue
+│       ├── SignIn.vue
+│       ├── SignUp.vue
+│       ├── Tables.vue
+│       ├── VirtualReality.vue
+│       └── components
+│           ├── AuthorsTable.vue
+│           ├── BillingCard.vue
+│           ├── CardCalendar.vue
+│           ├── CardEmail.vue
+│           ├── CardMessage.vue
+│           ├── CardPlayer.vue
+│           ├── CardToDo.vue
+│           ├── InvoiceCard.vue
+│           ├── NavPill.vue
+│           ├── OrdersCard.vue
+│           ├── PaymentCard.vue
+│           ├── ProfileCard.vue
+│           ├── ProjectOverviewCard.vue
+│           ├── ProjectsCard.vue
+│           ├── ProjectsTable.vue
+│           └── TransactionCard.vue
+├── vite.config.js
+└── yarn.lock
 ```
 
 ## Browser Support
