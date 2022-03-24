@@ -42,13 +42,13 @@
     }
   }
 
-  .btn.bg-gradient-success:not(:disabled):not(.disabled){
+  .btn.bg-gradient-primary:not(:disabled):not(.disabled){
     border: 1px solid transparent;
     &:not(.active){
       background-color: transparent;
       background-image: none;
-      border: 1px solid $success;
-      color: $success;
+      border: 1px solid $primary;
+      color: $primary;
     }
   }
 

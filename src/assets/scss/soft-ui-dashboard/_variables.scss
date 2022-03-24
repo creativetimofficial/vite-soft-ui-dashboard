@@ -102,6 +102,9 @@ $dark-gradient-state:         #3A416F !default;
 $light-gradient:              #CED4DA !default;
 $light-gradient-state:        #EBEFF4 !default;
 
+$dark-gradient-dark:          #323a54 !default;
+$dark-gradient-state-dark:    #1a2035 !default;
+
 // Gradient Colors map
 $theme-gradient-colors: (
   "primary":    ($primary-gradient, $primary-gradient-state),
@@ -415,8 +418,8 @@ $border-widths: (
 $rounded-pill:                50rem !default;
 
 $box-shadow-xs:               0 2px 9px -5px rgba($black, 0.15) !default;
-$box-shadow-sm:               0 .3125rem .625rem 0 rgba(0, 0, 0, 0.12) !default;
-$box-shadow:                  0 .25rem .375rem -.0625rem rgba(20, 20, 20, .12), 0 .125rem .25rem -.0625rem rgba(20, 20, 20, .07) !default;
+$box-shadow-sm:               0 .25rem .375rem -.0625rem rgba(20, 20, 20, .12), 0 .125rem .25rem -.0625rem rgba(20, 20, 20, .07) !default;
+$box-shadow:                  0 .3125rem .625rem 0 rgba(0, 0, 0, 0.12) !default;
 $box-shadow-lg:               0 8px 26px -4px rgba(20, 20, 20, 0.15), 0 8px 9px -5px rgba(20, 20, 20, 0.06) !default;
 $box-shadow-xl:                0 23px 45px -11px rgba(20, 20, 20, .25) !default;
 $box-shadow-inset:            inset 0 1px 2px rgba($black, .075) !default;
@@ -886,7 +889,7 @@ $form-check-input-checked-bg-color:       transparent !default;
 $form-check-input-checked-border-color:   $form-check-input-checked-bg-color !default;
 $form-check-input-checked-bg-image:       linear-gradient(310deg, $dark-gradient 0%, $dark-gradient-state 100%) !default;
 $form-check-radio-checked-bg-image:       $form-check-input-checked-bg-image !default;
-$form-check-radio-after-width:                  .4375rem !default;
+$form-check-radio-after-width:                  .5rem !default;
 
 $form-check-input-indeterminate-color:          $component-active-color !default;
 $form-check-input-indeterminate-bg-color:       $component-active-bg !default;
@@ -1093,7 +1096,7 @@ $navbar-box-shadow:                 0 2px 12px 0 rgba(0, 0, 0, .16) !default;
 $navbar-nav-link-padding-x:         .5rem !default;
 $navbar-nav-link-padding:           $navbar-nav-link-padding-x 1rem !default;
 
-$navbar-brand-font-size:            $font-size-lg !default;
+$navbar-brand-font-size:            $font-size-sm !default;
 // Compute the navbar-brand padding-y so the navbar-brand will have the same height as navbar-text and nav-link
 $nav-link-height:                   $font-size-base * $line-height-base + $nav-link-padding-y * 2 !default;
 $navbar-brand-height:               $navbar-brand-font-size * $line-height-base !default;
@@ -1576,6 +1579,7 @@ $tilt-transform-up-transition:      all 0.5s !default;
 @import "variables/animations";
 @import "variables/avatars";
 @import "variables/cards";
+@import "variables/dark-version";
 @import "variables/dropdowns";
 @import 'variables/header';
 @import 'variables/info-areas';

@@ -42,7 +42,9 @@ $utilities: (
     class: shadow,
     values: (
       null: $box-shadow,
+      xs: $box-shadow-xs,
       sm: $box-shadow-sm,
+      md: $box-shadow,
       lg: $box-shadow-lg,
       xl: $box-shadow-xl,
       none: none,
@@ -660,21 +662,37 @@ $utilities: (
       5: 5px
     ),
   ),
-// Border radius utilities
-"border-top-left-radius": (
-   property: border-top-left-radius,
-   class: border-radius-top-start,
-   responsive: true,
-   values: (
-     0: 0
-   )
- ),
- "border-top-right-radius": (
+  // Border radius utilities
+  "border-top-left-radius": (
+    property: border-top-left-radius,
+    class: border-radius-top-start,
+    responsive: true,
+    values: (
+      null: $border-radius,
+      0: 0,
+      sm: $border-radius-sm,
+      md: $border-radius,
+      lg: $border-radius-lg,
+      xl: $border-radius-xl,
+      2xl: $border-radius-2xl,
+      circle: 50%,
+      pill: $border-radius-pill
+     )
+    ),
+  "border-top-right-radius": (
     property: border-top-right-radius,
     class: border-radius-top-end,
     responsive: true,
     values: (
-      0: 0
+      null: $border-radius,
+      0: 0,
+      sm: $border-radius-sm,
+      md: $border-radius,
+      lg: $border-radius-lg,
+      xl: $border-radius-xl,
+      2xl: $border-radius-2xl,
+      circle: 50%,
+      pill: $border-radius-pill
     )
   ),
   "border-bottom-left-radius": (
@@ -682,7 +700,15 @@ $utilities: (
     class: border-radius-bottom-start,
     responsive: true,
     values: (
-      0: 0
+      null: $border-radius,
+      0: 0,
+      sm: $border-radius-sm,
+      md: $border-radius,
+      lg: $border-radius-lg,
+      xl: $border-radius-xl,
+      2xl: $border-radius-2xl,
+      circle: 50%,
+      pill: $border-radius-pill
     )
   ),
   "border-bottom-right-radius": (
@@ -690,7 +716,15 @@ $utilities: (
     class: border-radius-bottom-end,
     responsive: true,
     values: (
-      0: 0
+      null: $border-radius,
+      0: 0,
+      sm: $border-radius-sm,
+      md: $border-radius,
+      lg: $border-radius-lg,
+      xl: $border-radius-xl,
+      2xl: $border-radius-2xl,
+      circle: 50%,
+      pill: $border-radius-pill
     )
   ),
   // Max Height Values
@@ -748,6 +782,7 @@ $utilities: (
     class: height,
     values: (
      100: $height-100,
+     150: $height-150,
      200: $height-200,
      300: $height-300,
      400: $height-400,

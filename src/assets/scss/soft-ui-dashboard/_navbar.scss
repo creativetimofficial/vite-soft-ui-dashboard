@@ -3,7 +3,6 @@
 
   .navbar-brand {
     color: $dark;
-    @include font-size($font-size-sm);
   }
   .nav-link {
     color: $dark;
@@ -150,9 +149,10 @@
         }
       }
     }
-
+  
     .g-sidenav-show & {
-      &:not(.sidenav).navbar-main {
+      &:not(.sidenav).navbar-main,
+      &:not(.mixed-navbar) {
         .navbar-collapse {
           display: flex !important;
           flex-basis: auto;
