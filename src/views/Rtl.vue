@@ -62,7 +62,7 @@
               <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="d-flex flex-column h-100">
                   <p class="mb-1 pt-2 text-bold">بناها المطورون</p>
-                  <h5 class="font-weight-bolder">Soft UI Dashboard</h5>
+                  <h5 class="font-weight-bolder">Vite Soft UI Dashboard</h5>
                   <p class="mb-5">
                     من الألوان والبطاقات والطباعة إلى العناصر المعقدة ، ستجد
                     الوثائق الكاملة.

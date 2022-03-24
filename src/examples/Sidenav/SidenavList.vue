@@ -105,7 +105,7 @@ export default {
   },
   data() {
     return {
-      title: "Soft UI Dashboard",
+      title: "Vite Soft UI Dashboard",
       controls: "dashboardsExamples",
       isActive: "active",
     };
