@@ -54,10 +54,12 @@ const routes = [
     name: "Sign Up",
     component: SignUp,
   },
+  // will match everything and put it under `$route.params.pathMatch`
+  { path: '/:pathMatch(.*)*', name: 'Dashboard', component: Dashboard },
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes,
   linkActiveClass: "active",
 });
