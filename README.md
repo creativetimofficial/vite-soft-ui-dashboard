@@ -55,14 +55,14 @@ Let us know your thoughts below. And good luck with development!
 - [Licensing](#licensing)
 - [Useful Links](#useful-links)
 
-## Versions
+## Versions 
 
-[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/vue-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/vue-soft-ui-dashboard?ref=readme-vsud)
+[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/vue-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/vue-soft-ui-dashboard?ref=readme-vitesud) 
+[<img src="https://www.creative-tim.com/assets/icon-vite-f0eb8f14d3ba1b47beeb44734ff11f3c4bf84b9a731892f2fbc34fc0442a8421.jpg" width="60" height="60" />](https://www.creative-tim.com/product/vite-soft-ui-dashboard?ref=readme-vitesud)
 
-| VueJS |
-| ----- |
-
-| [![Vue Soft UI Dashboard](https://s3.amazonaws.com/creativetim_bucket/products/591/thumb/vue-soft-ui-dashboard.jpg)](http://demos.creative-tim.com/vite-soft-ui-dashboard/?ref=readme-vitesud)
+| VueJS | Vite |
+| ----- | ----- |
+| [![Vue Soft UI Dashboard](https://s3.amazonaws.com/creativetim_bucket/products/591/thumb/vue-soft-ui-dashboard.jpg)](http://demos.creative-tim.com/vue-soft-ui-dashboard/?ref=readme-vitesud)| [![Vite Soft UI Dashboard](https://s3.amazonaws.com/creativetim_bucket/products/635/thumb/vite-soft-ui-dashboard.jpg)](http://demos.creative-tim.com/vite-soft-ui-dashboard/?ref=readme-vitesud)|
 
 ## Demo
 
