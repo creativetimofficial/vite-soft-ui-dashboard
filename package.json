@@ -1,7 +1,8 @@
 {
-  "name": "softui",
+  "name": "vite-soft-ui-dashboard",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "Creative Tim (https://www.creative-tim.com/)",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
