@@ -2,7 +2,7 @@
 
 ![version](https://img.shields.io/badge/version-1.0.0-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/vue-soft-ui-dashboard.svg)](https://github.com/creativetimofficial/vite-soft-ui-dashboard/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/vite-soft-ui-dashboard.svg)](https://github.com/creativetimofficial/vite-soft-ui-dashboard/issues?q=is%3Aissue+is%3Aclosed)
 
-![Image](https://s3.amazonaws.com/creativetim_bucket/products/591/original/vue-soft-ui-dashboard.jpg)
+![Image](https://s3.amazonaws.com/creativetim_bucket/products/635/original/vite-soft-ui-dashboard.jpg)
 
 Start your Development with an Innovative Admin Template for Bootstrap 5, VueJS 3, Vite and Vuex. If you like the look & feel of the hottest design trend right now, Soft UI, you will fall in love with this dashboard! It features a huge number of components built to fit together and look amazing.
 
