@@ -10,7 +10,8 @@
         class="form-control"
         :class="getClasses(size, valid)"
         :name="name"
-        :value="value"
+        v-model="inputValue" 
+        @input="updateValue"
         :placeholder="placeholder"
         :isRequired="isRequired"
       />
@@ -63,6 +64,16 @@ export default {
     },
     isRequired: Boolean,
   },
+  data() {
+    return {
+      inputValue: this.value,
+    };
+  },
+  created() {
+    this.$watch('value', newValue => {
+      this.inputValue = newValue;
+    });
+  },
   methods: {
     getClasses: (size, valid) => {
       let sizeValue, isValidValue;
@@ -75,6 +86,9 @@ export default {
     },
     getIcon: (icon) => (icon ? icon : null),
     hasIcon: (icon) => (icon ? "input-group" : null),
+    updateValue() {
+      this.$emit('input', this.inputValue);
+    },
   },
 };
 </script>

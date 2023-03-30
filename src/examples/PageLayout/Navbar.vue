@@ -10,7 +10,7 @@
         to="/dashboard"
         v-bind="$attrs"
         :class="isBlur ? 'text-dark' : 'text-white'"
-      >Vite Soft UI Dashboard</router-link>
+      >Cinema Manager</router-link>
       <button
         class="navbar-toggler shadow-none ms-2"
         type="button"
@@ -28,30 +28,6 @@
       </button>
       <div id="navigation" class="collapse navbar-collapse">
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <router-link
-              class="nav-link d-flex align-items-center me-2 active"
-              aria-current="page"
-              to="/dashboard"
-            >
-              <i
-                class="fa fa-chart-pie opacity-6 me-1"
-                aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
-              ></i>
-              Dashboard
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link me-2" to="/profile">
-              <i
-                class="fa fa-user opacity-6 me-1"
-                aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
-              ></i>
-              Profile
-            </router-link>
-          </li>
           <li class="nav-item">
             <router-link class="nav-link me-2" to="/sign-up">
               <i
@@ -74,13 +50,6 @@
           </li>
         </ul>
         <ul class="navbar-nav d-lg-block d-none">
-          <li class="nav-item">
-            <a
-              href="https://www.creative-tim.com/product/vue-soft-ui-dashboard"
-              class="btn btn-sm btn-round mb-0 me-1"
-              :class="isBlur ? 'bg-gradient-dark' : 'bg-gradient-success'"
-            >Free download</a>
-          </li>
         </ul>
       </div>
     </div>
