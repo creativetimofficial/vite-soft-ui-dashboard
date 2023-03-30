@@ -43,7 +43,8 @@
                     <vsud-switch id="rememberMe" checked
                       >Remember me</vsud-switch
                     >
-                    <div class="text-center">
+                  </form>
+                  <div class="text-center">
                       <vsud-button
                         class="my-4 mb-2"
                         variant="gradient"
@@ -54,7 +55,6 @@
                         >Sign in</vsud-button
                       >
                     </div>
-                  </form>
                 </div>
                 <div class="px-1 pt-0 text-center card-footer px-lg-2">
                   <p class="mx-auto mb-4 text-sm">
