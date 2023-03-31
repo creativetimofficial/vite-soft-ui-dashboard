@@ -27,8 +27,11 @@
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^8.5.0",
+    "node-sass": "^8.0.0",
     "prettier": "2.6.0",
     "sass": "^1.49.9",
+    "sass-loader": "^13.2.2",
+    "style-loader": "^3.3.2",
     "vite": "^2.8.0"
   }
 }

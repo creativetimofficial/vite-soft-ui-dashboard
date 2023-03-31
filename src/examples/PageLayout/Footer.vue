@@ -8,42 +8,35 @@
             target="_blank"
             class="mb-2 text-secondary me-xl-5 me-3 mb-sm-0"
           >
-            Company
+            {{ $t('company') }}
           </a>
           <a
             href="javascript:;"
             target="_blank"
             class="mb-2 text-secondary me-xl-5 me-3 mb-sm-0"
           >
-            About Us
+            {{ $t('aboutus') }}
           </a>
           <a
             href="javascript:;"
             target="_blank"
             class="mb-2 text-secondary me-xl-5 me-3 mb-sm-0"
           >
-            Team
+            {{ $t('team') }}
           </a>
           <a
             href="javascript:;"
             target="_blank"
             class="mb-2 text-secondary me-xl-5 me-3 mb-sm-0"
           >
-            Products
+            {{ $t('products') }}
           </a>
           <a
             href="javascript:;"
             target="_blank"
             class="mb-2 text-secondary me-xl-5 me-3 mb-sm-0"
           >
-            Blog
-          </a>
-          <a
-            href="javascript:;"
-            target="_blank"
-            class="mb-2 text-secondary me-xl-5 me-3 mb-sm-0"
-          >
-            Pricing
+            {{ $t('blog') }}
           </a>
         </div>
         <div class="mx-auto mt-2 mb-4 text-center col-lg-8">

@@ -86,7 +86,7 @@ export default {
     }
   },
   created() {
-    this.$store.state.hideConfigButton = true;
+    this.$store.state.hideConfigButton = false;
     this.$store.state.showNavbar = false;
     this.$store.state.showSidenav = false;
     this.$store.state.showFooter = false;

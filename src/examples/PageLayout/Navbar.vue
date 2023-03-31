@@ -35,7 +35,7 @@
                 aria-hidden="true"
                 :class="isBlur ? 'text-dark' : 'text-white'"
               ></i>
-              Sign Up
+              {{ $t('signup') }}
             </router-link>
           </li>
           <li class="nav-item">
@@ -45,7 +45,7 @@
                 aria-hidden="true"
                 :class="isBlur ? 'text-dark' : 'text-white'"
               ></i>
-              Sign In
+              {{ $t('signin') }}
             </router-link>
           </li>
         </ul>

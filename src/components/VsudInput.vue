@@ -10,8 +10,8 @@
         class="form-control"
         :class="getClasses(size, valid)"
         :name="name"
-        v-model="inputValue" 
-        @input="updateValue"
+        :value="modelValue"
+        @input="updateInput"
         :placeholder="placeholder"
         :isRequired="isRequired"
       />
@@ -25,6 +25,7 @@
 <script>
 export default {
   name: "VsudInput",
+  emits: ["update:modelValue"],
   props: {
     size: {
       type: String,
@@ -50,9 +51,11 @@ export default {
       type: String,
       default: ""
     },
-    value: {
-      type: String,
-      default: ""
+    /**
+     * Biến model
+     */
+     modelValue: {
+      type: [String, Object, Array, Number],
     },
     placeholder: {
       type: String,
@@ -69,12 +72,19 @@ export default {
       inputValue: this.value,
     };
   },
-  created() {
-    this.$watch('value', newValue => {
-      this.inputValue = newValue;
-    });
-  },
   methods: {
+    /**
+     * Hàm thực hiện binding 2 chiều update lại data trong input và hiển thị icon sau icon
+     * Author: Công Đoàn (26/08/2022)
+     */
+     updateInput(event) {
+      this.$emit("update:modelValue", event.target.value);
+      if (!event.target.value.trim()) {
+        this.isHasIconAfter = false;
+      } else {
+        this.isHasIconAfter = true;
+      }
+    },
     getClasses: (size, valid) => {
       let sizeValue, isValidValue;
 

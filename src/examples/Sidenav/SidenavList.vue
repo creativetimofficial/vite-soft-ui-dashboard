@@ -91,7 +91,7 @@
         >Feature</h6>
       </li>
       <li class="nav-item" v-for="item in dataItem" :key="item.name">
-        <sidenav-collapse :nav-text="item.name" :to="{ name: item.name}">
+        <sidenav-collapse :nav-text="$t(item.text)" :to="{ name: item.name}">
           <template #icon>
             <icon :name="item.icon" />
           </template>

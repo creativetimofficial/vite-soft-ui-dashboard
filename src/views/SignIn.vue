@@ -19,20 +19,20 @@
               <div class="mt-8 card card-plain">
                 <div class="pb-0 card-header text-start">
                   <h3 class="font-weight-bolder text-info text-gradient">
-                    Welcome back
+                    {{ $t('welcome') }}
                   </h3>
-                  <p class="mb-0">Enter your email and password to sign in</p>
+                  <p class="mb-0">{{ $t('signinsub') }}</p>
                 </div>
                 <div class="card-body">
                   <form role="form" class="text-start">
-                    <label>Email</label>
+                    <label>{{ $t('username') }}</label>
                     <vsud-input
                       type="text"
                       placeholder="Email"
                       name="email"
                       v-model="username"
                     />
-                    <label>Password</label>
+                    <label>{{ $t('password') }}</label>
                     <vsud-input
                       type="password"
                       placeholder="Password"
@@ -41,7 +41,7 @@
                       :id="'user_login'"
                     />
                     <vsud-switch id="rememberMe" checked
-                      >Remember me</vsud-switch
+                      >{{ $t('rememberme') }}</vsud-switch
                     >
                   </form>
                   <div class="text-center">
@@ -52,17 +52,17 @@
                         full-width
                         @click="loginAdmin()"
                         :id="'password_login'"
-                        >Sign in</vsud-button
+                        >{{ $t('signin') }}</vsud-button
                       >
                     </div>
                 </div>
                 <div class="px-1 pt-0 text-center card-footer px-lg-2">
                   <p class="mx-auto mb-4 text-sm">
-                    Don't have an account?
+                    {{ $t('donthaveaccount') }}
                     <a
                       href="javascript:;"
                       class="text-info text-gradient font-weight-bold"
-                      >Sign up</a
+                      >{{ $t('signup') }}</a
                     >
                   </p>
                 </div>
@@ -129,10 +129,11 @@ export default {
     },
   },
   beforeMount() {
-    this.$store.state.hideConfigButton = true;
+    this.$store.state.hideConfigButton = false;
     this.$store.state.showNavbar = false;
     this.$store.state.showSidenav = false;
     this.$store.state.showFooter = false;
+    this.$store.state.IsOutSide = true;
     body.classList.remove("bg-gray-100");
   },
   beforeUnmount() {
@@ -140,6 +141,7 @@ export default {
     this.$store.state.showNavbar = true;
     this.$store.state.showSidenav = true;
     this.$store.state.showFooter = true;
+    this.$store.state.IsOutSide = false;
     body.classList.add("bg-gray-100");
   },
 };

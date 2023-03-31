@@ -1,13 +1,16 @@
 <template>
   <div class="fixed-plugin">
-    <a class="px-3 py-2 fixed-plugin-button text-dark position-fixed" @click="toggle">
+    <a
+      class="px-3 py-2 fixed-plugin-button text-dark position-fixed"
+      @click="toggle"
+    >
       <i class="py-2 fa fa-cog"></i>
     </a>
     <div class="shadow-lg card blur">
       <div class="pt-3 pb-0 bg-transparent card-header">
         <div class="float-start">
-          <h5 class="mt-3 mb-0">Cinema Config</h5>
-          <p>See dashboard options.</p>
+          <h5 class="mt-3 mb-0">{{ $t('appconfig') }}</h5>
+          <p>{{ $t('subappconfig') }}</p>
         </div>
         <div class="mt-4 float-end" @click="toggle">
           <button class="p-0 btn btn-link text-dark fixed-plugin-close-button">
@@ -17,13 +20,16 @@
         <!-- End Toggle Button -->
       </div>
       <hr class="my-1 horizontal dark" />
-      <div class="pt-0 card-body pt-sm-3">
+      <div class="pt-0 card-body pt-sm-3" v-show="!$store.state.IsOutSide">
         <!-- Sidebar Backgrounds -->
         <div>
-          <h6 class="mb-0">Sidebar Colors</h6>
+          <h6 class="mb-0">{{ $t('sidebarcolors') }}</h6>
         </div>
         <a href="#" class="switch-trigger background-color">
-          <div class="my-2 badge-colors" :class="$store.state.isRTL ? 'text-end' : ' text-start'">
+          <div
+            class="my-2 badge-colors"
+            :class="$store.state.isRTL ? 'text-end' : ' text-start'"
+          >
             <span
               class="badge filter bg-gradient-primary active"
               data-color="primary"
@@ -58,8 +64,8 @@
         </a>
         <!-- Sidenav Type -->
         <div class="mt-3">
-          <h6 class="mb-0">Sidenav Type</h6>
-          <p class="text-sm">Choose between 2 different sidenav types.</p>
+          <h6 class="mb-0">{{ $t('sidenavtype') }}</h6>
+          <p class="text-sm">{{ $t('subsidenavtype') }}</p>
         </div>
         <div class="d-flex">
           <button
@@ -67,20 +73,24 @@
             class="px-3 mb-2 btn bg-gradient-success w-100"
             :class="ifTransparent === 'bg-transparent' ? 'active' : ''"
             @click="sidebarType('bg-transparent')"
-          >Transparent</button>
+          >
+            {{ $t('transparent') }}
+          </button>
           <button
             id="btn-white"
             class="px-3 mb-2 btn bg-gradient-success w-100 ms-2"
             :class="ifTransparent === 'bg-white' ? 'active' : ''"
             @click="sidebarType('bg-white')"
-          >White</button>
+          >
+            {{ $t('white') }}
+          </button>
         </div>
-        <p
-          class="mt-2 text-sm d-xl-none d-block"
-        >You can change the sidenav type just on desktop view.</p>
+        <p class="mt-2 text-sm d-xl-none d-block">
+          You can change the sidenav type just on desktop view.
+        </p>
         <!-- Navbar Fixed -->
         <div class="mt-3">
-          <h6 class="mb-0">Navbar Fixed</h6>
+          <h6 class="mb-0">{{ $t('navbarfixed') }}</h6>
         </div>
         <div class="form-check form-switch ps-0">
           <input
@@ -94,7 +104,25 @@
           />
         </div>
         <hr class="horizontal dark my-sm-4" />
+      </div>
+      <div class="pt-0 card-body pt-sm-3">
+        <div>
+          <h6 class="mb-0">{{ $t('languages') }}</h6>
+          <div class="form-check form-switch ps-0">
+            <input
+              id="languageFixed"
+              v-model="languague"
+              class="mt-1 form-check-input"
+              :class="$store.state.isRTL ? 'float-end  me-auto' : ' ms-auto'"
+              type="checkbox"
+              :checked="$store.state.isVietNamese"
+              @change="setLanguage($store.state.isVietNamese)"
+            />
 
+          <div class="lang">{{ $t('lang') }}</div>
+            
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -107,12 +135,13 @@ export default {
   props: {
     toggle: {
       type: Function,
-      default: () => { }
+      default: () => {},
     },
   },
   data() {
     return {
       fixedKey: "",
+      languague: true
     };
   },
 
@@ -129,13 +158,26 @@ export default {
     // Deactivate sidenav type buttons on resize and small screens
     window.addEventListener("resize", this.sidenavTypeOnResize);
     window.addEventListener("load", this.sidenavTypeOnResize);
-  }, methods: {
+  },
+  methods: {
     ...mapMutations(["navbarMinimize", "sidebarType", "navbarFixed"]),
     ...mapActions(["toggleSidebarColor"]),
 
     sidebarColor(color = "success") {
       document.querySelector("#sidenav-main").setAttribute("data-color", color);
       this.$store.state.mcolor = `card-background-mask-${color}`;
+    },
+
+    /**
+     * Hàm thực hiện đổi ngôn ngữ
+     */
+    setLanguage(isVietNamese) {
+      this.$store.state.isVietNamese = !isVietNamese;
+      if (this.$store.state.isVietNamese) {
+        this.$i18n.locale = "vi";
+      } else {
+        this.$i18n.locale = "en";
+      }
     },
 
     sidebarType(type) {
@@ -162,3 +204,13 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.fixed-plugin{
+  .card-body{
+    flex: unset;
+  }
+  .lang{
+    margin-left: 50px;
+  }
+}
+</style>

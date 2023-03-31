@@ -38,7 +38,7 @@
             >
               <i class="fa fa-user" :class="$store.state.isRTL ? 'ms-sm-2' : 'me-sm-1'"></i>
               <span v-if="$store.state.isRTL" class="d-sm-inline d-none">يسجل دخول</span>
-              <span v-else class="d-sm-inline d-none">Sign In</span>
+              <span v-else class="d-sm-inline d-none">{{ $t('signin') }}</span>
             </router-link>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -189,7 +189,7 @@
 <script>
 import Breadcrumbs from "../Breadcrumbs.vue";
 import { mapMutations, mapActions } from "vuex";
-
+import {slideitems} from "@/constants/constantsdefaults"
 export default {
   name: "NavbarComponent",
 
@@ -213,6 +213,9 @@ export default {
   },
   computed: {
     currentRouteName() {
+      if(this.$route.name){
+        return this.$t(slideitems.find(x=>{if(x.name == this.$route.name) return x.text}).text);
+      }
       return this.$route.name;
     },
   },
