@@ -1,5 +1,5 @@
 <template>
-    <BaseGrid></BaseGrid>
+  
 </template>
 
 <script>
