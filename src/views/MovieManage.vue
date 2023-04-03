@@ -27,6 +27,7 @@
         </div>
       </template>
     </EasyDataTable>
+    <popup-add-movie></popup-add-movie>
   </div>
 </template>
 
@@ -34,12 +35,13 @@
 import { fields } from "@/constants/constantsmoviegrids.js";
 import BaseLoading from "./components/BaseLoading.vue";
 import BaseButton from "./components/BaseButton.vue";
-
+import PopupAddMovie from "./popups/PopupAddMovie.vue";
 export default {
   name: "MovieManager",
   components: {
     BaseLoading,
     BaseButton,
+    PopupAddMovie,
   },
   created() {
     let me = this;
