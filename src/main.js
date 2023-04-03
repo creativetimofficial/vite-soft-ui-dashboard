@@ -9,7 +9,7 @@ import Vue3EasyDataTable from 'vue3-easy-data-table';
 import 'vue3-easy-data-table/dist/style.css';
 import SoftUIDashboard from "./soft-ui-dashboard";
 import api from "./plugins/api";
-
+import  VueSelect  from "vue-select";
 
 
 
@@ -27,7 +27,7 @@ config.globalProperties.$te = i18n.global.te;
 config.globalProperties.$d = i18n.global.d;
 config.globalProperties.$n = i18n.global.n;
 
-
+app.component("v-select", VueSelect)
 app.component('EasyDataTable', Vue3EasyDataTable);
 app.use(store);
 app.use(router);

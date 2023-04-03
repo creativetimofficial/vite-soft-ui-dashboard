@@ -7,7 +7,10 @@
           <i class="fas fa-times"></i>
         </div>
       </div>
-      <div class="popup-main"></div>
+      <div class="popup-main">
+
+        <v-select :options="books" label="title"></v-select>
+      </div>
       <div class="popup-footer">
         <base-button
           :classButton="'button-white'"
@@ -39,6 +42,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "vue-select/dist/vue-select.css";
 .popup-add-movie {
   position: fixed;
   top: 0;
