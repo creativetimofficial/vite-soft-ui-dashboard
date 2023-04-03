@@ -1,10 +1,15 @@
 
 export var slideitems = [
   {
+    name: "Movie Manage",
+    icon: "virtual-reality",
+    text: 'moviemanage'
+  },
+  {
     name: "Dashboard",
     icon: "dashboard",
     text: "dashboard"
-},
+  },
   {
     name: "Tables",
     icon: "tables",
@@ -15,11 +20,7 @@ export var slideitems = [
     icon: "billing",
     text: 'bill'
   },
-  {
-    name: "Movie Manage",
-    icon: "virtual-reality",
-    text: 'moviemanage'
-  },
+
   {
     name: "Rtl",
     icon: "rtl-page",

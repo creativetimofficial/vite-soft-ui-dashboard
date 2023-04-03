@@ -214,7 +214,12 @@ export default {
   computed: {
     currentRouteName() {
       if(this.$route.name){
-        return this.$t(slideitems.find(x=>{if(x.name == this.$route.name) return x.text}).text);
+        let temp = slideitems.find(x=>{if(x.name == this.$route.name) return x.text});
+        if(temp){
+          return this.$t(temp.text);
+        }else{
+          return "";
+        }
       }
       return this.$route.name;
     },
