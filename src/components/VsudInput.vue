@@ -14,7 +14,20 @@
         @input="updateInput"
         :placeholder="placeholder"
         :isRequired="isRequired"
+        v-if="!isMultiple"
       />
+      <textarea
+        :id="id"
+        :type="type"
+        class="form-control"
+        :class="getClasses(size, valid)"
+        :name="name"
+        :value="modelValue"
+        @input="updateInput"
+        :placeholder="placeholder"
+        :isRequired="isRequired"
+        v-if="isMultiple"
+      ></textarea>
       <span v-if="iconDir === 'right'" class="input-group-text">
         <i :class="getIcon(icon)"></i>
       </span>
@@ -37,35 +50,36 @@ export default {
     },
     icon: {
       type: String,
-      default: ""
+      default: "",
     },
     iconDir: {
       type: String,
-      default: ""
+      default: "",
     },
     name: {
       type: String,
-      default: ""
+      default: "",
     },
     id: {
       type: String,
-      default: ""
+      default: "",
     },
     /**
      * Biến model
      */
-     modelValue: {
+    modelValue: {
       type: [String, Object, Array, Number],
     },
     placeholder: {
       type: String,
-      default: ""
+      default: "",
     },
     type: {
       type: String,
-      default: ""
+      default: "",
     },
     isRequired: Boolean,
+    isMultiple: { type: Boolean, default: false },
   },
   data() {
     return {
@@ -77,7 +91,7 @@ export default {
      * Hàm thực hiện binding 2 chiều update lại data trong input và hiển thị icon sau icon
      * Author: Công Đoàn (26/08/2022)
      */
-     updateInput(event) {
+    updateInput(event) {
       this.$emit("update:modelValue", event.target.value);
       if (!event.target.value.trim()) {
         this.isHasIconAfter = false;
@@ -97,7 +111,7 @@ export default {
     getIcon: (icon) => (icon ? icon : null),
     hasIcon: (icon) => (icon ? "input-group" : null),
     updateValue() {
-      this.$emit('input', this.inputValue);
+      this.$emit("input", this.inputValue);
     },
   },
 };

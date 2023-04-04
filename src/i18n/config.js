@@ -35,6 +35,19 @@ const i18n = createI18n({
         transparent: "Transparent",
         white: "White",
         lang: "English",
+        MovieCode: "Movie Code",
+        MovieName: "Movie Name",
+        FromDate: "From Date",
+        ToDate: "To Date",
+        Language: "Language",
+        ReleaseDate: "Release Date",
+        Actor: "Actor",
+        Direction: "Direction",
+        Trailer: "Trailer",
+        Poster: "Poster",
+        Content: "Content",
+        Type: "Type",
+        PickADay:"Pick A Day"
       },
       vi: {       
         welcome: "Chào mừng trở lại",
@@ -66,6 +79,19 @@ const i18n = createI18n({
         transparent: "Trong suốt",
         white: "Trắng",
         lang: "Tiếng Việt",
+        MovieCode: "Mã Phim",
+        MovieName: "Tên Phim",
+        FromDate: "Từ Ngày",
+        ToDate: "Đến Ngày",
+        Language: "Ngôn Ngữ",
+        ReleaseDate: "Ngày Phát Hành",
+        Actor: "Diễn Viên",
+        Direction: "Đạo Diễn",
+        Trailer: "Trailer",
+        Poster: "Poster",
+        Content: "Nội Dung",
+        Type: "Loại",
+        PickADay: "Chọn Một Ngày"
       }
     }
   })
