@@ -97,12 +97,7 @@
           </div>
           <div class="popup-input popup-date">
             <label>{{ $t("ReleaseDate") }}</label>
-            <el-date-picker
-              v-model="releasedate"
-              type="date"
-              :placeholder="$t('PickADay')"
-              :size="size"
-            />
+            <base-upload-firebase></base-upload-firebase>
           </div>
         </div>
       </div>
@@ -126,10 +121,11 @@
 import VsudInput from "../../components/VsudInput.vue";
 import BaseButton from "../components/BaseButton.vue";
 import BaseUpload from '../components/BaseUpload.vue';
+import BaseUploadFirebase from "../components/BaseUploadFirebase.vue";
 export default {
   components: {
     BaseButton,
-    VsudInput,BaseUpload
+    VsudInput,BaseUpload,BaseUploadFirebase
   },
   props: {},
   data() {
