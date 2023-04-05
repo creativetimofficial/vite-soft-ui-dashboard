@@ -1,44 +1,50 @@
 <template>
   <div class="upload-container">
-    <label class="upload-main" :for="idUpload" @click="open({ accept: 'image/*', multiple: false })">
+    <label
+      class="upload-main"
+      :for="idUpload"
+      @click="open({ accept: 'image/*', multiple: false })"
+    >
       <div class="icon-add" v-if="!url">
         <i class="fas fa-plus fa-lg"></i>
       </div>
       <img :src="url" alt="Ảnh" class="upload-image" v-if="url" />
     </label>
-    <button @click="uploadPicture()">upload</button>
   </div>
 </template>
 <script>
-import {watch} from 'vue'
+import { uuidv4 } from "../../common/uuid";
 import { useFileDialog } from "@vueuse/core";
 import { ref as storageRef } from "firebase/storage";
 import { useFirebaseStorage, useStorageFile } from "vuefire";
+import { watch } from "vue";
 export default {
   setup() {
     const storage = useFirebaseStorage();
-    const mountainFileRef = storageRef(storage, "images");
+    const mountainFileRef = storageRef(storage, "images/" + uuidv4());
     const {
       url,
-      // gives you a percentage between 0 and 1 of the upload progress
       uploadProgress,
       uploadError,
-      // firebase upload task
       uploadTask,
       upload,
     } = useStorageFile(mountainFileRef);
 
+    const { files, open, reset } = useFileDialog();
+
+    watch(files, (newFiles) => {
+      const file = newFiles[0];
+      if (file) {
+        upload(file);
+      }
+    });
+
     function uploadPicture() {
-      //const data = files.value?.item(0);
-      console.log(files)
-      if (dataImg) {
-        upload(dataImg);
+      const data = files.value?.item(0);
+      if (data) {
+        upload(data);
       }
     }
-
-    const dataImg = files.value?.item(0);
-
-    const { files, open, reset } = useFileDialog();
 
     return {
       storage,
@@ -49,10 +55,8 @@ export default {
       uploadPicture,
       open,
       reset,
+      files,
     };
-  },
-  watch:{
-
   },
   props: {
     typeImage: {
@@ -71,12 +75,9 @@ export default {
       filename: "",
     };
   },
-  methods: {
-
-  },
 };
 </script>
-  <style lang="scss">
+<style lang="scss">
 .upload-container {
   display: flex;
   height: 100px;
@@ -108,4 +109,3 @@ export default {
   }
 }
 </style>
-  

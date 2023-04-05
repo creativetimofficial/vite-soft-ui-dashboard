@@ -93,11 +93,11 @@
           </div>
           <div class="popup-input popup-date">
             <label>{{ $t("Poster") }}</label>
-            <base-upload :idUpload="'movie-image-upload'" :typeImage="'.jpg,.png'"></base-upload>
+            <base-upload-firebase :idUpload="'image-movie-upload'"></base-upload-firebase>
           </div>
           <div class="popup-input popup-date">
             <label>{{ $t("ReleaseDate") }}</label>
-            <base-upload-firebase></base-upload-firebase>
+
           </div>
         </div>
       </div>
