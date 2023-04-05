@@ -19,16 +19,13 @@ import { ref as storageRef } from "firebase/storage";
 import { useFirebaseStorage, useStorageFile } from "vuefire";
 import { watch } from "vue";
 export default {
-  setup() {
+  emits: ["url-bind"],
+  setup(props, { emit }) {
     const storage = useFirebaseStorage();
-    const mountainFileRef = storageRef(storage, "images/" + uuidv4());
-    const {
-      url,
-      uploadProgress,
-      uploadError,
-      uploadTask,
-      upload,
-    } = useStorageFile(mountainFileRef);
+    const linkImg = "images/" + uuidv4();
+    const mountainFileRef = storageRef(storage, linkImg);
+    const { url, uploadProgress, uploadError, uploadTask, upload } =
+      useStorageFile(mountainFileRef);
 
     const { files, open, reset } = useFileDialog();
 
@@ -36,6 +33,8 @@ export default {
       const file = newFiles[0];
       if (file) {
         upload(file);
+
+        emit("url-bind", linkImg);
       }
     });
 
@@ -44,6 +43,8 @@ export default {
       if (data) {
         upload(data);
       }
+
+      emit("url-bind", linkImg);
     }
 
     return {
@@ -56,6 +57,7 @@ export default {
       open,
       reset,
       files,
+      linkImg,
     };
   },
   props: {

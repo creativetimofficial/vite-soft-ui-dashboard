@@ -47,7 +47,13 @@ const i18n = createI18n({
         Poster: "Poster",
         Content: "Content",
         Type: "Type",
-        PickADay:"Pick A Day"
+        PickADay:"Pick A Day",
+        Typehere: "Type here...",
+        TypeMovie: "Type Movie",
+        CategoryMovie: "Category",
+        PCategoryMovie: "Select Categorys",
+        PTypeMovie: "Select Type Movie",
+        Search: "Search"
       },
       vi: {       
         welcome: "Chào mừng trở lại",
@@ -91,7 +97,14 @@ const i18n = createI18n({
         Poster: "Poster",
         Content: "Nội Dung",
         Type: "Loại",
-        PickADay: "Chọn Một Ngày"
+        PickADay: "Chọn Một Ngày",
+        Typehere: "Nhập tại đây ...",
+        TypeMovie: "Dạng phim",
+        CategoryMovie: "Thể loại",
+        PCategoryMovie: "Chọn các thể loại",
+        PTypeMovie: "Chọn một dạng phim",
+        Search: "Tìm kiếm"
+
       }
     }
   })

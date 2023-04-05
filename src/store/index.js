@@ -17,6 +17,8 @@ export default createStore({
     showMain: true,
     isOutside: true,
     isVietNamese: true,
+    isOpenPopup: false,
+    isOpenPopupDelete: false,
   },
   mutations: {
     toggleConfigurator(state) {

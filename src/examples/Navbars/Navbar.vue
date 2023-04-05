@@ -23,8 +23,7 @@
             <input
               type="text"
               class="form-control"
-              :placeholder="
-                $store.state.isRTL ? 'أكتب هنا...' : 'Type here...'
+              :placeholder="$t('Typehere')
               "
             />
           </div>

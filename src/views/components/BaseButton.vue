@@ -1,11 +1,12 @@
 <template>
   <div class="button-cinema">
-    <button :class="classButton">{{ titleButton }}</button>
+    <button :class="classButton" @click="bindEvent">{{ titleButton }}</button>
   </div>
 </template>
 
 <script>
 export default {
+  emits: ["bindEvent"],
   components: {},
   props: {
     titleButton: String,
@@ -14,7 +15,11 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    bindEvent(){
+      this.$emit('bindEvent');
+    }
+  },
 };
 </script>
 

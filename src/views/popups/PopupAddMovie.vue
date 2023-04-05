@@ -3,19 +3,19 @@
     <div class="popup-container">
       <div class="popup-header">
         <div class="popup-title">Thêm mới phim</div>
-        <div class="popup-icon-close">
+        <div class="popup-icon-close" @click="closeThisPopup()">
           <i class="fas fa-times"></i>
         </div>
       </div>
       <div class="popup-main">
-        <div class="popup-row-1">
+        <div class="popup-row-1 pt-25">
           <div class="popup-input">
             <label>{{ $t("MovieCode") }}</label>
             <vsud-input
               type="text"
               :placeholder="$t('MovieCode')"
               name="password"
-              v-model="password"
+              v-model="dataMovie.movieCode"
               :id="'movie_name'"
             />
           </div>
@@ -25,7 +25,7 @@
               type="text"
               :placeholder="$t('MovieName')"
               name="password"
-              v-model="password"
+              v-model="dataMovie.movieName"
               :id="'movie_name'"
             />
           </div>
@@ -35,7 +35,7 @@
               type="text"
               :placeholder="$t('Actor')"
               name="password"
-              v-model="password"
+              v-model="dataMovie.actor"
               :id="'movie_name'"
             />
           </div>
@@ -45,7 +45,7 @@
               type="text"
               :placeholder="$t('Direction')"
               name="password"
-              v-model="password"
+              v-model="dataMovie.direction"
               :id="'movie_name'"
             />
           </div>
@@ -54,7 +54,7 @@
           <div class="popup-input popup-date">
             <label>{{ $t("FromDate") }}</label>
             <el-date-picker
-              v-model="fromdate"
+              v-model="dataMovie.fromdate"
               type="date"
               :placeholder="$t('PickADay')"
               :size="size"
@@ -63,7 +63,7 @@
           <div class="popup-input popup-date">
             <label>{{ $t("ToDate") }}</label>
             <el-date-picker
-              v-model="todate"
+              v-model="dataMovie.todate"
               type="date"
               :placeholder="$t('PickADay')"
               :size="size"
@@ -72,7 +72,7 @@
           <div class="popup-input popup-date">
             <label>{{ $t("ReleaseDate") }}</label>
             <el-date-picker
-              v-model="releasedate"
+              v-model="dataMovie.releasedate"
               type="date"
               :placeholder="$t('PickADay')"
               :size="size"
@@ -86,18 +86,64 @@
               type="text"
               :placeholder="$t('Content')"
               name="password"
-              v-model="password"
+              v-model="dataMovie.content"
               :id="'movie_content'"
               :isMultiple="true"
             />
           </div>
           <div class="popup-input popup-date">
-            <label>{{ $t("Poster") }}</label>
-            <base-upload-firebase :idUpload="'image-movie-upload'"></base-upload-firebase>
+            <div class="group-typemovie">
+              <label>{{ $t("Poster") }}</label>
+              <base-upload-firebase
+                :idUpload="'image-movie-upload'"
+                @url-bind="catchUrl"
+              ></base-upload-firebase>
+            </div>
+          </div>
+          <div class="popup-input popup-date group-combobox">
+            <div class="group-typemovie">
+              <label>{{ $t("TypeMovie") }}</label>
+              <v-select
+                label="typeName"
+                :options="dataMovie.typeMovie"
+                :placeholder="$t('PTypeMovie')"
+                v-model="dataMovie.selectedTypeMovie"
+                :reduce="(typeName) => typeName.typeID"
+              ></v-select>
+            </div>
+            <div class="group-categorymovie">
+              <label>{{ $t("CategoryMovie") }}</label>
+              <v-select
+                label="categoryName"
+                :options="dataMovie.categoryMovie"
+                :placeholder="$t('PCategoryMovie')"
+                v-model="dataMovie.selectedCategory"
+                :reduce="(categoryName) => categoryName.categoryID"
+                multiple
+              ></v-select>
+            </div>
+          </div>
+        </div>
+        <div class="popup-row-1">
+          <div class="popup-input">
+            <label>{{ $t("Trailer") }}</label>
+            <vsud-input
+              type="text"
+              :placeholder="$t('Trailer')"
+              name="password"
+              v-model="dataMovie.linkTrailer"
+              :id="'trailer-link'"
+            />
           </div>
           <div class="popup-input popup-date">
-            <label>{{ $t("ReleaseDate") }}</label>
-
+            <label>{{ $t("Language") }}</label>
+            <vsud-input
+              type="text"
+              :placeholder="$t('Language')"
+              name="password"
+              v-model="dataMovie.language"
+              :id="'lang-movie'"
+            />
           </div>
         </div>
       </div>
@@ -105,12 +151,14 @@
         <base-button
           :classButton="'button-white'"
           :titleButton="'Hủy'"
+          @bindEvent="closeThisPopup()"
         ></base-button>
 
         <div class="ml-2"></div>
         <base-button
           :classButton="'button-blue'"
           :titleButton="'Thêm'"
+          @click="postMovie()"
         ></base-button>
       </div>
     </div>
@@ -120,24 +168,93 @@
 <script>
 import VsudInput from "../../components/VsudInput.vue";
 import BaseButton from "../components/BaseButton.vue";
-import BaseUpload from '../components/BaseUpload.vue';
+import BaseUpload from "../components/BaseUpload.vue";
 import BaseUploadFirebase from "../components/BaseUploadFirebase.vue";
+import { uuidv4 } from "../../common/uuid";
 export default {
+  emits: ['add-click'],
   components: {
     BaseButton,
-    VsudInput,BaseUpload,BaseUploadFirebase
+    VsudInput,
+    BaseUpload,
+    BaseUploadFirebase,
+  },
+  created() {
+    let me = this;
+    this.$api.post("/Movie/GetListTypeMovie").then((data) => {
+      me.dataMovie.typeMovie = data;
+    });
+
+    this.$api.post("/Movie/GetListCategoryMovie").then((data) => {
+      me.dataMovie.categoryMovie = data;
+    });
   },
   props: {},
   data() {
-    return { fromdate: "", todate: "", releasedate: "" };
+    return {
+      dataMovie: {
+        fromdate: "",
+        todate: "",
+        releasedate: "",
+        typeMovie: [],
+        categoryMovie: [],
+        selectedTypeMovie: null,
+        selectedCategory: null,
+        content: null,
+        movieCode: null,
+        movieName: null,
+        actor: null,
+        direction: null,
+        urlImage: null,
+        linkTrailer: null,
+        language: null,
+      },
+    };
   },
-  methods: {},
+  methods: {
+    closeThisPopup() {
+      this.$store.state.IsOpenPopup = false;
+    },
+    catchUrl(value) {
+      console.log(10);
+      this.dataMovie.urlImage = value;
+    },
+    postMovie() {
+      let me = this;
+      let dataParam = {
+        movieID: uuidv4(),
+        movieCode: this.dataMovie.movieCode,
+        movieName: this.dataMovie.movieName,
+        releaseDate: this.dataMovie.releasedate,
+        actor: this.dataMovie.actor,
+        directions: this.dataMovie.direction,
+        typeID: this.dataMovie.selectedTypeMovie,
+        language: this.dataMovie.language,
+        trailerLink: this.dataMovie.trailerLink,
+        posterLink: this.dataMovie.urlImage,
+        content: this.dataMovie.content,
+        fromDate: this.dataMovie.fromdate,
+        toDate: this.dataMovie.todate,
+        categoryIDs: this.dataMovie.selectedCategory,
+      };
+      this.$api
+        .post("/Movie/InsertMovie", dataParam)
+        .then(() => me.$emit("add-click"));
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 @import "vue-select/dist/vue-select.css";
 .popup-add-movie {
+  input::placeholder {
+    font-size: 13px;
+    color: #c8cace;
+  }
+  .form-control {
+    height: 40px;
+  }
   position: fixed;
   top: 0;
   bottom: 0;
@@ -209,6 +326,9 @@ export default {
       .popup-input {
         padding: 0 8px 0;
       }
+      .pt-25 {
+        padding-top: 25px;
+      }
       .popup-row-1 {
         display: flex;
         .form-control {
@@ -234,6 +354,10 @@ export default {
         max-height: 100px;
         width: 200px;
         height: 100px;
+      }
+
+      #trailer-link {
+        width: 600px;
       }
     }
   }
