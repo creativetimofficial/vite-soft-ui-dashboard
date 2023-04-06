@@ -91,7 +91,7 @@
               :isMultiple="true"
             />
           </div>
-          <div class="popup-input popup-date">
+          <div class="popup-input">
             <div class="group-typemovie">
               <label>{{ $t("Poster") }}</label>
               <base-upload-firebase
@@ -101,27 +101,25 @@
             </div>
           </div>
           <div class="popup-input popup-date group-combobox">
-            <div class="group-typemovie">
-              <label>{{ $t("TypeMovie") }}</label>
-              <v-select
-                label="typeName"
-                :options="dataMovie.typeMovie"
-                :placeholder="$t('PTypeMovie')"
-                v-model="dataMovie.selectedTypeMovie"
-                :reduce="(typeName) => typeName.typeID"
-              ></v-select>
-            </div>
-            <div class="group-categorymovie">
-              <label>{{ $t("CategoryMovie") }}</label>
-              <v-select
-                label="categoryName"
-                :options="dataMovie.categoryMovie"
-                :placeholder="$t('PCategoryMovie')"
-                v-model="dataMovie.selectedCategory"
-                :reduce="(categoryName) => categoryName.categoryID"
-                multiple
-              ></v-select>
-            </div>
+            <label>{{ $t("TypeMovie") }}</label>
+            <v-select
+              label="typeName"
+              :options="dataMovie.typeMovie"
+              :placeholder="$t('PTypeMovie')"
+              v-model="dataMovie.selectedTypeMovie"
+              :reduce="(typeName) => typeName.typeID"
+            ></v-select>
+          </div>
+          <div class="popup-input popup-date group-combobox">
+            <label>{{ $t("CategoryMovie") }}</label>
+            <v-select
+              label="categoryName"
+              :options="dataMovie.categoryMovie"
+              :placeholder="$t('PCategoryMovie')"
+              v-model="dataMovie.selectedCategory"
+              :reduce="(categoryName) => categoryName.categoryID"
+              multiple
+            ></v-select>
           </div>
         </div>
         <div class="popup-row-1">
@@ -172,7 +170,7 @@ import BaseUpload from "../components/BaseUpload.vue";
 import BaseUploadFirebase from "../components/BaseUploadFirebase.vue";
 import { uuidv4 } from "../../common/uuid";
 export default {
-  emits: ['add-click'],
+  emits: ["add-click"],
   components: {
     BaseButton,
     VsudInput,
@@ -358,6 +356,10 @@ export default {
 
       #trailer-link {
         width: 600px;
+      }
+
+      .group-combobox{
+        margin: auto 0;
       }
     }
   }

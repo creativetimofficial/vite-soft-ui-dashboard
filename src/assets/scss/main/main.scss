@@ -1,44 +1,82 @@
-.vue3-easy-data-table{
+.vue3-easy-data-table {
     flex-shrink: 0;
     width: 100%;
     max-width: 100%;
     margin-top: 0;
     border-radius: 4px;
-    border: none!important;
+    border: none !important;
 
 }
 
-.vue3-easy-data-table__main{
+.vue3-easy-data-table__main {
     border-top-right-radius: 8px 8px;
     border-top-left-radius: 8px 8px;
     box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
 
 }
-.vue3-easy-data-table__footer{
+
+.vue3-easy-data-table__footer {
     border-bottom-right-radius: 8px 8px;
     border-bottom-left-radius: 8px 8px;
     box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
 }
 
-.customize-table{
+.customize-table {
     --easy-table-border: 1px solid #000;
     --easy-table-row-border: 1px solid #e9ecef;
 }
 
-.input-group-text{
-    z-index: 999!important;
+.input-group-text {
+    z-index: 999 !important;
 }
 
-.sidenav{
-    z-index: 999!important;
+.sidenav {
+    z-index: 999 !important;
 }
 
-.vs__dropdown-toggle{
-    border-radius: 10px!important;
+.vs__dropdown-toggle {
+    border-radius: 10px !important;
     height: 40px;
     border: 1px solid #D3D6DA;
 }
 
-.multi-sort__number{
+.multi-sort__number {
     display: none;
+}
+
+.vs__selected-options {
+    overflow: auto;
+}
+
+.scrollbar {
+    margin-left: 22px;
+    float: left;
+    height: 300px;
+    width: 65px;
+    background: #F5F5F5;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #EBF1FB;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #E0E0E0;
 }

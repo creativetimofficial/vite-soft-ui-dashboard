@@ -108,7 +108,7 @@ export default {
       let me = this;
       this.$api
         .post("/Movie/DeleteMovie", this.rowSelected.movieID)
-        .then(() => me.loadData());
+        .then(() => {me.loadData(); location.reload()});
     },
     loadData() {
       let me = this;
