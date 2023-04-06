@@ -10,9 +10,9 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="mx-auto text-center col-lg-5">
-          <h1 class="mt-5 mb-2 text-white">Welcome!</h1>
+          <h1 class="mt-5 mb-2 text-white">{{ $t('welcomesignin') }}</h1>
           <p class="text-white text-lead">
-            Create new account
+            {{$t('createnewaccount')}}
           </p>
         </div>
       </div>
@@ -23,37 +23,33 @@
       <div class="mx-auto col-xl-4 col-lg-5 col-md-7">
         <div class="card z-index-0">
           <div class="pt-4 text-center card-header">
-            <h5>Register</h5>
+            <h5>{{ $t('Register') }}</h5>
           </div>
           
           <div class="card-body">
             <form role="form">
               <div class="mb-3">
-                <vsud-input type="text" placeholder="Name" aria-label="Name" />
+                <vsud-input type="text" :placeholder="$t('Name')" aria-label="Name" />
               </div>
               <div class="mb-3">
                 <vsud-input type="email" placeholder="Email" aria-label="Email" />
               </div>
               <div class="mb-3">
-                <vsud-input type="password" placeholder="Password" aria-label="Password" />
+                <vsud-input type="password" :placeholder="$t('Password')" aria-label="Password" />
               </div>
               <vsud-checkbox id="flexCheckDefault" checked>
-                I agree the
-                <a
-                  href="javascript:;"
-                  class="text-dark font-weight-bolder"
-                >Terms and Conditions</a>
+                {{ $t('agreeterm') }}
               </vsud-checkbox>
 
               <div class="text-center">
                 <vsud-button color="dark" full-width variant="gradient" class="my-4 mb-2">Sign up</vsud-button>
               </div>
               <p class="text-sm mt-3 mb-0">
-                Already have an account?
+                {{ $t('haveaccount') }}
                 <a
                   href="javascript:;"
                   class="text-dark font-weight-bolder"
-                >Sign in</a>
+                >{{ $t('signin') }}</a>
               </p>
             </form>
           </div>

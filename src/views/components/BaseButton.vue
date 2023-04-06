@@ -39,6 +39,19 @@ export default {
     font-size: 13px;
   }
 
+  .button-red {
+    background: #CC3333;
+    height: 36px;
+    padding: 0px 12px 0px;
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
   .button-white{
     background: #fff;
     height: 36px;

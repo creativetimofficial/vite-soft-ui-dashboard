@@ -19,7 +19,7 @@
 
         <div class="ml-2"></div>
         <base-button
-          :classButton="'button-blue'"
+          :classButton="'button-red'"
           :titleButton="'Xóa'"
           @click="deleteClick()"
         ></base-button>

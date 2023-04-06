@@ -53,7 +53,14 @@ const i18n = createI18n({
         CategoryMovie: "Category",
         PCategoryMovie: "Select Categorys",
         PTypeMovie: "Select Type Movie",
-        Search: "Search"
+        Search: "Search",
+        showtimemanage: "Showtime Manage",
+        welcomesignin: "Welcome!",
+        createnewaccount: "Create new account",
+        Register: "Register",
+        agreeterm: "I agree the Terms and Conditions",
+        haveaccount: "Already have an account?",
+        Name: "Name",
       },
       vi: {       
         welcome: "Chào mừng trở lại",
@@ -103,8 +110,14 @@ const i18n = createI18n({
         CategoryMovie: "Thể loại",
         PCategoryMovie: "Chọn các thể loại",
         PTypeMovie: "Chọn một dạng phim",
-        Search: "Tìm kiếm"
-
+        Search: "Tìm kiếm",
+        showtimemanage: "Quản lý suất chiếu",
+        welcomesignin: "Xin Chào!",
+        createnewaccount: "Tạo một tài khoản mới",
+        Register: "Đăng ký",
+        agreeterm: "Tôi đồng ý với các Điều khoản và Điều kiện",
+        haveaccount: "Bạn đã có sẵn tài khoản?",
+        Name: "Tên"
       }
     }
   })

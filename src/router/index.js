@@ -8,12 +8,13 @@ import Rtl from "@/views/Rtl.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 import MovieManage from "@/views/MovieManage.vue";
+import ShowTimeManage from "@/views/ShowTimeManage.vue"
 
 const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard",
+    redirect: "/movie-manage",
   },
   {
     path: "/dashboard",
@@ -59,6 +60,11 @@ const routes = [
     path: "/movie-manage",
     name: "Movie Manage",
     component: MovieManage,
+  },
+  {
+    path: "/showtime-manage",
+    name: "ShowTime Manage",
+    component: ShowTimeManage,
   },
 ];
 

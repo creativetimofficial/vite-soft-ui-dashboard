@@ -36,8 +36,7 @@
               :class="textWhite ? textWhite : 'text-body'"
             >
               <i class="fa fa-user" :class="$store.state.isRTL ? 'ms-sm-2' : 'me-sm-1'"></i>
-              <span v-if="$store.state.isRTL" class="d-sm-inline d-none">يسجل دخول</span>
-              <span v-else class="d-sm-inline d-none">{{ $t('signin') }}</span>
+              <span class="d-sm-inline d-none">{{ $t('signin') }}</span>
             </router-link>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -189,11 +188,13 @@
 import Breadcrumbs from "../Breadcrumbs.vue";
 import { mapMutations, mapActions } from "vuex";
 import {slideitems} from "@/constants/constantsdefaults"
+
+import BaseImageDownload from '../../views/components/BaseImageDownload.vue';
 export default {
   name: "NavbarComponent",
 
   components: {
-    Breadcrumbs,
+    Breadcrumbs,BaseImageDownload
   },
   props: {
     minNav: {

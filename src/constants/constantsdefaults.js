@@ -6,6 +6,11 @@ export var slideitems = [
     text: 'moviemanage'
   },
   {
+    name: "ShowTime Manage",
+    icon: "virtual-reality",
+    text: 'showtimemanage'
+  },
+  {
     name: "Dashboard",
     icon: "dashboard",
     text: "dashboard"
