@@ -2,7 +2,7 @@
   "name": "vite-soft-ui-dashboard",
   "private": true,
   "version": "1.0.0",
-  "author": "Creative Tim (https://www.creative-tim.com/)",
+  "author": "vcdoan (https://www.facebook.com/yasolovest/)",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -42,7 +42,7 @@
               </vsud-checkbox>
 
               <div class="text-center">
-                <vsud-button color="dark" full-width variant="gradient" class="my-4 mb-2">Sign up</vsud-button>
+                <vsud-button color="dark" full-width variant="gradient" class="my-4 mb-2">{{ $t('signup') }}</vsud-button>
               </div>
               <p class="text-sm mt-3 mb-0">
                 {{ $t('haveaccount') }}

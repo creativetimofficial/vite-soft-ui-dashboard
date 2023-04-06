@@ -31,7 +31,9 @@
         <BaseLoading :isLoading="true"></BaseLoading>
       </template>
       <template #item-posterLink="{ posterLink }">
-        <base-image-download :linkImg="posterLink"></base-image-download>
+        <div>
+          <base-image-download :linkImg="posterLink"></base-image-download>
+        </div>
       </template>
 
       <template #item-operation="item">
@@ -41,7 +43,10 @@
         </div>
       </template>
     </EasyDataTable>
-    <popup-add-movie v-if="$store.state.IsOpenPopup" @add-click="handleAdd()"></popup-add-movie>
+    <popup-add-movie
+      v-if="$store.state.IsOpenPopup"
+      @add-click="handleAdd()"
+    ></popup-add-movie>
     <popup-delete
       v-if="$store.state.isOpenPopupDelete"
       @delete-click="deleteMovie()"
@@ -108,7 +113,9 @@ export default {
       let me = this;
       this.$api
         .post("/Movie/DeleteMovie", this.rowSelected.movieID)
-        .then(() => {me.loadData(); location.reload()});
+        .then(() => {
+          location.reload();
+        });
     },
     loadData() {
       let me = this;
@@ -116,10 +123,10 @@ export default {
         me.dataSource = data;
       });
     },
-    handleAdd(){
-      this.$store.state.IsOpenPopup= false;
+    handleAdd() {
+      this.$store.state.IsOpenPopup = false;
       this.loadData();
-    }
+    },
   },
 };
 </script>
