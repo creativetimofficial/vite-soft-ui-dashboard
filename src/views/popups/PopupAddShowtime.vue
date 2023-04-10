@@ -106,6 +106,9 @@
             if(this.dataMovie.postDate){
                this.$api.post("/Movie/GetTemplateTimeCodeByMovieID",{movieID:me.idMovie,postDate: convertDateTime(me.dataMovie.postDate) }).then(data=>{
                 me.dataMovie.templateTime = data;
+                if(me.dataMovie.templateTime.length ==0){
+                    me.dataMovie.selectTemplateCode = null;
+                }
                 me.showTemplate = true;
                })
             }else{
