@@ -1,35 +1,43 @@
 <template>
   <div class="showtime-manage">
-    <div class="screen-select-seat">
-      <div class="seat-container">
-        <div class="seat-row" v-for="item in maxRow" :key="item">
-          <div
-            class="seat-col"
-            :class="[
-              !getSeat(item, itemCol) ? 'selected' : '',
-              isSelecting(item, itemCol) ? 'selecting' : '',
-            ]"
-            v-for="itemCol in maxCol"
-            :key="itemCol"
-            @click="pushSelectingSeat(item, itemCol)"
-          >
-            {{ convertLetter(item) + itemCol }}
+    <div class="showtime-main">
+      <div
+        class="showtime-movie"
+        v-for="item in dataSource"
+        :key="item.movieID"
+      >
+        <div class="card-movie" @click="showPopup(item.movieID)">
+          <base-image-download :linkImg="item.posterLink"></base-image-download>
+          <div class="feature-container">
+            <base-button
+              :classButton="'button-blue'"
+              :titleButton="'Thêm mới'"
+              @bindEvent="openPopupAddShowTime(item.movieID,item.movieName)"
+            ></base-button>
           </div>
+          <div class="name-movie">{{ item.movieName }}</div>
         </div>
       </div>
     </div>
-    <base-button
-        :classButton="'button-blue'"
-        :titleButton="'Thêm mới'"
-        @bindEvent="SaveState()"
-      ></base-button>
   </div>
+  <popup-seat-cinema
+    :roomCinmeIDSelected="roomCinmeIDSelected"
+    v-if="$store.state.isOpenPopupSeat"
+  ></popup-seat-cinema>
+  <popup-add-showtime 
+  v-if="$store.state.isOpenPopupAddShowtime"
+  :nameMovie = "movieNameSelected"
+  :idMovie = "movieIDSelected"
+  ></popup-add-showtime>
 </template>
-  
+
 <script>
 import { listSeat, convertLetter } from "@/constants/constantsdefaults";
-import BaseButton from './components/BaseButton.vue';
-
+import BaseButton from "./components/BaseButton.vue";
+import PopupSeatCinema from "./popups/PopupSeatCinema.vue";
+import CardMovie from "./components/CardMovie.vue";
+import BaseImageDownload from "./components/BaseImageDownload.vue";
+import PopupAddShowtime from './popups/PopupAddShowtime.vue';
 export default {
   name: "ShowTimeManager",
   setup() {
@@ -38,109 +46,95 @@ export default {
       convertLetter,
     };
   },
-  components: {BaseButton},
+  components: { BaseButton, PopupSeatCinema, CardMovie, BaseImageDownload,PopupAddShowtime },
   created() {
-    this.loadDataSeat();
+    let me = this;
+    this.$api.post("/Movie/GetListMovie", { TypeFilter: 0 }).then((data) => {
+      me.dataSource = data;
+    });
   },
   data() {
     return {
-      dataSeat: [],
+      dataField: [],
+      dataSource: [],
       roomCinmeIDSelected: "ca589116-d5b2-11ed-a44f-907841e9040c",
-      seatsSelecting: [],
-      maxRow: 0,
-      maxCol: 0,
+      movieIDSelected: "",
+      movieNameSelected: "",
     };
   },
   methods: {
-    loadDataSeat() {
+    loadData() {
       let me = this;
-      this.$api
-        .post("/Movie/GetListSeatCinemaRoom", {
-          roomCinemaID: me.roomCinmeIDSelected,
-        })
-        .then((data) => {
-          me.dataSeat = data;
-          this.getLastRowCol(me.dataSeat);
-        });
-    },
-
-    getLastRowCol(dataSeat) {
-      const lastSeat = dataSeat[dataSeat.length - 1]; // Lấy ghế cuối cùng trong danh sách
-      this.maxRow = lastSeat.rowSeat; // Số hàng lớn nhất
-      this.maxCol = lastSeat.colSeat; // Số cột lớn nhất
-    },
-
-    getSeat(row, col) {
-      return this.dataSeat.find(
-        (seat) => seat.rowSeat === row && seat.colSeat === col
-      ).status;
-    },
-
-    pushSelectingSeat(row, col) {
-      if (this.getSeat(row, col)) {
-        if (
-          this.seatsSelecting.find((x) => x.rowSeat == row && x.colSeat == col)
-        ) {
-          this.seatsSelecting = this.seatsSelecting.filter(
-            (item) => item.rowSeat !== row || item.colSeat !== col
-          );
-        } else {
-          this.seatsSelecting.push({ rowSeat: row, colSeat: col, roomCinemaID: this.roomCinmeIDSelected });
-        }
-      }
-    },
-
-    isSelecting(row, col) {
-      console.log(
-        this.seatsSelecting.find((x) => x.rowSeat == row && x.colSeat == col)
-      );
-      return this.seatsSelecting.find(
-        (x) => x.rowSeat == row && x.colSeat == col
-      );
-    },
-
-    SaveState(){
-      let me = this;
-      this.$api.post('/Movie/UpdateSeatRoomCinema', me.seatsSelecting).then(()=>{
-        location.reload();
+      this.$api.post("/Movie/GetListMovie", { TypeFilter: 0 }).then((data) => {
+        me.dataSource = data;
       });
+    },
+    showPopup() {},
+    openPopupAddShowTime(id,name){
+      this.movieIDSelected = id;
+      this.movieNameSelected = name;
+      this.$store.state.isOpenPopupAddShowtime = true;
     }
   },
 };
 </script>
 <style lang="scss">
 .showtime-manage {
-  .seat-container {
-    .seat-row {
-      display: flex;
-      justify-content: center;
-      .seat-col {
-        height: 50px;
-        width: 50px;
-        background: #cb0c9f;
-
-        color: #fff;
-        margin: 5px;
+  padding: 30px 28px 0;
+  .showtime-main {
+    display: flex;
+    flex-wrap: wrap;
+    .showtime-movie {
+      .card-movie {
+        cursor: pointer;
+        border-radius: 10px;
+        box-shadow: 0px 5px 10px 0px rgba(0, 255, 255, 0.7);
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        border-radius: 4px;
-        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-          rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-        font-weight: 600;
-        cursor: pointer;
-        &.selected {
-          background: #17c1e8;
-
-          cursor: no-drop;
+        margin: 10px;
+        .posterLink {
+          height: 250px;
+          width: 150px;
+          padding: 0;
+          margin: 10px 10px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          border-radius: 4px;
         }
 
-        &.selecting {
-          background: red;
+        .feature-container{
+          height: 250px;
+          width: 150px;
+          padding: 0;
+          margin: 10px 10px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          border-radius: 4px;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-evenly;
+          display: none;
         }
 
-        -webkit-user-select: none;
-        user-select: none;
+        .name-movie {
+          font-size: 16px;
+          font-weight: 600;
+          color: #111;
+        }
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0px 10px 20px 2px rgba(0, 255, 255, 0.7);
+          .feature-container{
+            display: flex !important;
+          }
+
+          .posterLink{
+            display: none!important;
+          }
+
+          
+        }
       }
     }
   }

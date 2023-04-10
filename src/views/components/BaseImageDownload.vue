@@ -20,6 +20,7 @@ export default {
     const storage = useFirebaseStorage();
     const mountainFileRef = storageRef(storage, props.linkImg);
     const { url, refresh } = useStorageFileUrl(mountainFileRef);
+    console.log(url);
     return {
       url,
     };

@@ -14,6 +14,8 @@ import Revenue from "@/views/Revenue.vue"
 import History from "@/views/History.vue"
 import ReportAndStatistic from "@/views/ReportAndStatistic.vue"
 import Ticket from "@/views/Ticket.vue"
+import RoomCinema from "@/views/SeatRoomCinema.vue"
+
 const routes = [
   {
     path: "/",
@@ -95,6 +97,11 @@ const routes = [
     name: "Ticket",
     component: Ticket,
   },
+  { 
+    path: '/showtime-manage/room-cinema',
+    component: RoomCinema,
+    name: 'roomcinema-manage'
+  }
 ];
 
 const router = createRouter({
