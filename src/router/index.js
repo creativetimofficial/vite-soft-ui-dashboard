@@ -9,7 +9,11 @@ import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 import MovieManage from "@/views/MovieManage.vue";
 import ShowTimeManage from "@/views/ShowTimeManage.vue"
-
+import Payment from "@/views/Payment.vue"
+import Revenue from "@/views/Revenue.vue"
+import History from "@/views/History.vue"
+import ReportAndStatistic from "@/views/ReportAndStatistic.vue"
+import Ticket from "@/views/Ticket.vue"
 const routes = [
   {
     path: "/",
@@ -65,6 +69,31 @@ const routes = [
     path: "/showtime-manage",
     name: "ShowTime Manage",
     component: ShowTimeManage,
+  },
+  {
+    path: "/payment",
+    name: "Payment",
+    component: Payment,
+  },
+  {
+    path: "/revenue",
+    name: "Revenue",
+    component: Revenue,
+  },
+  {
+    path: "/history",
+    name: "History",
+    component: History,
+  },
+  {
+    path: "/report-statistic",
+    name: "ReportAndStatistic",
+    component: ReportAndStatistic,
+  },
+  {
+    path: "/ticket",
+    name: "Ticket",
+    component: Ticket,
   },
 ];
 

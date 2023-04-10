@@ -61,6 +61,12 @@ const i18n = createI18n({
         agreeterm: "I agree the Terms and Conditions",
         haveaccount: "Already have an account?",
         Name: "Name",
+        Ticket: "Ticket",
+        ReportAndStatistic: "Report And Statistic",
+        History: "History",
+        Revenue: "Revenue",
+        Payment: "Thanh toán",
+        FEATURE: "FEATURE"
       },
       vi: {       
         welcome: "Chào mừng trở lại",
@@ -117,7 +123,13 @@ const i18n = createI18n({
         Register: "Đăng ký",
         agreeterm: "Tôi đồng ý với các Điều khoản và Điều kiện",
         haveaccount: "Bạn đã có sẵn tài khoản?",
-        Name: "Tên"
+        Name: "Tên",
+        Ticket: "Vé",
+        ReportAndStatistic: "Báo cáo và thống kê",
+        History: "Lịch sử",
+        Revenue: "Doanh thu",
+        Payment: "Thanh toán",
+        FEATURE: "TÍNH NĂNG"
       }
     }
   })

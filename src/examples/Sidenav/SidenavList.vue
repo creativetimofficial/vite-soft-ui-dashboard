@@ -9,7 +9,7 @@
         <h6
           class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6"
           :class="$store.state.isRTL ? 'me-4' : 'ms-2'"
-        >Feature</h6>
+        >{{ $t('FEATURE') }}</h6>
       </li>
       <li class="nav-item" v-for="item in dataItem" :key="item.name">
         <sidenav-collapse :nav-text="$t(item.text)" :to="{ name: item.name}">
@@ -24,22 +24,22 @@
           :class="$store.state.isRTL ? 'me-4' : 'ms-2'"
         >PAGES</h6>
       </li>
-      <li class="nav-item">
-        <sidenav-collapse nav-text="Profile" :to="{ name: 'Profile' }">
+      <!-- <li class="nav-item">
+        <sidenav-collapse nav-text="Profile" :to="{ name: $t('Profile') }">
           <template #icon>
             <icon name="customer-support" />
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
       <li class="nav-item">
-        <sidenav-collapse nav-text="Sign In" :to="{ name: 'Sign In' }">
+        <sidenav-collapse :nav-text="$t('signin')" :to="{ name: 'Sign In' }">
           <template #icon>
             <icon name="sign-in" />
           </template>
         </sidenav-collapse>
       </li>
       <li class="nav-item">
-        <sidenav-collapse nav-text="Sign Up" :to="{ name: 'Sign Up' }">
+        <sidenav-collapse :nav-text="$t('signup')" :to="{ name: 'Sign Up' }">
           <template #icon>
             <icon name="sign-up" />
           </template>

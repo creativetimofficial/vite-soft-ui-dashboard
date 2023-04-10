@@ -132,7 +132,7 @@ export default {
 </script>
 <style lang="scss">
 .movie-manage {
-  padding: 20px 12px 0;
+  padding: 30px 28px 0;
   .movie-manage-header {
     height: 50px;
     display: flex;

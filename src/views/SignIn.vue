@@ -124,7 +124,7 @@ export default {
         })
         .then((data) => {
           localStorage.setItem("token", data.token);
-          router.push("/dashboard");
+          router.push("/");
         });
     },
   },

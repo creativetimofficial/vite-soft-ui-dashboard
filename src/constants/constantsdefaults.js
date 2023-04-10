@@ -11,24 +11,60 @@ export var slideitems = [
     text: 'showtimemanage'
   },
   {
-    name: "Dashboard",
+    name: "Ticket",
     icon: "dashboard",
-    text: "dashboard"
+    text: "Ticket"
   },
   {
-    name: "Tables",
-    icon: "tables",
-    text: 'tables'
+    name: "ReportAndStatistic",
+    icon: "dashboard",
+    text: "ReportAndStatistic"
   },
   {
-    name: "Billing",
-    icon: "billing",
-    text: 'bill'
+    name: "History",
+    icon: "dashboard",
+    text: "History"
   },
+  {
+    name: "Revenue",
+    icon: "dashboard",
+    text: "Revenue"
+  },
+  {
+    name: "Payment",
+    icon: "dashboard",
+    text: "Payment"
+  },
+  // {
+  //   name: "Dashboard",
+  //   icon: "dashboard",
+  //   text: "dashboard"
+  // },
+  // {
+  //   name: "Tables",
+  //   icon: "tables",
+  //   text: 'tables'
+  // },
+  // {
+  //   name: "Billing",
+  //   icon: "billing",
+  //   text: 'bill'
+  // },
 
-  {
-    name: "Rtl",
-    icon: "rtl-page",
-    text: "rtl"
-  },
+  // {
+  //   name: "Rtl",
+  //   icon: "rtl-page",
+  //   text: "rtl"
+  // },
 ];
+
+
+export const listSeat = {
+  row: 8,
+  col: 10,
+  
+}
+
+export function convertLetter(number){
+  return String.fromCharCode(64 + number);
+}
