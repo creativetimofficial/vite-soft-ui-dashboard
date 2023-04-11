@@ -11,8 +11,14 @@
           <div class="feature-container">
             <base-button
               :classButton="'button-blue'"
-              :titleButton="'Thêm mới'"
-              @bindEvent="openPopupAddShowTime(item.movieID,item.movieName)"
+              :titleButton="'Thêm suất chiếu'"
+              @bindEvent="openPopupAddShowTime(item.movieID, item.movieName)"
+            ></base-button>
+            <div class="mt-2"></div>
+            <base-button
+              :classButton="'button-blue'"
+              :titleButton="'Xem suất chiếu'"
+              @bindEvent="openPopupSeatCinema(item.movieID, item.movieName)"
             ></base-button>
           </div>
           <div class="name-movie">{{ item.movieName }}</div>
@@ -21,13 +27,14 @@
     </div>
   </div>
   <popup-seat-cinema
-    :roomCinmeIDSelected="roomCinmeIDSelected"
     v-if="$store.state.isOpenPopupSeat"
+    :nameMovie="movieNameSelected"
+    :idMovie="movieIDSelected"
   ></popup-seat-cinema>
-  <popup-add-showtime 
-  v-if="$store.state.isOpenPopupAddShowtime"
-  :nameMovie = "movieNameSelected"
-  :idMovie = "movieIDSelected"
+  <popup-add-showtime
+    v-if="$store.state.isOpenPopupAddShowtime"
+    :nameMovie="movieNameSelected"
+    :idMovie="movieIDSelected"
   ></popup-add-showtime>
 </template>
 
@@ -37,7 +44,7 @@ import BaseButton from "./components/BaseButton.vue";
 import PopupSeatCinema from "./popups/PopupSeatCinema.vue";
 import CardMovie from "./components/CardMovie.vue";
 import BaseImageDownload from "./components/BaseImageDownload.vue";
-import PopupAddShowtime from './popups/PopupAddShowtime.vue';
+import PopupAddShowtime from "./popups/PopupAddShowtime.vue";
 export default {
   name: "ShowTimeManager",
   setup() {
@@ -46,7 +53,13 @@ export default {
       convertLetter,
     };
   },
-  components: { BaseButton, PopupSeatCinema, CardMovie, BaseImageDownload,PopupAddShowtime },
+  components: {
+    BaseButton,
+    PopupSeatCinema,
+    CardMovie,
+    BaseImageDownload,
+    PopupAddShowtime,
+  },
   created() {
     let me = this;
     this.$api.post("/Movie/GetListMovie", { TypeFilter: 0 }).then((data) => {
@@ -70,16 +83,24 @@ export default {
       });
     },
     showPopup() {},
-    openPopupAddShowTime(id,name){
+    openPopupAddShowTime(id, name) {
       this.movieIDSelected = id;
       this.movieNameSelected = name;
       this.$store.state.isOpenPopupAddShowtime = true;
-    }
+    },
+    openPopupSeatCinema(id, name) {
+      this.movieIDSelected = id;
+      this.movieNameSelected = name;
+      this.$store.state.isOpenPopupSeat = true;
+    },
   },
 };
 </script>
 <style lang="scss">
 .showtime-manage {
+  .mt-2{
+    margin-top: 10px;
+  }
   padding: 30px 28px 0;
   .showtime-main {
     display: flex;
@@ -103,7 +124,7 @@ export default {
           border-radius: 4px;
         }
 
-        .feature-container{
+        .feature-container {
           height: 250px;
           width: 150px;
           padding: 0;
@@ -112,7 +133,7 @@ export default {
           border-radius: 4px;
           flex-direction: column;
           align-items: center;
-          justify-content: space-evenly;
+          justify-content: center;
           display: none;
         }
 
@@ -125,15 +146,13 @@ export default {
         &:hover {
           transform: translateY(-5px);
           box-shadow: 0px 10px 20px 2px rgba(0, 255, 255, 0.7);
-          .feature-container{
+          .feature-container {
             display: flex !important;
           }
 
-          .posterLink{
-            display: none!important;
+          .posterLink {
+            display: none !important;
           }
-
-          
         }
       }
     }

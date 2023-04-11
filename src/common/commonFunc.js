@@ -19,3 +19,27 @@ export function convertDateTime(input) {
 
   return datetime;
 }
+
+
+export function convertDateFormat(date) {
+  // Tách ngày, tháng và năm từ chuỗi date
+  var year = date.substring(0, 4);
+  var month = date.substring(5, 7);
+  var day = date.substring(8, 10);
+
+  // Tạo chuỗi định dạng mới
+  var newDate = day + '/' + month + '/' + year;
+
+  return newDate;
+}
+
+export function convertTimeFormat(time) {
+  // Tách giờ và phút từ chuỗi time
+  var hour = time.substring(0, 2);
+  var minute = time.substring(3, 5);
+
+  // Tạo chuỗi định dạng mới
+  var newTime = hour + ':' + minute;
+
+  return newTime;
+}

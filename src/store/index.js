@@ -20,7 +20,8 @@ export default createStore({
     isOpenPopup: false,
     isOpenPopupDelete: false,
     isOpenPopupSeat: false,
-    isOpenPopupAddShowtime: false
+    isOpenPopupAddShowtime: false,
+    isOpenPopupShowContent: false
   },
   mutations: {
     toggleConfigurator(state) {

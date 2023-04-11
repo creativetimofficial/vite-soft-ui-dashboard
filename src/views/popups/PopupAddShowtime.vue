@@ -94,6 +94,7 @@ export default {
   },
   watch:{
     dataRoomSelected(newVal,oldVal){
+      this.dataMovie.selectTemplateCode = null;
       this.checkHideTemplate();
     }
   },
@@ -119,6 +120,7 @@ export default {
           .post("/Movie/GetTemplateTimeCodeByMovieID", {
             movieID: me.idMovie,
             postDate: convertDateTime(me.dataMovie.postDate),
+            roomID: me.dataRoomSelected
           })
           .then((data) => {
             me.dataMovie.templateTime = data;

@@ -14,35 +14,53 @@
         @bindEvent="openPopup()"
       ></base-button>
     </div>
-    <EasyDataTable
-      buttons-pagination
-      :headers="dataField"
-      :items="dataSource"
-      :loading="loading"
-      table-class-name="customize-table"
-      :sort-by="sortBy"
-      :sort-type="sortType"
-      multi-sort
-      :search-field="searchField"
-      :search-value="searchValue"
-      @click-row="getRowSelected"
-    >
-      <template #loading>
-        <BaseLoading :isLoading="true"></BaseLoading>
-      </template>
-      <template #item-posterLink="{ posterLink }">
-        <div>
-          <base-image-download :linkImg="posterLink"></base-image-download>
+    <div class="movie-manage-container">
+      <div class="movie-manage-main">
+        <div class="movie-item" v-for="item in dataSource" :key="item.movieID">
+          <base-image-download :linkImg="item.posterLink"></base-image-download>
+          <div class="movie-trailer" v-if="isOpenTrailer(item.movieID)">
+            <iframe
+              width="120"
+              height="200"
+              src="https://www.youtube.com/embed/r4Xstoq18gA"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="movie-detail">
+            <div class="movie-name">
+              {{ item.movieName }} - {{ item.movieCode }}
+            </div>
+            <div class="movie-time-line">Thời lượng: {{ item.timeLine }}</div>
+            <div class="movie-from-date">
+              Ngày khởi chiếu: {{ convertDateFormat(item.fromDate) }}
+            </div>
+            <div class="movie-to-date">
+              Ngày kết thúc: {{ convertDateFormat(item.toDate) }}
+            </div>
+            <div class="movie-release-date">
+              Ngày xuất bản: {{ convertDateFormat(item.releaseDate) }}
+            </div>
+            <div class="movie-actor">Diễn viên: {{ item.actor }}</div>
+            <div class="movie-direction">Đạo diễn: {{ item.directions }}</div>
+            <div class="movie-category">Thể loại: {{ item.categoryName }}</div>
+            <div class="movie-type">Loại phim: {{ item.typeName }}</div>
+          </div>
+          <div class="movie-detail">
+            <base-button
+              :classButton="'button-blue-round'"
+              :titleButton="
+                !isOpenTrailer(item.movieID) ? 'Hiện trailer' : 'Ẩn Trailer'
+              "
+              @bindEvent="openTrailer(item.movieID)"
+              v-if="!isOpenTrailer(item.movieID)"
+            ></base-button>
+          </div>
         </div>
-      </template>
-
-      <template #item-operation="item">
-        <div class="operation-wrapper">
-          <i class="fas fa-trash-alt fa-lg pl-1" @click="isDeleteMovie()"></i>
-          <i class="far fa-edit fa-lg"></i>
-        </div>
-      </template>
-    </EasyDataTable>
+      </div>
+    </div>
     <popup-add-movie
       v-if="$store.state.IsOpenPopup"
       @add-click="handleAdd()"
@@ -52,6 +70,9 @@
       @delete-click="deleteMovie()"
       :content="rowSelected.movieCode"
     ></popup-delete>
+    <popup-show-content
+      v-if="$store.state.isOpenPopupShowContent"
+    ></popup-show-content>
   </div>
 </template>
 
@@ -63,6 +84,8 @@ import PopupAddMovie from "./popups/PopupAddMovie.vue";
 import BaseImageDownload from "./components/BaseImageDownload.vue";
 import VsudInput from "../components/VsudInput.vue";
 import PopupDelete from "./popups/PopupDelete.vue";
+import { convertDateFormat } from "@/common/commonFunc";
+import PopupShowContent from "./popups/PopupShowContent.vue";
 export default {
   name: "MovieManager",
   components: {
@@ -72,6 +95,10 @@ export default {
     BaseImageDownload,
     VsudInput,
     PopupDelete,
+    PopupShowContent,
+  },
+  setup() {
+    return { convertDateFormat };
   },
   created() {
     let me = this;
@@ -85,15 +112,24 @@ export default {
       dataField: [],
       dataSource: [],
       itemsSelected: {},
-      sortBy: ["fromDate", "toDate"],
-      sortType: ["desc", "desc"],
-      searchField: ["movieCode", "movieName", "actor", "directions"],
       searchValue: "",
       rowSelected: {},
       checkDelete: false,
+      openTrailers: [],
     };
   },
   methods: {
+    isOpenTrailer(id) {
+      return this.openTrailers.find((x) => x == id);
+    },
+
+    openTrailer(id) {
+      if (this.openTrailers.find((x) => x == id)) {
+        this.openTrailers = this.openTrailers.filter((x) => x != id);
+      } else {
+        this.openTrailers.push(id);
+      }
+    },
     openPopup() {
       this.$store.state.IsOpenPopup = true;
     },
@@ -142,16 +178,66 @@ export default {
   #search_movie {
     height: 36px;
   }
-}
 
-.posterLink {
-  margin-right: 10px;
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 10%);
-  padding: 3px;
+  .mt-2 {
+    margin-top: 10px;
+  }
+
+  .button-blue-round{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
+
+  .movie-manage-container {
+    .movie-manage-main {
+      .movie-item {
+        color: #111;
+        display: flex;
+        height: 220px;
+        margin-bottom: 10px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 13px;
+        .posterLink {
+          display: inline-block;
+          width: 120px;
+          height: 200px;
+          object-fit: cover;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          padding: 3px;
+          border-radius: 10px;
+        }
+
+        .movie-name {
+          font-size: 16px;
+          font-weight: 600;
+        }
+
+        .movie-content-main {
+          padding: 0 20px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          /* justify-content: center; */
+          align-items: center;
+          .movie-content {
+            overflow: auto;
+          }
+        }
+
+        .movie-trailer {
+          iframe {
+            border-radius: 10px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            padding: 3px;
+          }
+          margin-right: 10px;
+        }
+      }
+    }
+  }
 }
 
 .operation-wrapper {

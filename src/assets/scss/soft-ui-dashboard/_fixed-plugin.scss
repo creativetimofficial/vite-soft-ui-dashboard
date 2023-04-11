@@ -11,6 +11,10 @@
     i{
       pointer-events: none;
     }
+
+    &:hover{
+      transform: rotate(45deg);
+    }
   }
   .card{
     position: fixed !important;
