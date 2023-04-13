@@ -3,7 +3,7 @@
     <div class="movie-content-container">
       <div class="movie-content-header">Nội dung phim {{ nameMovie }}</div>
       <div class="movie-content-main">
-        {{ contentMovie }}
+        {{ contentMovie ?? 'Không có nội dung phim' }}
       </div>
       <div class="movie-content-footer">
         <base-button
@@ -39,7 +39,11 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    closePopup(){
+      this.$store.state.isOpenPopupShowContent = false;
+    }
+  },
 };
 </script>
 <style lang="scss">
@@ -74,6 +78,10 @@ export default {
 
     .movie-content-main {
       height: 480px;
+      padding: 10px;
+      text-align: justify;
+      overflow: auto;
+      color: #111;
     }
 
     .movie-content-footer {

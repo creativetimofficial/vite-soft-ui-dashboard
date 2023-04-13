@@ -16,13 +16,13 @@
     </div>
     <div class="movie-manage-container">
       <div class="movie-manage-main">
-        <div class="movie-item" v-for="item in dataSource" :key="item.movieID">
+        <div class="movie-item" v-for="item in dataSource" :key="item.movieID" v-show="isShowMovie(item)">
           <base-image-download :linkImg="item.posterLink"></base-image-download>
           <div class="movie-trailer" v-if="isOpenTrailer(item.movieID)">
             <iframe
               width="120"
               height="200"
-              src="https://www.youtube.com/embed/r4Xstoq18gA"
+              :src="item.trailerLink"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -31,7 +31,48 @@
           </div>
           <div class="movie-detail">
             <div class="movie-name">
-              {{ item.movieName }} - {{ item.movieCode }}
+              <div
+                class="movie-content"
+                @click="openContent(item.movieName, item.content)"
+              >
+                {{ item.movieName }} - {{ item.movieCode }}
+              </div>
+              <div class="group-icon">
+                <div
+                  class="icon-trailer"
+                  v-if="!isOpenTrailer(item.movieID)"
+                  @click="openTrailer(item.movieID)"
+                >
+                  <i class="fas fa-film"></i>
+                </div>
+                <div
+                  class="icon-trailer"
+                  v-if="isOpenTrailer(item.movieID)"
+                  @click="openTrailer(item.movieID)"
+                >
+                  <i class="fas fa-times"></i>
+                </div>
+                <div class="icon-context-container">
+                  <div class="icon-trailer" @click="openContext(item.movieID)">
+                    <i
+                      class="fas fa-caret-down"
+                      v-if="!isOpenContext(item.movieID)"
+                    ></i>
+                    <i
+                      class="fas fa-caret-up"
+                      v-if="isOpenContext(item.movieID)"
+                    ></i>
+                  </div>
+                  <div class="group-icon-down" v-if="isOpenContext(item.movieID)">
+                  <div class="icon-down"><i class="fas fa-pen"></i></div>
+                  <div class="icon-down" @click="getRowSelected(item.movieID)">
+                    <i class="fas fa-trash-alt" ></i>
+                  </div>
+                </div>
+                </div>
+
+
+              </div>
             </div>
             <div class="movie-time-line">Thời lượng: {{ item.timeLine }}</div>
             <div class="movie-from-date">
@@ -45,19 +86,12 @@
             </div>
             <div class="movie-actor">Diễn viên: {{ item.actor }}</div>
             <div class="movie-direction">Đạo diễn: {{ item.directions }}</div>
-            <div class="movie-category">Thể loại: {{ item.categoryName }}</div>
+            <div class="movie-category" :title="item.categoryName">
+              Thể loại: {{ item.categoryName }}
+            </div>
             <div class="movie-type">Loại phim: {{ item.typeName }}</div>
           </div>
-          <div class="movie-detail">
-            <base-button
-              :classButton="'button-blue-round'"
-              :titleButton="
-                !isOpenTrailer(item.movieID) ? 'Hiện trailer' : 'Ẩn Trailer'
-              "
-              @bindEvent="openTrailer(item.movieID)"
-              v-if="!isOpenTrailer(item.movieID)"
-            ></base-button>
-          </div>
+          <div class="movie-detail"></div>
         </div>
       </div>
     </div>
@@ -72,6 +106,8 @@
     ></popup-delete>
     <popup-show-content
       v-if="$store.state.isOpenPopupShowContent"
+      :contentMovie="contentSelected"
+      :nameMovie="nameMovie"
     ></popup-show-content>
   </div>
 </template>
@@ -113,12 +149,20 @@ export default {
       dataSource: [],
       itemsSelected: {},
       searchValue: "",
-      rowSelected: {},
+      rowSelected: "",
       checkDelete: false,
       openTrailers: [],
+      openContexts: [],
+      contentSelected: "",
+      nameMovie: "",
     };
   },
   methods: {
+    isShowMovie(item){
+      return item.movieName.includes(this.searchValue) || item.movieCode.includes(this.searchValue);
+    },
+
+
     isOpenTrailer(id) {
       return this.openTrailers.find((x) => x == id);
     },
@@ -130,25 +174,34 @@ export default {
         this.openTrailers.push(id);
       }
     },
+
+    isOpenContext(id) {
+      return this.openContexts.find((x) => x == id);
+    },
+
+    openContext(id) {
+      if (this.openContexts.find((x) => x == id)) {
+        this.openContexts = this.openContexts.filter((x) => x != id);
+      } else {
+        this.openContexts.push(id);
+      }
+    },
+
     openPopup() {
       this.$store.state.IsOpenPopup = true;
     },
     getRowSelected(item) {
       let me = this;
       this.rowSelected = item;
-      console.log(this.rowSelected.movieID);
-      if (this.checkDelete) {
-        this.checkDelete = false;
+
         this.$store.state.isOpenPopupDelete = true;
-      }
+
     },
-    isDeleteMovie() {
-      this.checkDelete = true;
-    },
+
     deleteMovie() {
       let me = this;
       this.$api
-        .post("/Movie/DeleteMovie", this.rowSelected.movieID)
+        .post("/Movie/DeleteMovie", me.rowSelected)
         .then(() => {
           location.reload();
         });
@@ -163,6 +216,11 @@ export default {
       this.$store.state.IsOpenPopup = false;
       this.loadData();
     },
+    openContent(name, content) {
+      this.nameMovie = name;
+      this.contentSelected = content;
+      this.$store.state.isOpenPopupShowContent = true;
+    },
   },
 };
 </script>
@@ -173,6 +231,7 @@ export default {
     height: 50px;
     display: flex;
     justify-content: space-between;
+    padding: 0 20px;
   }
 
   #search_movie {
@@ -183,15 +242,24 @@ export default {
     margin-top: 10px;
   }
 
-  .button-blue-round{
+  .button-blue-round {
     height: 50px;
     width: 50px;
     border-radius: 50%;
+    border: none;
+    background: #1a72ff;
+    color: #fff;
+    font-weight: 600;
   }
 
   .movie-manage-container {
     .movie-manage-main {
+      display: flex;
+      flex-wrap: wrap;
       .movie-item {
+        position: relative;
+        margin-left: 20px;
+        min-width: 400px;
         color: #111;
         display: flex;
         height: 220px;
@@ -210,9 +278,69 @@ export default {
           border-radius: 10px;
         }
 
+        .movie-category,
+        .movie-actor {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 240px;
+        }
+
         .movie-name {
           font-size: 16px;
           font-weight: 600;
+          display: flex;
+          justify-content: space-between;
+          .movie-content {
+            &:hover {
+              text-decoration: underline;
+              opacity: 0.9;
+            }
+            cursor: pointer;
+          }
+          
+          .group-icon {
+            display: flex;
+            .icon-trailer {
+              position: relative;
+            }
+          }
+          .icon-context-container{
+            position: relative;
+            .group-icon-down {
+            display: flex;
+            top: 30px;
+              right: 0;
+            flex-direction: column;
+            position: absolute;
+            .icon-down {
+              margin-bottom: 5px;
+              height: 24px;
+              width: 24px;
+              background: #1a72ff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #fff;
+              border-radius: 50%;
+              cursor: pointer;
+            }
+          }
+          }
+
+
+          .icon-trailer {
+            margin-left: 5px;
+            height: 24px;
+            width: 24px;
+            background: #1a72ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+          }
         }
 
         .movie-content-main {
