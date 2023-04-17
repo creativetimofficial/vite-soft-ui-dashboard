@@ -16,7 +16,12 @@
     </div>
     <div class="movie-manage-container">
       <div class="movie-manage-main">
-        <div class="movie-item" v-for="item in dataSource" :key="item.movieID" v-show="isShowMovie(item)">
+        <div
+          class="movie-item"
+          v-for="item in dataSource"
+          :key="item.movieID"
+          v-show="isShowMovie(item)"
+        >
           <base-image-download :linkImg="item.posterLink"></base-image-download>
           <div class="movie-trailer" v-if="isOpenTrailer(item.movieID)">
             <iframe
@@ -63,15 +68,21 @@
                       v-if="isOpenContext(item.movieID)"
                     ></i>
                   </div>
-                  <div class="group-icon-down" v-if="isOpenContext(item.movieID)">
-                  <div class="icon-down"><i class="fas fa-pen"></i></div>
-                  <div class="icon-down" @click="getRowSelected(item.movieID)">
-                    <i class="fas fa-trash-alt" ></i>
+                  <div
+                    class="group-icon-down"
+                    v-if="isOpenContext(item.movieID)"
+                  >
+                    <div class="icon-down" @click="getAlterMovie(item.movieID)">
+                      <i class="fas fa-pen"></i>
+                    </div>
+                    <div
+                      class="icon-down"
+                      @click="getRowSelected(item.movieID)"
+                    >
+                      <i class="fas fa-trash-alt"></i>
+                    </div>
                   </div>
                 </div>
-                </div>
-
-
               </div>
             </div>
             <div class="movie-time-line">Thời lượng: {{ item.timeLine }}</div>
@@ -109,6 +120,12 @@
       :contentMovie="contentSelected"
       :nameMovie="nameMovie"
     ></popup-show-content>
+    <popup-alter-movie
+      v-if="$store.state.isOpenPopupAlterMovie"
+      :idMovie="rowSelected"
+      @add-click="handelAlter()"
+    >
+    </popup-alter-movie>
   </div>
 </template>
 
@@ -122,6 +139,7 @@ import VsudInput from "../components/VsudInput.vue";
 import PopupDelete from "./popups/PopupDelete.vue";
 import { convertDateFormat } from "@/common/commonFunc";
 import PopupShowContent from "./popups/PopupShowContent.vue";
+import PopupAlterMovie from "./popups/PopupAlterMovie.vue";
 export default {
   name: "MovieManager",
   components: {
@@ -132,6 +150,7 @@ export default {
     VsudInput,
     PopupDelete,
     PopupShowContent,
+    PopupAlterMovie,
   },
   setup() {
     return { convertDateFormat };
@@ -158,10 +177,16 @@ export default {
     };
   },
   methods: {
-    isShowMovie(item){
-      return item.movieName.includes(this.searchValue) || item.movieCode.includes(this.searchValue);
+    getAlterMovie(item) {
+      this.rowSelected = item;
+      this.$store.state.isOpenPopupAlterMovie = true;
     },
-
+    isShowMovie(item) {
+      return (
+        item.movieName.includes(this.searchValue) ||
+        item.movieCode.includes(this.searchValue)
+      );
+    },
 
     isOpenTrailer(id) {
       return this.openTrailers.find((x) => x == id);
@@ -194,17 +219,14 @@ export default {
       let me = this;
       this.rowSelected = item;
 
-        this.$store.state.isOpenPopupDelete = true;
-
+      this.$store.state.isOpenPopupDelete = true;
     },
 
     deleteMovie() {
       let me = this;
-      this.$api
-        .post("/Movie/DeleteMovie", me.rowSelected)
-        .then(() => {
-          location.reload();
-        });
+      this.$api.post("/Movie/DeleteMovie", me.rowSelected).then(() => {
+        location.reload();
+      });
     },
     loadData() {
       let me = this;
@@ -214,6 +236,11 @@ export default {
     },
     handleAdd() {
       this.$store.state.IsOpenPopup = false;
+      this.loadData();
+    },
+
+    handelAlter(){
+      this.$store.state.isOpenPopupAlterMovie = false;
       this.loadData();
     },
     openContent(name, content) {
@@ -298,36 +325,35 @@ export default {
             }
             cursor: pointer;
           }
-          
+
           .group-icon {
             display: flex;
             .icon-trailer {
               position: relative;
             }
           }
-          .icon-context-container{
+          .icon-context-container {
             position: relative;
             .group-icon-down {
-            display: flex;
-            top: 30px;
-              right: 0;
-            flex-direction: column;
-            position: absolute;
-            .icon-down {
-              margin-bottom: 5px;
-              height: 24px;
-              width: 24px;
-              background: #1a72ff;
               display: flex;
-              align-items: center;
-              justify-content: center;
-              color: #fff;
-              border-radius: 50%;
-              cursor: pointer;
+              top: 30px;
+              right: 0;
+              flex-direction: column;
+              position: absolute;
+              .icon-down {
+                margin-bottom: 5px;
+                height: 24px;
+                width: 24px;
+                background: #1a72ff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                border-radius: 50%;
+                cursor: pointer;
+              }
             }
           }
-          }
-
 
           .icon-trailer {
             margin-left: 5px;

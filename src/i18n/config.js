@@ -66,7 +66,8 @@ const i18n = createI18n({
         History: "History",
         Revenue: "Revenue",
         Payment: "Thanh toán",
-        FEATURE: "FEATURE"
+        FEATURE: "FEATURE",
+        TimeLine: "Time line"
       },
       vi: {       
         welcome: "Chào mừng trở lại",
@@ -129,7 +130,8 @@ const i18n = createI18n({
         History: "Lịch sử",
         Revenue: "Doanh thu",
         Payment: "Thanh toán",
-        FEATURE: "TÍNH NĂNG"
+        FEATURE: "TÍNH NĂNG",
+        TimeLine: "Thời lượng"
       }
     }
   })

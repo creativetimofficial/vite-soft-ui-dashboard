@@ -1,8 +1,8 @@
 <template>
-  <div class="popup-add-movie">
+  <div class="popup-alter-movie">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">Thêm mới phim</div>
+        <div class="popup-title">Cập nhật phim</div>
         <div class="popup-icon-close" @click="closeThisPopup()">
           <i class="fas fa-times"></i>
         </div>
@@ -17,6 +17,7 @@
               name="password"
               v-model="dataMovie.movieCode"
               :id="'movie_name'"
+              :readonly="true"
             />
           </div>
           <div class="popup-input">
@@ -45,7 +46,7 @@
               type="text"
               :placeholder="$t('Direction')"
               name="password"
-              v-model="dataMovie.direction"
+              v-model="dataMovie.directions"
               :id="'movie_name'"
             />
           </div>
@@ -54,7 +55,7 @@
           <div class="popup-input popup-date">
             <label>{{ $t("FromDate") }}</label>
             <el-date-picker
-              v-model="dataMovie.fromdate"
+              v-model="dataMovie.fromDate"
               type="date"
               :placeholder="$t('PickADay')"
               :size="size"
@@ -63,7 +64,7 @@
           <div class="popup-input popup-date">
             <label>{{ $t("ToDate") }}</label>
             <el-date-picker
-              v-model="dataMovie.todate"
+              v-model="dataMovie.toDate"
               type="date"
               :placeholder="$t('PickADay')"
               :size="size"
@@ -72,7 +73,7 @@
           <div class="popup-input popup-date">
             <label>{{ $t("ReleaseDate") }}</label>
             <el-date-picker
-              v-model="dataMovie.releasedate"
+              v-model="dataMovie.releaseDate"
               type="date"
               :placeholder="$t('PickADay')"
               :size="size"
@@ -95,8 +96,8 @@
             <div class="group-typemovie">
               <label>{{ $t("Poster") }}</label>
               <base-upload-firebase
-                :idUpload="'image-movie-upload'"
                 @url-bind="catchUrl"
+                :urlLink="dataMovie.urlImage"
               ></base-upload-firebase>
             </div>
           </div>
@@ -106,7 +107,7 @@
               label="typeName"
               :options="dataMovie.typeMovie"
               :placeholder="$t('PTypeMovie')"
-              v-model="dataMovie.selectedTypeMovie"
+              v-model="dataMovie.typeID"
               :reduce="(typeName) => typeName.typeID"
             ></v-select>
           </div>
@@ -116,7 +117,7 @@
               label="categoryName"
               :options="dataMovie.categoryMovie"
               :placeholder="$t('PCategoryMovie')"
-              v-model="dataMovie.selectedCategory"
+              v-model="dataMovie.categoryID"
               :reduce="(categoryName) => categoryName.categoryID"
               multiple
             ></v-select>
@@ -129,7 +130,7 @@
               type="text"
               :placeholder="$t('Trailer')"
               name="password"
-              v-model="dataMovie.trailerLink"
+              v-model="dataMovie.linkTrailer"
               :id="'trailer-link'"
             />
           </div>
@@ -189,6 +190,22 @@ export default {
   },
   created() {
     let me = this;
+    this.$api.post("/Movie/GetMovieAlterByMovieID", {movieID: me.idMovie}).then((data) => {
+      (me.dataMovie.fromDate = data.fromDate),
+        (me.dataMovie.toDate = data.toDate),
+        (me.dataMovie.releaseDate = data.releaseDate),
+        (me.dataMovie.typeID = data.typeID),
+        (me.dataMovie.categoryID = JSON.parse(data.categoryIDs)),
+        (me.dataMovie.content = data.content),
+        (me.dataMovie.movieCode = data.movieCode),
+        (me.dataMovie.movieName = data.movieName),
+        (me.dataMovie.actor = data.actor),
+        (me.dataMovie.directions = data.directions),
+        (me.dataMovie.urlImage = data.posterLink),
+        (me.dataMovie.linkTrailer = data.linkTrailer),
+        (me.dataMovie.language = data.language),
+        (me.dataMovie.timeLine = data.timeLine);
+    });
     this.$api.post("/Movie/GetListTypeMovie").then((data) => {
       me.dataMovie.typeMovie = data;
     });
@@ -197,32 +214,36 @@ export default {
       me.dataMovie.categoryMovie = data;
     });
   },
-  props: {},
+  props: {
+    idMovie: {
+      type: String,
+    },
+  },
   data() {
     return {
       dataMovie: {
-        fromdate: "",
-        todate: "",
-        releasedate: "",
+        fromDate: "",
+        toDate: "",
+        releaseDate: "",
         typeMovie: [],
         categoryMovie: [],
-        selectedTypeMovie: null,
-        selectedCategory: null,
+        typeID: null,
+        categoryID: null,
         content: null,
         movieCode: null,
         movieName: null,
         actor: null,
-        direction: null,
+        directions: null,
         urlImage: null,
         linkTrailer: null,
         language: null,
-        timeLine: null
+        timeLine: null,
       },
     };
   },
   methods: {
     closeThisPopup() {
-      this.$store.state.IsOpenPopup = false;
+      this.$store.state.isOpenPopupAlterMovie = false;
     },
     catchUrl(value) {
       console.log(10);
@@ -231,24 +252,24 @@ export default {
     postMovie() {
       let me = this;
       let dataParam = {
-        movieID: uuidv4(),
+        movieID: this.idMovie,
         movieCode: this.dataMovie.movieCode,
         movieName: this.dataMovie.movieName,
-        releaseDate: this.dataMovie.releasedate,
+        releaseDate: this.dataMovie.releaseDate,
         actor: this.dataMovie.actor,
-        directions: this.dataMovie.direction,
-        typeID: this.dataMovie.selectedTypeMovie,
+        directions: this.dataMovie.directions,
+        typeID: this.dataMovie.typeID,
         language: this.dataMovie.language,
         trailerLink: this.dataMovie.trailerLink,
         posterLink: this.dataMovie.urlImage,
         content: this.dataMovie.content,
-        fromDate: this.dataMovie.fromdate,
-        toDate: this.dataMovie.todate,
-        categoryIDs: this.dataMovie.selectedCategory,
+        fromDate: this.dataMovie.fromDate,
+        toDate: this.dataMovie.toDate,
+        categoryID: JSON.stringify(this.dataMovie.categoryID),
         timeLine: this.dataMovie.timeLine
       };
       this.$api
-        .post("/Movie/InsertMovie", dataParam)
+        .post("/Movie/AlterMovieByID", dataParam)
         .then(() => me.$emit("add-click"));
     },
   },
@@ -257,7 +278,7 @@ export default {
 
 <style lang="scss">
 @import "vue-select/dist/vue-select.css";
-.popup-add-movie {
+.popup-alter-movie {
   input::placeholder {
     font-size: 13px;
     color: #c8cace;
@@ -370,7 +391,7 @@ export default {
         width: 600px;
       }
 
-      .group-combobox{
+      .group-combobox {
         margin: auto 0;
       }
     }

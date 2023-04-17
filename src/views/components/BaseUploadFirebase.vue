@@ -22,8 +22,8 @@ export default {
   emits: ["url-bind"],
   setup(props, { emit }) {
     const storage = useFirebaseStorage();
-    const linkImg = "images/" + uuidv4();
-    const mountainFileRef = storageRef(storage, linkImg);
+    var linkImg = props.urlLink ? props.urlLink : "images/" + uuidv4();
+    var mountainFileRef = storageRef(storage, linkImg);
     const { url, uploadProgress, uploadError, uploadTask, upload } =
       useStorageFile(mountainFileRef);
 
@@ -43,13 +43,13 @@ export default {
       if (data) {
         upload(data);
       }
-
+ 
       emit("url-bind", linkImg);
     }
 
     return {
       storage,
-      url,
+      url, 
       uploadProgress,
       uploadError,
       uploadTask,
@@ -57,18 +57,31 @@ export default {
       open,
       reset,
       files,
-      linkImg,
+      linkImg,mountainFileRef
     };
+  },
+
+  watch:{
+    urlLink(newVal){
+      this.linkImg = newVal;
+      this.mountainFileRef = storageRef(this.storage, this.linkImg);
+      this.url = useStorageFile(this.mountainFileRef).url;
+    }
   },
   props: {
     typeImage: {
       type: String,
       default: "*/*",
     },
-    idUpload: {
+    urlLink: {
       type: String,
-      required: true,
+      required: false,
+      default: null
     },
+    idUpload:{
+      type: String,
+      default: ""
+    }
   },
   data() {
     return {

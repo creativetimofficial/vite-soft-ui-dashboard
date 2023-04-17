@@ -15,6 +15,7 @@
         :placeholder="placeholder"
         :isRequired="isRequired"
         v-if="!isMultiple"
+        :readonly="readonly"
       />
       <textarea
         :id="id"
@@ -80,6 +81,7 @@ export default {
     },
     isRequired: Boolean,
     isMultiple: { type: Boolean, default: false },
+    readonly: Boolean
   },
   data() {
     return {
