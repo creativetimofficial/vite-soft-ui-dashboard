@@ -15,6 +15,7 @@ import History from "@/views/History.vue"
 import ReportAndStatistic from "@/views/ReportAndStatistic.vue"
 import Ticket from "@/views/Ticket.vue"
 import RoomCinema from "@/views/SeatRoomCinema.vue"
+import CinemaRoom from "@/views/CinemaRoom.vue"
 
 const routes = [
   {
@@ -101,6 +102,10 @@ const routes = [
     path: '/showtime-manage/room-cinema',
     component: RoomCinema,
     name: 'roomcinema-manage'
+  },{
+    path: '/cinemaroom-manage',
+    component: CinemaRoom,
+    name: 'Cinema Room'
   }
 ];
 

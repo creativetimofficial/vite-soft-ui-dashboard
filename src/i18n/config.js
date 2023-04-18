@@ -65,9 +65,10 @@ const i18n = createI18n({
         ReportAndStatistic: "Report And Statistic",
         History: "History",
         Revenue: "Revenue",
-        Payment: "Thanh toán",
+        Payment: "Payment",
         FEATURE: "FEATURE",
-        TimeLine: "Time line"
+        TimeLine: "Time line",
+        CinemaRoomManage: "Cinema Room Manage"
       },
       vi: {       
         welcome: "Chào mừng trở lại",
@@ -131,7 +132,8 @@ const i18n = createI18n({
         Revenue: "Doanh thu",
         Payment: "Thanh toán",
         FEATURE: "TÍNH NĂNG",
-        TimeLine: "Thời lượng"
+        TimeLine: "Thời lượng",
+        CinemaRoomManage: "Quản lí phòng chiếu"
       }
     }
   })

@@ -31,7 +31,7 @@ export default {
 .movie-manage {
   padding: 30px 28px 0;
   .movie-manage-header {
-    height: 50px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
   }

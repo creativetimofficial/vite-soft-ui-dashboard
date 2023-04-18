@@ -85,7 +85,7 @@
                 </div>
               </div>
             </div>
-            <div class="movie-time-line">Thời lượng: {{ item.timeLine }}</div>
+            <div class="movie-time-line">Thời lượng: {{ item.timeLine }} phút</div>
             <div class="movie-from-date">
               Ngày khởi chiếu: {{ convertDateFormat(item.fromDate) }}
             </div>
@@ -255,10 +255,17 @@ export default {
 .movie-manage {
   padding: 30px 28px 0;
   .movie-manage-header {
-    height: 50px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background: #fff;
+    border-radius: 10px;
+    align-items: center;
+    .form-group{
+      margin-bottom: 0px!important;
+    }
   }
 
   #search_movie {
@@ -281,9 +288,11 @@ export default {
 
   .movie-manage-container {
     .movie-manage-main {
+      margin-top: 30px;
       display: flex;
       flex-wrap: wrap;
       .movie-item {
+        background: #fff;
         position: relative;
         margin-left: 20px;
         min-width: 400px;

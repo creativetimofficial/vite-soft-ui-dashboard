@@ -35,6 +35,11 @@ export var slideitems = [
     icon: "dashboard",
     text: "Payment"
   },
+  {
+    name: "Cinema Room",
+    icon: "dashboard",
+    text: "CinemaRoomManage"
+  }
 ];
 
 

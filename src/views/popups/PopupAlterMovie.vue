@@ -194,8 +194,8 @@ export default {
       (me.dataMovie.fromDate = data.fromDate),
         (me.dataMovie.toDate = data.toDate),
         (me.dataMovie.releaseDate = data.releaseDate),
-        (me.dataMovie.typeID = data.typeID),
-        (me.dataMovie.categoryID = JSON.parse(data.categoryIDs)),
+        (me.dataMovie.typeID = data.typeID ?? ""),
+        (me.dataMovie.categoryID = JSON.parse(data.categoryIDs) ?? []),
         (me.dataMovie.content = data.content),
         (me.dataMovie.movieCode = data.movieCode),
         (me.dataMovie.movieName = data.movieName),
@@ -265,7 +265,7 @@ export default {
         content: this.dataMovie.content,
         fromDate: this.dataMovie.fromDate,
         toDate: this.dataMovie.toDate,
-        categoryID: JSON.stringify(this.dataMovie.categoryID),
+        categoryIDs: JSON.stringify(this.dataMovie.categoryID),
         timeLine: this.dataMovie.timeLine
       };
       this.$api
