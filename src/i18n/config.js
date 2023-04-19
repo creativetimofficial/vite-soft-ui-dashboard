@@ -74,7 +74,8 @@ const i18n = createI18n({
         EnterTheColNumber: "Enter the col number",
         RoomName: "Room Name",
         RowNumber: "Row Number",
-        ColNumber: "Col Number"
+        ColNumber: "Col Number",
+        UpdateSuccessful: "Update successful"
       },
       vi: {       
         welcome: "Chào mừng trở lại",
@@ -145,7 +146,8 @@ const i18n = createI18n({
         EnterTheColNumber: "Nhập số cột",
         RoomName: "Tên Phòng",
         RowNumber: "Số Hàng",
-        ColNumber: "Số Cột"
+        ColNumber: "Số Cột",
+        UpdateSuccessful: "Cập nhật thành công"
       }
     }
   })

@@ -40,7 +40,7 @@ config.globalProperties.$n = i18n.global.n;
 app.use(
   Vue3Toasity,
   {
-    autoClose: 3000,
+    autoClose: 1500,
     // ...
   }
 )

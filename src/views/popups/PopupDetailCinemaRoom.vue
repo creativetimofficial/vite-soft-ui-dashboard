@@ -56,6 +56,21 @@
       ></base-button>
       <div class="ml-2"></div>
       <base-button
+        :classButton="'button-red'"
+        :titleButton="'Xóa'"
+        @bindEvent="showDeletePopup()"
+      ></base-button>
+      <div class="ml-2"></div>
+      <base-button
+        :classButton="[
+          'button-blue',
+          seatsSelecting.length ? '' : ' button-none',
+        ]"
+        :titleButton="'Cập nhật thường'"
+        @bindEvent="updateNormal()"
+      ></base-button>
+      <div class="ml-2"></div>
+      <base-button
         :classButton="[
           'button-blue',
           seatsSelecting.length ? '' : ' button-none',
@@ -75,11 +90,16 @@
       <div class="ml-2"></div>
     </div>
   </div>
+  <popup-delete
+    v-if="$store.state.isOpenPopupDelete"
+    @delete-click="deleteSelect()"
+  ></popup-delete>
 </template>
 
 <script>
 import { listSeat, convertLetter } from "@/constants/constantsdefaults";
 import BaseButton from "@/views/components/BaseButton.vue";
+import PopupDelete from "./PopupDelete.vue";
 import { convertDateFormat, convertTimeFormat } from "@/common/commonFunc";
 import { forEach } from "lodash";
 export default {
@@ -92,7 +112,7 @@ export default {
       convertTimeFormat,
     };
   },
-  components: { BaseButton },
+  components: { BaseButton, PopupDelete },
   created() {
     let me = this;
     this.loadDataSeat(me.idRoom);
@@ -117,7 +137,7 @@ export default {
       dataTemplateTime: [],
     };
   },
-  methods: { 
+  methods: {
     loadDataSeat(id) {
       let me = this;
       this.$api
@@ -141,17 +161,19 @@ export default {
         (seat) => seat.rowSeat === row && seat.colSeat === col
       ).type;
 
-      if(status == 1){
-        return "normal"
-      }else if(status == 2){
-        return "vip"
-      }else{
-        return "unuse"
+      if (status == 1) {
+        return "normal";
+      } else if (status == 2) {
+        return "vip";
+      } else if (status == 3) {
+        return "unuse";
+      } else {
+        return "none";
       }
     },
 
     pushSelectingSeat(row, col) {
-      if (this.getSeat(row, col)!="unuse") {
+      if (this.getSeat(row, col) != "none") {
         if (
           this.seatsSelecting.find((x) => x.rowSeat == row && x.colSeat == col)
         ) {
@@ -174,28 +196,53 @@ export default {
       );
     },
 
-    updateVIP() {
+    updateRealSeat() {
       let me = this;
-      for(let item in me.seatsSelecting){
-        me.seatsSelecting[item].type = 2;
-      };
+      this.$store.state.isShowLoading = true;
       this.$api
         .post("/CinemaRoom/UpdateRealSeat", me.seatsSelecting)
         .then(() => {
-          location.reload();
+          me.loadDataSeat(me.idRoom);
+          me.seatsSelecting = [];
+          this.$store.state.isShowLoading = false;
+          this.$store.dispatch("showToast", this.$t("UpdateSuccessful"));
         });
+    },
+
+    updateVIP() {
+      let me = this;
+      for (let item in me.seatsSelecting) {
+        me.seatsSelecting[item].type = 2;
+      }
+      this.updateRealSeat();
+    },
+
+    showDeletePopup(){
+      this.$store.state.isOpenPopupDelete = true;
     },
 
     updateNone() {
       let me = this;
-      for(let item in me.seatsSelecting){
+      for (let item in me.seatsSelecting) {
         me.seatsSelecting[item].type = 3;
-      };
-      this.$api
-        .post("/CinemaRoom/UpdateRealSeat", me.seatsSelecting)
-        .then(() => {
-          location.reload();
-        });
+      }
+      this.updateRealSeat();
+    },
+
+    updateNormal() {
+      let me = this;
+      for (let item in me.seatsSelecting) {
+        me.seatsSelecting[item].type = 1;
+      }
+      this.updateRealSeat();
+    },
+
+    deleteSelect() {
+      let me = this;
+      for (let item in me.seatsSelecting) {
+        me.seatsSelecting[item].type = 4;
+      }
+      this.updateRealSeat();
     },
 
     closePopup() {
@@ -212,7 +259,7 @@ export default {
   right: 0;
   bottom: 0;
   background: #fff;
-  z-index: 9999;
+  z-index: 2001;
   .cinemaroom-header {
     height: 60px;
     display: flex;
@@ -247,39 +294,6 @@ export default {
     }
   }
 
-  .template-time-code-main {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 10px;
-    justify-content: center;
-    .template-time-card {
-      &.selecting {
-        background: rgb(195 137 137);
-        color: #fff;
-        font-weight: 900;
-        border-color: #fff;
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-          rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-        transform: scale(1.1) !important;
-      }
-      margin: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 4px;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-      border: 1px solid rgba(0, 0, 0, 0.5);
-      border-radius: 4px;
-      cursor: pointer;
-      -webkit-user-select: none;
-      user-select: none;
-      &:hover {
-        opacity: 0.7;
-        transform: scale(1.05);
-      }
-    }
-  }
-
   .cinemaroom-main {
     height: calc(100vh - 230px);
     padding: 20px 200px;
@@ -307,12 +321,17 @@ export default {
               background: #17c1e8;
             }
 
-            &.unuse{
+            &.unuse {
               background: rgb(202, 202, 202);
             }
 
             &.selecting {
               background: red;
+            }
+
+            &.none {
+              opacity: 0;
+              pointer-events: none!important;
             }
 
             -webkit-user-select: none;
@@ -342,14 +361,16 @@ export default {
 
       .seat-selected,
       .seat-unselected,
-      .seat-selecting,.seat-unuse {
+      .seat-selecting,
+      .seat-unuse {
         display: flex;
         padding-bottom: 10px;
       }
 
       .color-selected,
       .color-unselected,
-      .color-selecting,.color-unuse {
+      .color-selecting,
+      .color-unuse {
         height: 20px;
         width: 20px;
         margin-right: 10px;
@@ -371,7 +392,7 @@ export default {
         background: red;
       }
 
-      .color-unuse{
+      .color-unuse {
         background: rgb(202, 202, 202);
       }
     }
