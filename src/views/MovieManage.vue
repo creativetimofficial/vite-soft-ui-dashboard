@@ -158,8 +158,11 @@ export default {
   created() {
     let me = this;
     me.dataField = fields;
+    this.$store.state.isShowLoading = true;
     this.$api.post("/Movie/GetListMovie", { TypeFilter: 0 }).then((data) => {
       me.dataSource = data;
+    this.$store.state.isShowLoading = false;
+
     });
   },
   data() {
@@ -288,9 +291,14 @@ export default {
 
   .movie-manage-container {
     .movie-manage-main {
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px 0;
       margin-top: 30px;
       display: flex;
       flex-wrap: wrap;
+      min-width: 500px;
       .movie-item {
         background: #fff;
         position: relative;

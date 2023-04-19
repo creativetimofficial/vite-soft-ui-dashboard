@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { toast } from 'vue3-toastify';
 
 export default createStore({
   state: {
@@ -23,6 +24,10 @@ export default createStore({
     isOpenPopupAddShowtime: false,
     isOpenPopupShowContent: false,
     isOpenPopupAlterMovie: false,
+    isShowLoading: false,
+    isShowPopupAddRealRoom: false,
+    isShowToast: false,
+    contentToast: ""
   },
   mutations: {
     toggleConfigurator(state) {
@@ -61,6 +66,12 @@ export default createStore({
     toggleSidebarColor({ commit }, payload) {
       commit("sidebarType", payload);
     },
+    showToast(context,payload){
+      toast(payload, {
+        transition: toast.TRANSITIONS.BOUNCE,
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   },
   getters: {},
 });

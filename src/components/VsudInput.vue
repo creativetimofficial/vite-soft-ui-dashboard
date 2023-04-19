@@ -8,14 +8,14 @@
         :id="id"
         :type="type"
         class="form-control"
-        :class="getClasses(size, valid)"
+        :class="[getClasses(size, valid),isEmpty?'required':'']"
         :name="name"
         :value="modelValue"
         @input="updateInput"
         :placeholder="placeholder"
-        :isRequired="isRequired"
         v-if="!isMultiple"
         :readonly="readonly"
+        @blur="checkRequired()"
       />
       <textarea
         :id="id"
@@ -26,7 +26,6 @@
         :value="modelValue"
         @input="updateInput"
         :placeholder="placeholder"
-        :isRequired="isRequired"
         v-if="isMultiple"
       ></textarea>
       <span v-if="iconDir === 'right'" class="input-group-text">
@@ -79,13 +78,14 @@ export default {
       type: String,
       default: "",
     },
-    isRequired: Boolean,
+    isRequired: {type: Boolean, default: false},
     isMultiple: { type: Boolean, default: false },
     readonly: Boolean
   },
   data() {
     return {
       inputValue: this.value,
+      isEmpty: false,
     };
   },
   methods: {
@@ -115,6 +115,20 @@ export default {
     updateValue() {
       this.$emit("input", this.inputValue);
     },
+
+    checkRequired(){
+      if(this.isRequired && !this.modelValue){
+        this.isEmpty =  true;
+      }else{
+        this.isEmpty  = false;
+      }
+
+    }
   },
 };
 </script>
+<style scoped>
+.required{
+  border: 1px solid red !important;
+}
+</style>

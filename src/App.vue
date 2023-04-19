@@ -28,12 +28,17 @@
       ]"
     />
   </main>
+  <base-loading :isLoading="$store.state.isShowLoading"></base-loading>
 </template>
 <script>
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import Sidenav from "./examples/Sidenav/index.vue";
 import Configurator from "@/examples/Configurator.vue";
 import Navbar from "@/examples/Navbars/Navbar.vue";
 import AppFooter from "@/examples/Footer.vue";
+import BaseLoading from "./views/components/BaseLoading.vue";
+import BaseToast from "./views/components/BaseToast.vue";
 import { mapMutations } from "vuex";
 
 export default {
@@ -42,9 +47,8 @@ export default {
     Sidenav,
     Configurator,
     Navbar,
-    AppFooter,
+    AppFooter,BaseLoading,BaseToast
   },
-
   computed: {
     navClasses() {
       return {

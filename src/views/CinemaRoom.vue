@@ -8,28 +8,68 @@
         v-model="searchValue"
         :id="'search_movie'"
       />
-      <base-button
-        :classButton="'button-blue'"
-        :titleButton="'Thêm mới'"
-        @bindEvent="openPopup()"
-      ></base-button>
+      <div class="button-feature-container">
+        <base-button
+          :classButton="'button-blue'"
+          :titleButton="'Tra cứu phòng trống'"
+          @bindEvent="openToast('Thử nghiệm')"
+        ></base-button>
+        <div class="mr-1"></div>
+        <base-button
+          :classButton="'button-blue'"
+          :titleButton="'Thêm mới'"
+          @bindEvent="openPopup()"
+        ></base-button>
+      </div>
     </div>
-    <div class="cinema-room-main"></div>
+    <div class="cinema-room-main">
+      <div class="room-main-header">Danh sách phòng</div>
+      <div class="room-container">
+        <div class="room-item" v-for="item in rooms" :key="item">
+          <div class="room-name">
+            {{ item.roomCode }}
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="cinema-room-footer"></div>
   </div>
+  <popup-add-real-room
+  v-if="$store.state.isShowPopupAddRealRoom"></popup-add-real-room>
 </template>
 <script>
 import BaseButton from "./components/BaseButton.vue";
 import VsudInput from "../components/VsudInput.vue";
-
+import PopupAddRealRoom from "./popups/PopupAddRealRoom.vue";
 export default {
-  components:{BaseButton,VsudInput}
+  components: { BaseButton, VsudInput,PopupAddRealRoom },
+  created() {
+    let me = this;
+    this.$store.state.isShowLoading = true;
+    this.$api.post("/CinemaRoom/GetListCinemaRoom").then((data) => {
+      me.rooms = data;
+      me.$store.state.isShowLoading = false;
+    });
+  },
+  data() {
+    return {
+      rooms: [],
+    };
+  },
+  methods: {
+    openPopup(){
+      this.$store.state.isShowPopupAddRealRoom = true;
+    },
+    openToast(item){
+      this.$store.dispatch('showToast',item);
+    }
+  },
 };
 </script>
 <style lang="scss">
 .cinema-room-manage {
   padding: 30px 28px 0;
-  .cinema-room-header{
+  .cinema-room-header {
     height: 60px;
     background: #fff;
     border-radius: 10px;
@@ -38,8 +78,66 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    .form-group{
+    .mr-1{
+      margin-right: 10px;
+    }
+    .form-group {
       margin-bottom: 0px;
+    }
+
+    .button-feature-container{
+      display: flex;
+    }
+  }
+  .cinema-room-main {
+    margin-top: 10px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 20px 30px 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    .room-main-header {
+      display: flex;
+      justify-content: center;
+      font-size: 20px;
+      color: #111;
+      font-weight: 600;
+    }
+    .room-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .room-item {
+        margin: 10px;
+        height: 100px;
+        width: 100px;
+
+        .room-name {
+          color: #fff;
+          background: #93bbfb;
+          font-size: 30px;
+          font-weight: 800;
+          height: 100px;
+          width: 100px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+            rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+          -webkit-user-select: none;
+          user-select: none;
+          cursor: pointer;
+          &:hover {
+            background: #1a72ff;
+          }
+
+          &:focus,
+          &:active {
+            background: #93bbfb;
+          }
+        }
+      }
     }
   }
 }

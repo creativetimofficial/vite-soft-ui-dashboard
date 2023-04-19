@@ -15,6 +15,8 @@ import 'element-plus/dist/index.css'
 import { VueFire, VueFireAuth } from 'vuefire'
 import { firebaseApp } from './firebase'
 import i18n from "@/i18n/config";
+import Vue3Toasity from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 
   
@@ -35,6 +37,13 @@ config.globalProperties.$tc = i18n.global.tc;
 config.globalProperties.$te = i18n.global.te;
 config.globalProperties.$d = i18n.global.d;
 config.globalProperties.$n = i18n.global.n;
+app.use(
+  Vue3Toasity,
+  {
+    autoClose: 3000,
+    // ...
+  }
+)
 app.use(ElementPlus)
 app.component("v-select", VueSelect)
 app.component('EasyDataTable', Vue3EasyDataTable);

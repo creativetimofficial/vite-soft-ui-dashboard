@@ -68,7 +68,13 @@ const i18n = createI18n({
         Payment: "Payment",
         FEATURE: "FEATURE",
         TimeLine: "Time line",
-        CinemaRoomManage: "Cinema Room Manage"
+        CinemaRoomManage: "Cinema Room Manage",
+        EnterRoomName: "Enter room name",
+        EnterTheRowNumber: "Enter the row number",
+        EnterTheColNumber: "Enter the col number",
+        RoomName: "Room Name",
+        RowNumber: "Row Number",
+        ColNumber: "Col Number"
       },
       vi: {       
         welcome: "Chào mừng trở lại",
@@ -133,7 +139,13 @@ const i18n = createI18n({
         Payment: "Thanh toán",
         FEATURE: "TÍNH NĂNG",
         TimeLine: "Thời lượng",
-        CinemaRoomManage: "Quản lí phòng chiếu"
+        CinemaRoomManage: "Quản lí phòng chiếu",
+        EnterRoomName: "Nhập tên phòng",
+        EnterTheRowNumber: "Nhập số hàng",
+        EnterTheColNumber: "Nhập số cột",
+        RoomName: "Tên Phòng",
+        RowNumber: "Số Hàng",
+        ColNumber: "Số Cột"
       }
     }
   })
