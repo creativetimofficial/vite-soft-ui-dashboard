@@ -10,7 +10,7 @@
       <div class="popup-main">
         <div class="popup-row-1 mt-2">
           <div class="popup-input popup-date">
-            <label>{{ $t('RoomName') }}</label>
+            <label>{{ $t("RoomName") }}</label>
             <vsud-input
               type="text"
               :placeholder="$t('EnterRoomName')"
@@ -21,23 +21,25 @@
             />
           </div>
           <div class="popup-input popup-date">
-            <label>{{ $t('RowNumber')}}</label>
+            <label>{{ $t("RowNumber") }}</label>
             <vsud-input
               type="number"
               :placeholder="$t('EnterTheRowNumber')"
               name="search_movie"
-              v-model="searchValue"
+              v-model="rowSeat"
               :id="'search_movie'"
+              :isRequired="true"
             />
           </div>
           <div class="popup-input popup-date">
-            <label>{{$t('ColNumber')}}</label>
+            <label>{{ $t("ColNumber") }}</label>
             <vsud-input
               type="number"
               :placeholder="$t('EnterTheColNumber')"
               name="search_movie"
-              v-model="searchValue"
+              v-model="colSeat"
               :id="'search_movie'"
+              :isRequired="true"
             />
           </div>
         </div>
@@ -83,13 +85,31 @@ export default {
       dataRoom: [],
       dataRoomSelected: null,
       showTemplate: false,
-      roomCode: ""
+      roomCode: "",
+      colSeat: 0,
+      rowSeat: 0,
     };
   },
   methods: {
-    closeThisPopup(){
+    closeThisPopup() {
       this.$store.state.isShowPopupAddRealRoom = false;
-    }
+    },
+    createNewRoomCinema() {
+      let me = this;
+      this.$store.state.isShowLoading = true;
+      this.$api
+        .post("/CinemaRoom/CreateNewRealRoom", {
+          roomCode: me.roomCode,
+          colSeat: me.colSeat,
+          rowSeat: me.rowSeat,
+        })
+        .then(() => {
+          me.$emit("add-click");
+          me.$store.state.isShowLoading = false;
+          me.$store.state.isShowPopupAddRealRoom = false;
+          me.$store.dispatch("showToast", "Thêm mới thành công");
+        });
+    },
   },
 };
 </script>

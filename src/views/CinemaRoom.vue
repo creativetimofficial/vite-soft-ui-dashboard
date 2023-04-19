@@ -25,7 +25,12 @@
     <div class="cinema-room-main">
       <div class="room-main-header">Danh sách phòng</div>
       <div class="room-container">
-        <div class="room-item" v-for="item in rooms" :key="item">
+        <div
+          class="room-item"
+          v-for="item in rooms"
+          :key="item"
+          @click="showDetail(item.roomID, item.roomCode)"
+        >
           <div class="room-name">
             {{ item.roomCode }}
           </div>
@@ -35,14 +40,27 @@
     <div class="cinema-room-footer"></div>
   </div>
   <popup-add-real-room
-  v-if="$store.state.isShowPopupAddRealRoom"></popup-add-real-room>
+    v-if="$store.state.isShowPopupAddRealRoom"
+    @add-click="loadData()"
+  ></popup-add-real-room>
+  <popup-detail-cinema-room
+    :idRoom="idRoomSelected"
+    :codeRoom="codeRoomSelected"
+    v-if="$store.state.isShowDetailCinemaRoom"
+  ></popup-detail-cinema-room>
 </template>
 <script>
 import BaseButton from "./components/BaseButton.vue";
 import VsudInput from "../components/VsudInput.vue";
 import PopupAddRealRoom from "./popups/PopupAddRealRoom.vue";
+import PopupDetailCinemaRoom from "./popups/PopupDetailCinemaRoom.vue";
 export default {
-  components: { BaseButton, VsudInput,PopupAddRealRoom },
+  components: {
+    BaseButton,
+    VsudInput,
+    PopupAddRealRoom,
+    PopupDetailCinemaRoom,
+  },
   created() {
     let me = this;
     this.$store.state.isShowLoading = true;
@@ -54,15 +72,30 @@ export default {
   data() {
     return {
       rooms: [],
+      idRoomSelected: null,
+      codeRoomSelected: null,
     };
   },
   methods: {
-    openPopup(){
+    openPopup() {
       this.$store.state.isShowPopupAddRealRoom = true;
     },
-    openToast(item){
-      this.$store.dispatch('showToast',item);
-    }
+    openToast(item) {
+      this.$store.dispatch("showToast", item);
+    },
+    loadData() {
+      let me = this;
+      this.$store.state.isShowLoading = true;
+      this.$api.post("/CinemaRoom/GetListCinemaRoom").then((data) => {
+        me.rooms = data;
+        me.$store.state.isShowLoading = false;
+      });
+    },
+    showDetail(id, code) {
+      this.idRoomSelected = id;
+      this.codeRoomSelected = code;
+      this.$store.state.isShowDetailCinemaRoom = true;
+    },
   },
 };
 </script>
@@ -78,14 +111,14 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    .mr-1{
+    .mr-1 {
       margin-right: 10px;
     }
     .form-group {
       margin-bottom: 0px;
     }
 
-    .button-feature-container{
+    .button-feature-container {
       display: flex;
     }
   }

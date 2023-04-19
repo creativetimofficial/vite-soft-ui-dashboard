@@ -26,6 +26,7 @@ export default createStore({
     isOpenPopupAlterMovie: false,
     isShowLoading: false,
     isShowPopupAddRealRoom: false,
+    isShowDetailCinemaRoom: false,
     isShowToast: false,
     contentToast: ""
   },
