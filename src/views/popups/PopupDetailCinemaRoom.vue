@@ -31,11 +31,11 @@
       <div class="description-seat">
         <div class="note">Chú thích</div>
         <div class="seat-selected">
-          <div class="color-selected"></div>
+          <div class="color-vip"></div>
           <div class="content-selected">Ghế VIP</div>
         </div>
         <div class="seat-unselected">
-          <div class="color-unselected"></div>
+          <div class="color-normal"></div>
           <div class="content-unselected">Ghế thường</div>
         </div>
         <div class="seat-unuse">
@@ -49,50 +49,65 @@
       </div>
     </div>
     <div class="cinemaroom-footer">
-      <base-button
-        :classButton="'button-white'"
-        :titleButton="'Hủy'"
-        @bindEvent="closePopup()"
-      ></base-button>
-      <div class="ml-2"></div>
-      <base-button
-        :classButton="'button-red'"
-        :titleButton="'Xóa'"
-        @bindEvent="showDeletePopup()"
-      ></base-button>
-      <div class="ml-2"></div>
-      <base-button
-        :classButton="[
-          'button-blue',
-          seatsSelecting.length ? '' : ' button-none',
-        ]"
-        :titleButton="'Cập nhật thường'"
-        @bindEvent="updateNormal()"
-      ></base-button>
-      <div class="ml-2"></div>
-      <base-button
-        :classButton="[
-          'button-blue',
-          seatsSelecting.length ? '' : ' button-none',
-        ]"
-        :titleButton="'Cập nhật VIP'"
-        @bindEvent="updateVIP()"
-      ></base-button>
-      <div class="ml-2"></div>
-      <base-button
-        :classButton="[
-          'button-blue',
-          seatsSelecting.length ? '' : ' button-none',
-        ]"
-        :titleButton="'Cập nhật bảo trì'"
-        @bindEvent="updateNone()"
-      ></base-button>
-      <div class="ml-2"></div>
+      <div class="cinema-footer-left">
+        <div class="mr-2"></div>
+        <base-button
+          :classButton="'button-red'"
+          :titleButton="'Xóa phòng'"
+          @bindEvent="showPopupDeleteRealRoom()"
+        ></base-button>
+      </div>
+      <div class="cinema-footer-right">
+        <base-button
+          :classButton="'button-white'"
+          :titleButton="'Hủy'"
+          @bindEvent="closePopup()"
+        ></base-button>
+        <div class="ml-2"></div>
+        <base-button
+          :classButton="'button-red'"
+          :titleButton="'Xóa'"
+          @bindEvent="showDeletePopup()"
+        ></base-button>
+        <div class="ml-2"></div>
+        <base-button
+          :classButton="[
+            'button-blue',
+            seatsSelecting.length ? '' : ' button-none',
+          ]"
+          :titleButton="'Cập nhật thường'"
+          @bindEvent="updateNormal()"
+        ></base-button>
+        <div class="ml-2"></div>
+        <base-button
+          :classButton="[
+            'button-blue',
+            seatsSelecting.length ? '' : ' button-none',
+          ]"
+          :titleButton="'Cập nhật VIP'"
+          @bindEvent="updateVIP()"
+        ></base-button>
+        <div class="ml-2"></div>
+        <base-button
+          :classButton="[
+            'button-blue',
+            seatsSelecting.length ? '' : ' button-none',
+          ]"
+          :titleButton="'Cập nhật bảo trì'"
+          @bindEvent="updateNone()"
+        ></base-button>
+        <div class="ml-2"></div>
+      </div>
     </div>
   </div>
   <popup-delete
     v-if="$store.state.isOpenPopupDelete"
     @delete-click="deleteSelect()"
+  ></popup-delete>
+  <popup-delete
+    v-if="isShowDeletePopupRealRoom"
+    @delete-click="deleteRealRoom()"
+    :contentCustom="'Bạn có muốn xóa phòng này?'"
   ></popup-delete>
 </template>
 
@@ -135,9 +150,29 @@ export default {
       maxCol: 0,
       roomCinmeIDSelected: "",
       dataTemplateTime: [],
+      isShowDeletePopupRealRoom: false,
     };
   },
   methods: {
+    showPopupDeleteRealRoom(){
+      this.isShowDeletePopupRealRoom = true;
+    },
+
+
+    /**
+     * Hàm thực hiện xóa phòng hiện tại
+     */
+    deleteRealRoom() {
+      this.isShowDeletePopupRealRoom = false;
+      let me = this;
+      this.$api
+        .post("/CinemaRoom/DeleteRealRoom", { roomID: me.idRoom })
+        .then(() => {
+          location.reload();
+          me.$store.dispatch("showToast","Xóa thành công!");
+        });
+    },
+
     loadDataSeat(id) {
       let me = this;
       this.$api
@@ -217,7 +252,7 @@ export default {
       this.updateRealSeat();
     },
 
-    showDeletePopup(){
+    showDeletePopup() {
       this.$store.state.isOpenPopupDelete = true;
     },
 
@@ -331,7 +366,7 @@ export default {
 
             &.none {
               opacity: 0;
-              pointer-events: none!important;
+              pointer-events: none !important;
             }
 
             -webkit-user-select: none;
@@ -367,8 +402,8 @@ export default {
         padding-bottom: 10px;
       }
 
-      .color-selected,
-      .color-unselected,
+      .color-vip,
+      .color-normal,
       .color-selecting,
       .color-unuse {
         height: 20px;
@@ -380,11 +415,11 @@ export default {
         }
       }
 
-      .color-selected {
+      .color-vip {
         background: #17c1e8;
       }
 
-      .color-unselected {
+      .color-normal {
         background: #cb0c9f;
       }
 
@@ -404,10 +439,14 @@ export default {
     left: 0;
     bottom: 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     height: 60px;
     .ml-2 {
       margin-left: 10px;
+    }
+
+    .mr-2 {
+      margin-right: 10px;
     }
     align-items: center;
     background: #ddefff;
@@ -416,6 +455,14 @@ export default {
   .button-none {
     pointer-events: none;
     opacity: 0.5;
+  }
+
+  .cinema-footer-right {
+    display: flex;
+  }
+
+  .cinema-footer-left {
+    display: flex;
   }
 }
 </style>

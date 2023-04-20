@@ -31,6 +31,7 @@
               :class="[
                 !getSeat(item, itemCol) ? 'selected' : '',
                 isSelecting(item, itemCol) ? 'selecting' : '',
+                getType(item, itemCol),
               ]"
               v-for="itemCol in maxCol"
               :key="itemCol"
@@ -49,7 +50,15 @@
         </div>
         <div class="seat-unselected">
           <div class="color-unselected"></div>
-          <div class="content-unselected">Chưa mua</div>
+          <div class="content-unselected">Ghế thường</div>
+        </div>
+        <div class="seat-unselected">
+          <div class="color-vip"></div>
+          <div class="content-unselected">Ghế VIP</div>
+        </div>
+        <div class="seat-unselected">
+          <div class="color-unuse"></div>
+          <div class="content-unselected">Bảo trì</div>
         </div>
         <div class="seat-selecting">
           <div class="color-selecting"></div>
@@ -144,6 +153,22 @@ export default {
         });
     },
 
+    getType(row, col) {
+      let status = this.dataSeat.find(
+        (seat) => seat.rowSeat === row && seat.colSeat === col
+      ).type;
+
+      if (status == 1) {
+        return "normal";
+      } else if (status == 2) {
+        return "vip";
+      } else if (status == 3) {
+        return "unuse";
+      } else {
+        return "none";
+      }
+    },
+
     getLastRowCol(dataSeat) {
       const lastSeat = dataSeat[dataSeat.length - 1]; // Lấy ghế cuối cùng trong danh sách
       this.maxRow = lastSeat.rowSeat; // Số hàng lớn nhất
@@ -157,7 +182,11 @@ export default {
     },
 
     pushSelectingSeat(row, col) {
-      if (this.getSeat(row, col)) {
+      if(this.getType(row,col)=="unuse"){
+        this.$store.dispatch("showToast","Ghế đang bảo trì");
+      }
+
+      if (this.getSeat(row, col) && this.getType(row,col)!="unuse") {
         if (
           this.seatsSelecting.find((x) => x.rowSeat == row && x.colSeat == col)
         ) {
@@ -262,7 +291,7 @@ export default {
         border-color: #fff;
         box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
           rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-          transform: scale(1.1)!important;
+        transform: scale(1.1) !important;
       }
       margin: 10px;
       display: flex;
@@ -278,7 +307,6 @@ export default {
       &:hover {
         opacity: 0.7;
         transform: scale(1.05);
-
       }
     }
   }
@@ -307,13 +335,30 @@ export default {
             font-weight: 600;
             cursor: pointer;
             &.selected {
-              background: #17c1e8;
-
+              background: #cb0c9f !important;
+              opacity: 0.5;
               cursor: no-drop;
             }
 
             &.selecting {
               background: red;
+            }
+
+            &.vip {
+              background: #17c1e8;
+            }
+
+            &.unuse {
+              background: rgb(202, 202, 202);
+            }
+
+            &.selecting {
+              background: red;
+            }
+
+            &.none {
+              opacity: 0;
+              pointer-events: none !important;
             }
 
             -webkit-user-select: none;
@@ -349,19 +394,22 @@ export default {
       }
 
       .color-selected,
+      .color-unuse,
+      .color-vip,
       .color-unselected,
       .color-selecting {
         height: 20px;
         width: 20px;
         margin-right: 10px;
         border-radius: 4px;
-        &:hover{
+        &:hover {
           transform: scale(1.5);
         }
       }
 
       .color-selected {
-        background: #17c1e8;
+        background: #cb0c9f !important;
+        opacity: 0.5;
       }
 
       .color-unselected {
@@ -370,6 +418,14 @@ export default {
 
       .color-selecting {
         background: red;
+      }
+
+      .color-unuse {
+        background: rgb(202, 202, 202);
+      }
+
+      .color-vip {
+        background: #17c1e8;
       }
     }
   }

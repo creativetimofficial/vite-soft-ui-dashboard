@@ -8,7 +8,11 @@
         </div>
       </div>
       <div class="popup-main">
-        Bạn có muốn xóa bản ghi vừa chọn không! {{ content }}
+        {{
+          contentCustom
+            ? contentCustom
+            : "Bạn có muốn xóa bản ghi vừa chọn không!" + content
+        }}
       </div>
       <div class="popup-footer">
         <base-button
@@ -31,29 +35,31 @@
 <script>
 import BaseButton from "../components/BaseButton.vue";
 export default {
-    emits: ['delete-click'],
+  emits: ["delete-click"],
   components: {
     BaseButton,
   },
-  props:{
-    content:{
-        type: String,
-        default: ""
-    }
+  props: {
+    content: {
+      type: String,
+      default: "",
+    },
+    contentCustom: {
+      type: String,
+      default: "",
+    },
   },
   data() {
-    return {
-      
-    }
+    return {};
   },
   methods: {
-    deleteClick(){
-        this.$emit('delete-click');
-        this.$store.state.isOpenPopupDelete = false;
+    deleteClick() {
+      this.$emit("delete-click");
+      this.$store.state.isOpenPopupDelete = false;
     },
-    closeThisPopup(){
-        this.$store.state.isOpenPopupDelete = false;
-    }
+    closeThisPopup() {
+      this.$store.state.isOpenPopupDelete = false;
+    },
   },
 };
 </script>
@@ -132,8 +138,8 @@ export default {
     }
 
     .popup-main {
-
-      padding: 0 18px 0;}
+      padding: 0 18px 0;
+    }
   }
 }
 </style>
