@@ -28,7 +28,9 @@ export default createStore({
     isShowPopupAddRealRoom: false,
     isShowDetailCinemaRoom: false,
     isShowToast: false,
-    contentToast: ""
+    contentToast: "",
+    isLoggedIn: false,
+    role: ""
   },
   mutations: {
     toggleConfigurator(state) {
@@ -72,6 +74,14 @@ export default createStore({
         transition: toast.TRANSITIONS.BOUNCE,
         position: toast.POSITION.TOP_RIGHT,
       });
+    },
+    checkRow(context,payload){
+      if(context.state.role == payload || context.state.role == "admin"){
+        return true;
+      }else{
+        context.dispatch("showToast","Tài khoản không có quyền");
+        return false;
+      }
     }
   },
   getters: {},

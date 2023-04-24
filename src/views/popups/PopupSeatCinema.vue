@@ -67,21 +67,31 @@
       </div>
     </div>
     <div class="seatroom-footer">
-      <base-button
-        :classButton="'button-white'"
-        :titleButton="'Hủy'"
-        @bindEvent="closePopup()"
-      ></base-button>
-      <div class="ml-2"></div>
-      <base-button
-        :classButton="[
-          'button-blue',
-          seatsSelecting.length ? '' : ' button-none',
-        ]"
-        :titleButton="'Thay đổi'"
-        @bindEvent="SaveState()"
-      ></base-button>
-      <div class="ml-2"></div>
+      <div class="footer-left">
+        <base-button
+          :classButton="'button-red'"
+          :titleButton="'Xóa phòng'"
+          @bindEvent="closePopup()"
+          v-if="$store.state.role == 'admin' && roomCinmeIDSelected"
+        ></base-button>
+      </div>
+      <div class="footer-right">
+        <base-button
+          :classButton="'button-white'"
+          :titleButton="'Hủy'"
+          @bindEvent="closePopup()"
+        ></base-button>
+        <div class="ml-2"></div>
+        <base-button
+          :classButton="[
+            'button-blue',
+            seatsSelecting.length ? '' : ' button-none',
+          ]"
+          :titleButton="'Thay đổi'"
+          @bindEvent="SaveState()"
+        ></base-button>
+        <div class="ml-2"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -91,7 +101,7 @@ import { listSeat, convertLetter } from "@/constants/constantsdefaults";
 import BaseButton from "@/views/components/BaseButton.vue";
 import { convertDateFormat, convertTimeFormat } from "@/common/commonFunc";
 export default {
-  name: "SeatRoomManage",
+  name: "PopupSeatRoomManage",
   setup() {
     return {
       listSeat,
@@ -182,11 +192,11 @@ export default {
     },
 
     pushSelectingSeat(row, col) {
-      if(this.getType(row,col)=="unuse"){
-        this.$store.dispatch("showToast","Ghế đang bảo trì");
+      if (this.getType(row, col) == "unuse") {
+        this.$store.dispatch("showToast", "Ghế đang bảo trì");
       }
 
-      if (this.getSeat(row, col) && this.getType(row,col)!="unuse") {
+      if (this.getSeat(row, col) && this.getType(row, col) != "unuse") {
         if (
           this.seatsSelecting.find((x) => x.rowSeat == row && x.colSeat == col)
         ) {
@@ -431,12 +441,21 @@ export default {
   }
 
   .seatroom-footer {
+    display: flex;
+    justify-content: space-between;
+    .footer-left{
+      margin-left: 10px;
+    }
+
+    .footer-right{
+      display: flex;
+
+    }
     position: absolute;
     right: 0;
     left: 0;
     bottom: 0;
     display: flex;
-    justify-content: flex-end;
     height: 60px;
     .ml-2 {
       margin-left: 10px;

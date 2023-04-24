@@ -126,6 +126,7 @@ export default {
           localStorage.setItem("token", data.token);
           router.push("/");
         });
+      this.$store.state.isLoggedIn = false;
     },
   },
   beforeMount() {

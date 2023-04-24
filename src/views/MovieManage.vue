@@ -22,7 +22,7 @@
           :key="item.movieID"
           v-show="isShowMovie(item)"
         >
-          <base-image-download :linkImg="item.posterLink"></base-image-download>
+          <base-image-download :linkImg="item.posterLink" v-if="!isOpenTrailer(item.movieID)"></base-image-download>
           <div class="movie-trailer" v-if="isOpenTrailer(item.movieID)">
             <iframe
               width="120"
@@ -85,7 +85,9 @@
                 </div>
               </div>
             </div>
-            <div class="movie-time-line">Thời lượng: {{ item.timeLine }} phút</div>
+            <div class="movie-time-line">
+              Thời lượng: {{ item.timeLine }} phút
+            </div>
             <div class="movie-from-date">
               Ngày khởi chiếu: {{ convertDateFormat(item.fromDate) }}
             </div>
@@ -161,8 +163,7 @@ export default {
     this.$store.state.isShowLoading = true;
     this.$api.post("/Movie/GetListMovie", { TypeFilter: 0 }).then((data) => {
       me.dataSource = data;
-    this.$store.state.isShowLoading = false;
-
+      this.$store.state.isShowLoading = false;
     });
   },
   data() {
@@ -215,8 +216,10 @@ export default {
       }
     },
 
-    openPopup() {
-      this.$store.state.IsOpenPopup = true;
+    async openPopup() {
+      if (await this.$store.dispatch("checkRow", "admin")) {
+        this.$store.state.IsOpenPopup = true;
+      }
     },
     getRowSelected(item) {
       let me = this;
@@ -242,7 +245,7 @@ export default {
       this.loadData();
     },
 
-    handelAlter(){
+    handelAlter() {
       this.$store.state.isOpenPopupAlterMovie = false;
       this.loadData();
     },
@@ -262,12 +265,13 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background: #fff;
     border-radius: 10px;
     align-items: center;
-    .form-group{
-      margin-bottom: 0px!important;
+    .form-group {
+      margin-bottom: 0px !important;
     }
   }
 
@@ -291,10 +295,11 @@ export default {
 
   .movie-manage-container {
     .movie-manage-main {
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px 0;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 0;
       margin-top: 30px;
       display: flex;
       flex-wrap: wrap;
@@ -304,6 +309,7 @@ export default {
         position: relative;
         margin-left: 20px;
         min-width: 400px;
+        width: 420px;
         color: #111;
         display: flex;
         height: 220px;
@@ -341,6 +347,10 @@ export default {
               opacity: 0.9;
             }
             cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 200px;
           }
 
           .group-icon {

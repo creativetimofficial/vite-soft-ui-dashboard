@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
+import jwt from 'jsonwebtoken'
+
+import store from "../store";
 import Dashboard from "@/views/Dashboard.vue";
 import Tables from "@/views/Tables.vue";
 import Billing from "@/views/Billing.vue";
@@ -67,6 +70,7 @@ const routes = [
     path: "/movie-manage",
     name: "Movie Manage",
     component: MovieManage,
+    meta: { requiresAuth: true ,beforeEnter: requireAdmin},
   },
   {
     path: "/showtime-manage",
@@ -114,5 +118,66 @@ const router = createRouter({
   routes,
   linkActiveClass: "active",
 });
+
+
+
+router.beforeEach((to, from, next) => {
+  console.log(from);
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isLoggedIn() || !store.state.isLoggedIn) {
+      next({
+        path: '/sign-in',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+// Hàm check login với token
+function isLoggedIn() {
+  const token = localStorage.getItem('token');
+  store.state.isLoggedIn = true;
+
+  // Kiểm tra xem token đã được lưu trong localStorage chưa
+  if (token) {
+    // Giải mã token để kiểm tra tính hợp lệ của nó
+    const decodedToken = jwt.decode(token);
+    store.state.role = jwt.decode(token).role;
+
+    // Kiểm tra xem token có hết hạn hay không
+    const expirationDate = new Date(decodedToken.exp * 1000);
+    if (expirationDate <= new Date()) {
+      // Nếu token đã hết hạn, xóa nó khỏi localStorage và trả về false
+      localStorage.removeItem('token');
+      return false;
+    } else {
+      // Nếu token hợp lệ, trả về true
+      return true;
+    }
+  } else {
+    // Nếu token không tồn tại trong localStorage, trả về false
+    return false;
+  }
+}
+
+// Hàm check role
+function requireAdmin(to, from, next) {
+  const token = localStorage.getItem('token')
+
+  if (!isLoggedIn(token)) {
+    next('/sign-in')
+  } else {
+    const decodedToken = jwt.decode(token)
+    if (decodedToken.role !== 'admin') {
+      next(from.path)
+    } else {
+      next()
+    }
+  }
+}
 
 export default router;

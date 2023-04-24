@@ -1,0 +1,20 @@
+-- Làm chức năng vé
+1: Hiển thị vé theo từng loại phim
+ + Có 2 loại vé là vé vip và vé thường 
+
+2: Chức năng thay đổi giá vé theo loại vé
+3: Xóa vè (Không thể xóa nếu còn phim)
+4: add phân quyền 
+    +_Thay đổi giá: admin
+    + xem vé: All
+    + Xóa:admin
+
+-- làm ảnh hưởng của chức năng vé:
+1: Chọn ghế trong phòng chiếu:
+    + Tự tính tiền theo vé:
+    + HIển thị số ghế đã được mua
+    + Hiển thị số ghế đang chọn
+    + Hiển thị doanh thu phòng
+    + Tự sinh ra lịch sử mua vé
+    + Tự sinh ra vé ảo đã được mua theo khách hàng
+    + (Nâng cao: QR thanh toán)

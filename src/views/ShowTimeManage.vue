@@ -98,7 +98,7 @@ export default {
 </script>
 <style lang="scss">
 .showtime-manage {
-  .mt-2{
+  .mt-2 {
     margin-top: 10px;
   }
   padding: 30px 28px 0;
@@ -115,9 +115,10 @@ export default {
         justify-content: center;
         align-items: center;
         margin: 10px;
+        width: 250px;
         .posterLink {
           height: 250px;
-          width: 150px;
+          width: 200px;
           padding: 0;
           margin: 10px 10px;
           box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -126,7 +127,7 @@ export default {
 
         .feature-container {
           height: 250px;
-          width: 150px;
+          width: 200px;
           padding: 0;
           margin: 10px 10px;
           box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -141,6 +142,11 @@ export default {
           font-size: 16px;
           font-weight: 600;
           color: #111;
+          text-align: center;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 200px;
         }
 
         &:hover {
