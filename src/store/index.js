@@ -75,7 +75,7 @@ export default createStore({
         position: toast.POSITION.TOP_RIGHT,
       });
     },
-    checkRow(context,payload){
+    checkRole(context,payload){
       if(context.state.role == payload || context.state.role == "admin"){
         return true;
       }else{

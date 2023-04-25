@@ -55,6 +55,7 @@
           :classButton="'button-red'"
           :titleButton="'Xóa phòng'"
           @bindEvent="showPopupDeleteRealRoom()"
+          v-if="$store.state.role == 'admin'"
         ></base-button>
       </div>
       <div class="cinema-footer-right">
@@ -66,7 +67,7 @@
         <div class="ml-2"></div>
         <base-button
           :classButton="'button-red'"
-          :titleButton="'Xóa'"
+          :titleButton="'Xóa ghế'"
           @bindEvent="showDeletePopup()"
         ></base-button>
         <div class="ml-2"></div>

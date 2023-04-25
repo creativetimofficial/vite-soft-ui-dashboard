@@ -62,7 +62,7 @@ export default {
   },
   created() {
     let me = this;
-    this.$api.post("/Movie/GetListMovie", { TypeFilter: 0 }).then((data) => {
+    this.$api.post("/Movie/GetListMovie", { TypeFilter: 1 }).then((data) => {
       me.dataSource = data;
     });
   },

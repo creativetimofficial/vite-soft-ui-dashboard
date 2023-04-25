@@ -31,8 +31,8 @@
   <base-loading :isLoading="$store.state.isShowLoading"></base-loading>
 </template>
 <script>
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import Sidenav from "./examples/Sidenav/index.vue";
 import Configurator from "@/examples/Configurator.vue";
 import Navbar from "@/examples/Navbars/Navbar.vue";
@@ -40,6 +40,7 @@ import AppFooter from "@/examples/Footer.vue";
 import BaseLoading from "./views/components/BaseLoading.vue";
 import BaseToast from "./views/components/BaseToast.vue";
 import { mapMutations } from "vuex";
+import jwt from 'jsonwebtoken'
 
 export default {
   name: "App",
@@ -47,7 +48,17 @@ export default {
     Sidenav,
     Configurator,
     Navbar,
-    AppFooter,BaseLoading,BaseToast
+    AppFooter,
+    BaseLoading,
+    BaseToast,
+  },
+  created() {
+    if (localStorage.getItem("token")) {
+  const token = localStorage.getItem('token');
+      const decodedToken = jwt.decode(token);
+      this.$store.state.role = jwt.decode(token).role;
+      this.$store.state.isLoggedIn = true;
+    }
   },
   computed: {
     navClasses() {
@@ -70,5 +81,4 @@ export default {
 </script>
 <style lang="scss">
 @import url("@/assets/scss/main/main.scss");
-
 </style>

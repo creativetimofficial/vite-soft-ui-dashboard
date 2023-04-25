@@ -75,7 +75,13 @@ const i18n = createI18n({
         RoomName: "Room Name",
         RowNumber: "Row Number",
         ColNumber: "Col Number",
-        UpdateSuccessful: "Update successful"
+        UpdateSuccessful: "Update successful",
+        No: "No",
+        Timel: "Time",
+        Cost: "Cost",
+        SeatType: "Seat Type",
+        Releasedate: "Release date",
+        Languagel:"Language"
       },
       vi: {       
         welcome: "Chào mừng trở lại",
@@ -112,7 +118,7 @@ const i18n = createI18n({
         FromDate: "Từ Ngày",
         ToDate: "Đến Ngày",
         Language: "Ngôn Ngữ",
-        ReleaseDate: "Ngày Phát Hành",
+        ReleaseDate: "Ngày Công Chiếu",
         Actor: "Diễn Viên",
         Direction: "Đạo Diễn",
         Trailer: "Trailer",
@@ -147,7 +153,13 @@ const i18n = createI18n({
         RoomName: "Tên Phòng",
         RowNumber: "Số Hàng",
         ColNumber: "Số Cột",
-        UpdateSuccessful: "Cập nhật thành công"
+        UpdateSuccessful: "Cập nhật thành công",
+        No: "Số",
+        Timel: "Thời lượng",
+        Cost: "Giá",
+        SeatType: "Loại ghế",
+        Releasedate: "Ngày công chiếu",
+        Languagel: "Ngôn ngữ"
       }
     }
   })

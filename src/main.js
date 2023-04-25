@@ -18,7 +18,6 @@ import i18n from "@/i18n/config";
 import Vue3Toasity from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
-
   
 const app = createApp(App);
 app.use(i18n);

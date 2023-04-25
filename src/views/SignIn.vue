@@ -125,8 +125,11 @@ export default {
         .then((data) => {
           localStorage.setItem("token", data.token);
           router.push("/");
+          if(!data.token){
+            me.$store.dispatch("showToast","Tài khoản hoặc mật khẩu không đúng!");
+          }
         });
-      this.$store.state.isLoggedIn = false;
+      this.$store.state.isLoggedIn = true;
     },
   },
   beforeMount() {
@@ -136,6 +139,8 @@ export default {
     this.$store.state.showFooter = false;
     this.$store.state.IsOutSide = true;
     body.classList.remove("bg-gray-100");
+    this.$store.state.isLoggedIn = false;
+    localStorage.removeItem('token');
   },
   beforeUnmount() {
     this.$store.state.hideConfigButton = false;

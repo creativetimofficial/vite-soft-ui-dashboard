@@ -161,7 +161,7 @@ export default {
     let me = this;
     me.dataField = fields;
     this.$store.state.isShowLoading = true;
-    this.$api.post("/Movie/GetListMovie", { TypeFilter: 0 }).then((data) => {
+    this.$api.post("/Movie/GetListMovie", { TypeFilter: 1 }).then((data) => {
       me.dataSource = data;
       this.$store.state.isShowLoading = false;
     });
@@ -217,7 +217,7 @@ export default {
     },
 
     async openPopup() {
-      if (await this.$store.dispatch("checkRow", "admin")) {
+      if (await this.$store.dispatch("checkRole", "admin")) {
         this.$store.state.IsOpenPopup = true;
       }
     },

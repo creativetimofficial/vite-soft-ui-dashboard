@@ -65,13 +65,45 @@
           <div class="content-selecting">Đang chọn</div>
         </div>
       </div>
+
+      <div class="description-total">
+        <div class="note">Thống kê</div>
+        <div class="total-seat">
+          Tổng số ghế: <span class="bold"> {{ totalSeat }} </span>
+        </div>
+        <div class="seat-unselected">
+          Ghế đã bán: <span class="bold">{{ totalSelected }}</span>
+        </div>
+        <div class="seat-unselected">
+          Ghế đang chọn: <span class="bold">{{ totalSelecting }}</span>
+        </div>
+        <div class="seat-unselected">
+          Ghế bảo trì: <span class="bold">{{ totalMaintenance }}</span>
+        </div>
+        <div class="seat-selecting">
+          Ghế VIP: <span class="bold">{{ totalVIP }}</span>
+        </div>
+        <div class="seat-selecting">
+          Ghế thường: <span class="bold">{{ totalNormal }}</span>
+        </div>
+      </div>
+
+      <div class="user-select">
+        <div class="note">Chọn người dùng</div>
+        <v-select
+          label="name"
+          :options="dataCustomerTemp"
+          v-model="accountSelected"
+          :reduce="(typeName) => typeName.accountID"
+        ></v-select>
+      </div>
     </div>
     <div class="seatroom-footer">
       <div class="footer-left">
         <base-button
           :classButton="'button-red'"
           :titleButton="'Xóa phòng'"
-          @bindEvent="closePopup()"
+          @bindEvent="deleteCinemaRoomVirtual()"
           v-if="$store.state.role == 'admin' && roomCinmeIDSelected"
         ></base-button>
       </div>
@@ -100,6 +132,7 @@
 import { listSeat, convertLetter } from "@/constants/constantsdefaults";
 import BaseButton from "@/views/components/BaseButton.vue";
 import { convertDateFormat, convertTimeFormat } from "@/common/commonFunc";
+
 export default {
   name: "PopupSeatRoomManage",
   setup() {
@@ -121,6 +154,11 @@ export default {
       .then((data) => {
         me.dataTemplateTime = data;
       });
+
+    this.$api.post("/CinemaRoom/GetListCustomer").then((data) => {
+      me.dataCustomer = data;
+      me.dataCustomerTemp = data;
+    });
   },
   props: {
     idMovie: {
@@ -141,9 +179,25 @@ export default {
       roomCinmeIDSelected: "",
       dataTemplateTime: [],
       isOpenTemplateSeat: false,
+      totalSeat: 0,
+      totalSelected: 0,
+      totalSelecting: 0,
+      totalMaintenance: 0,
+      totalVIP: 0,
+      totalNormal: 0,
+      dataCustomer: [],
+      dataCustomerTemp: [],
+      accountSelected: "",
     };
   },
   methods: {
+    filterSearch(){
+      if(search){
+        this.dataCustomerTemp = this.dataCustomerTemp.filter(x=>x.phoneNumber.includes(search)|| x.name.toLowerCase().includes(search.toLowerCase()));
+      }else{
+        this.dataCustomerTemp = JSON.parse(JSON.stringify(this.dataCustomer));
+      }
+    },
     openTemplateSeat(id) {
       this.isOpenTemplateSeat = false;
       this.seatsSelecting = [];
@@ -160,6 +214,33 @@ export default {
           me.dataSeat = data;
           this.getLastRowCol(me.dataSeat);
           me.isOpenTemplateSeat = true;
+          me.totalSeat = 0;
+          me.totalSelected = 0;
+          me.totalSelecting = 0;
+          me.totalMaintenance = 0;
+          me.totalVIP = 0;
+          me.totalNormal = 0;
+          me.dataSeat.forEach((item) => {
+            if (item.type != 4) {
+              me.totalSeat++;
+            }
+
+            if (item.type == 3) {
+              me.totalMaintenance++;
+            }
+
+            if (item.type == 2) {
+              me.totalVIP++;
+            }
+
+            if (item.type == 1) {
+              me.totalNormal++;
+            }
+
+            if (item.status == 0) {
+              me.totalSelected++;
+            }
+          });
         });
     },
 
@@ -211,6 +292,8 @@ export default {
           });
         }
       }
+
+      this.totalSelecting = this.seatsSelecting.length;
     },
 
     isSelecting(row, col) {
@@ -225,6 +308,7 @@ export default {
     SaveState() {
       let me = this;
       this.$api
+
         .post("/Movie/UpdateSeatRoomCinema", me.seatsSelecting)
         .then(() => {
           location.reload();
@@ -241,6 +325,24 @@ export default {
       } else {
         return false;
       }
+    },
+
+    deleteCinemaRoomVirtual() {
+      let me = this;
+      me.$store.state.isShowLoading = true;
+      this.$api
+        .post("/CinemaRoom/DeleteCinemaRoomVirtual", {
+          roomCinemaID: me.roomCinmeIDSelected,
+        })
+        .then((data) => {
+          if (data) {
+            me.$store.dispatch("showToast", "Xóa phòng thành công!");
+            me.$store.state.isOpenPopupSeat = false;
+          } else {
+            me.$store.dispatch("showToast", "Xóa phòng không thành công!");
+          }
+          me.$store.state.isShowLoading = false;
+        });
     },
   },
 };
@@ -438,18 +540,60 @@ export default {
         background: #17c1e8;
       }
     }
+
+    .description-total {
+      -webkit-user-select: none;
+      user-select: none;
+      position: absolute;
+      left: 20px;
+      top: 65%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      padding: 10px;
+      border-radius: 4px;
+      .note {
+        font-size: 14px;
+        color: #111;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .bold {
+        font-weight: 600;
+        color: #111;
+      }
+    }
+
+    .user-select {
+      -webkit-user-select: none;
+      user-select: none;
+      position: absolute;
+      right: 20px;
+      top: 20%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      padding: 10px;
+      border-radius: 4px;
+      width: 200px;
+      .note {
+        font-size: 14px;
+        color: #111;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+    }
   }
 
   .seatroom-footer {
     display: flex;
     justify-content: space-between;
-    .footer-left{
+    .footer-left {
       margin-left: 10px;
     }
 
-    .footer-right{
+    .footer-right {
       display: flex;
-
     }
     position: absolute;
     right: 0;
