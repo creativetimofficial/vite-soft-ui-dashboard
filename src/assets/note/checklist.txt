@@ -18,3 +18,9 @@
     + Tự sinh ra lịch sử mua vé
     + Tự sinh ra vé ảo đã được mua theo khách hàng
     + (Nâng cao: QR thanh toán)
+
+    -- Làm chức năng lịch sử
+
+1. Hiển thị chi tiết lịch sử của từng vé
+2. Hiển thị dòng cha của chi tiết lịch sử đó (Mua nhiều)
+3. Thêm tính tính năng lưu vào lịch sử bán vé khi mua vé

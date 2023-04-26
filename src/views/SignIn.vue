@@ -128,6 +128,7 @@ export default {
           if(!data.token){
             me.$store.dispatch("showToast","Tài khoản hoặc mật khẩu không đúng!");
           }
+          me.$store.state.accountName = me.username;
         });
       this.$store.state.isLoggedIn = true;
     },

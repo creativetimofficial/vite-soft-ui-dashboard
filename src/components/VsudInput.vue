@@ -16,6 +16,7 @@
         v-if="!isMultiple"
         :readonly="readonly"
         @blur="checkRequired()"
+        @keydown.enter="checkEnter()"
       />
       <textarea
         :id="id"
@@ -38,7 +39,7 @@
 <script>
 export default {
   name: "VsudInput",
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue","enter-event"],
   props: {
     size: {
       type: String,
@@ -124,6 +125,9 @@ export default {
         this.isEmpty  = false;
       }
 
+    },
+    checkEnter(){
+      this.$emit('enter-event');
     }
   },
 };

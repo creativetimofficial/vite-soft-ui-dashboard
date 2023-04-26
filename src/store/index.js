@@ -30,7 +30,8 @@ export default createStore({
     isShowToast: false,
     contentToast: "",
     isLoggedIn: false,
-    role: ""
+    role: "",
+    accountName:"",
   },
   mutations: {
     toggleConfigurator(state) {

@@ -119,7 +119,7 @@
             'button-blue',
             seatsSelecting.length ? '' : ' button-none',
           ]"
-          :titleButton="'Thay đổi'"
+          :titleButton="'Đặt vé'"
           @bindEvent="SaveState()"
         ></base-button>
         <div class="ml-2"></div>
@@ -191,10 +191,14 @@ export default {
     };
   },
   methods: {
-    filterSearch(){
-      if(search){
-        this.dataCustomerTemp = this.dataCustomerTemp.filter(x=>x.phoneNumber.includes(search)|| x.name.toLowerCase().includes(search.toLowerCase()));
-      }else{
+    filterSearch() {
+      if (search) {
+        this.dataCustomerTemp = this.dataCustomerTemp.filter(
+          (x) =>
+            x.phoneNumber.includes(search) ||
+            x.name.toLowerCase().includes(search.toLowerCase())
+        );
+      } else {
         this.dataCustomerTemp = JSON.parse(JSON.stringify(this.dataCustomer));
       }
     },
@@ -220,6 +224,7 @@ export default {
           me.totalMaintenance = 0;
           me.totalVIP = 0;
           me.totalNormal = 0;
+          me.seatsSelecting = [];
           me.dataSeat.forEach((item) => {
             if (item.type != 4) {
               me.totalSeat++;
@@ -277,6 +282,10 @@ export default {
         this.$store.dispatch("showToast", "Ghế đang bảo trì");
       }
 
+      let typeSeat = this.dataSeat.find(
+        (seat) => seat.rowSeat === row && seat.colSeat === col
+      ).type;
+
       if (this.getSeat(row, col) && this.getType(row, col) != "unuse") {
         if (
           this.seatsSelecting.find((x) => x.rowSeat == row && x.colSeat == col)
@@ -289,6 +298,8 @@ export default {
             rowSeat: row,
             colSeat: col,
             roomCinemaID: this.roomCinmeIDSelected,
+            Type: typeSeat,
+            SeatName: convertLetter(row) + col,
           });
         }
       }
@@ -307,12 +318,46 @@ export default {
 
     SaveState() {
       let me = this;
-      this.$api
+      let cusName = "";
+      let phoneNum = "";
+      let templateTimeCode = "";
+      let tempTime = "";
+      let postDate = null;
+      let roomCode = "";
+      if(this.dataCustomer && me.accountSelected){
+        cusName=this.dataCustomer.find(x=>x.accountID==me.accountSelected).name;
+        phoneNum = this.dataCustomer.find(x=>x.accountID==me.accountSelected).phoneNumber;
+      }
 
+      if(this.dataTemplateTime){
+        templateTimeCode = this.dataTemplateTime.find(x=>x.roomCinemaID == me.roomCinmeIDSelected).templateTimeCode;
+        tempTime = this.dataTemplateTime.find(x=>x.roomCinemaID == me.roomCinmeIDSelected).time;
+        postDate = this.dataTemplateTime.find(x=>x.roomCinemaID == me.roomCinmeIDSelected).postDate;
+        roomCode = this.dataTemplateTime.find(x=>x.roomCinemaID == me.roomCinmeIDSelected).roomCode;
+      }
+
+      this.$api.post("/History/InsertIntoHistory",{
+          movieID: me.idMovie,
+          roomCinemaID: me.roomCinmeIDSelected,
+          customerName: cusName,
+          phoneNumber: phoneNum,
+          templateTimeCode: templateTimeCode,
+          time: tempTime,
+          movieName: me.nameMovie,
+          showDate: postDate,
+          dataTicket: JSON.stringify(me.seatsSelecting),
+          createdBy: me.$store.state.accountName,
+          roomCode: roomCode
+        });
+
+      this.$api
         .post("/Movie/UpdateSeatRoomCinema", me.seatsSelecting)
         .then(() => {
-          location.reload();
+          me.$store.dispatch("showToast", "Đặt vé thành công!");
+          me.loadDataSeat(me.roomCinmeIDSelected);
         });
+
+
     },
 
     closePopup() {
