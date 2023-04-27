@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <main class="mt-0 main-content main-content-bg">
+  <main class="mt-0 main-content main-content-bg" @keydown.enter="checkEnter()">
     <section>
       <div class="page-header min-vh-75">
         <div class="container">
@@ -132,6 +132,10 @@ export default {
         });
       this.$store.state.isLoggedIn = true;
     },
+
+    checkEnter(){
+      this.loginAdmin();
+    }
   },
   beforeMount() {
     this.$store.state.hideConfigButton = false;

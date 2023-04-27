@@ -17,6 +17,7 @@ import { firebaseApp } from './firebase'
 import i18n from "@/i18n/config";
 import Vue3Toasity from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import VueApexCharts from "vue3-apexcharts";
 
   
 const app = createApp(App);
@@ -44,6 +45,7 @@ app.use(
   }
 )
 app.use(ElementPlus)
+app.use(VueApexCharts);
 app.component("v-select", VueSelect)
 app.component('EasyDataTable', Vue3EasyDataTable);
 app.use(store);
