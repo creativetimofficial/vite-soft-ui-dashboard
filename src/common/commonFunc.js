@@ -43,3 +43,23 @@ export function convertTimeFormat(time) {
 
   return newTime;
 }
+
+
+export function convertToType(a, type) {
+  switch(type) {
+    case 'Number':
+      return Number(a);
+    case 'String':
+      return String(a);
+    case 'Boolean':
+      return Boolean(a);
+    case 'Array':
+      return Array.from(a);
+    case 'Object':
+      return Object(a);
+    case 'Date':
+      return new Date(a);
+    default:
+      return a;
+  }
+}

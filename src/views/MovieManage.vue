@@ -161,7 +161,7 @@ export default {
     let me = this;
     me.dataField = fields;
     this.$store.state.isShowLoading = true;
-    this.$api.post("/Movie/GetListMovie", { TypeFilter: 1 }).then((data) => {
+    this.$api.post("/Movie/GetListMovie", { TypeFilter: me.typeFilter }).then((data) => {
       me.dataSource = data;
       this.$store.state.isShowLoading = false;
     });
@@ -178,6 +178,7 @@ export default {
       openContexts: [],
       contentSelected: "",
       nameMovie: "",
+      typeFilter: 1
     };
   },
   methods: {
@@ -236,7 +237,7 @@ export default {
     },
     loadData() {
       let me = this;
-      this.$api.post("/Movie/GetListMovie", { TypeFilter: 0 }).then((data) => {
+      this.$api.post("/Movie/GetListMovie", { TypeFilter: me.typeFilter }).then((data) => {
         me.dataSource = data;
       });
     },
