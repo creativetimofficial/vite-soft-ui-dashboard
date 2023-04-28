@@ -3,9 +3,7 @@
     <navbar
       :min-nav="navbarMinimize"
       :toggle="toggleConfigurator"
-      :class="
-        $store.state.isNavFixed ? $store.state.navbarFixed_class : ''
-      "
+      :class="$store.state.isNavFixed ? $store.state.navbarFixed_class : ''"
     />
   </div>
   <div
@@ -15,9 +13,15 @@
       backgroundSize: 'cover',
     }"
   >
-    <sidenav :custom_class="$store.state.mcolor" :class="isTransparent" class="fixed-start" />
+    <sidenav
+      :custom_class="$store.state.mcolor"
+      :class="isTransparent"
+      class="fixed-start"
+    />
     <main class="mt-1 main-content border-radius-lg">
-      <div class="section min-vh-85 position-relative transform-scale-0 transform-scale-md-7">
+      <div
+        class="section min-vh-85 position-relative transform-scale-0 transform-scale-md-7"
+      >
         <div class="container-fluid">
           <div class="pt-10 row">
             <div class="pt-5 text-center col-lg-1 col-md-1 pt-lg-0 ms-lg-5">
@@ -108,7 +112,7 @@ import CardToDo from "./components/CardToDo.vue";
 import CardPlayer from "./components/CardPlayer.vue";
 import CardMessage from "./components/CardMessage.vue";
 import setTooltip from "@/assets/js/tooltip.js";
-import bgImg from '@/assets/img/vr-bg.jpg';
+import bgImg from "@/assets/img/vr-bg.jpg";
 const body = document.getElementsByTagName("body")[0];
 
 import { mapMutations } from "vuex";
@@ -127,8 +131,8 @@ export default {
   },
   data() {
     return {
-      bgImg
-    }
+      bgImg,
+    };
   },
 
   computed: {
@@ -159,7 +163,8 @@ export default {
       this.$store.state.isPinned = true;
     }
     this.$store.state.isTransparent = "bg-transparent";
-  }, methods: {
+  },
+  methods: {
     ...mapMutations(["navbarMinimize", "toggleConfigurator"]),
   },
 };

@@ -3,7 +3,7 @@
     <div
       class="mt-4 page-header min-height-300 border-radius-xl"
       :style="{
-        backgroundImage:`url(${bgImg})`,
+        backgroundImage: `url(${bgImg})`,
 
         backgroundPositionY: '50%',
       }"
@@ -496,7 +496,7 @@ import team1 from "@/assets/img/team-1.jpg";
 import team2 from "@/assets/img/team-2.jpg";
 import team3 from "@/assets/img/team-3.jpg";
 import team4 from "@/assets/img/team-4.jpg";
-import bgImg from "@/assets/img/curved-images/curved14.jpg"
+import bgImg from "@/assets/img/curved-images/curved14.jpg";
 import ProjectsCard from "./components/ProjectOverviewCard.vue";
 
 import setNavPills from "@/assets/js/nav-pills.js";
@@ -525,7 +525,7 @@ export default {
       team4,
       img2,
       img3,
-      bgImg
+      bgImg,
     };
   },
 

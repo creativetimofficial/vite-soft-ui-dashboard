@@ -1,12 +1,13 @@
-.form-switch{
-  .form-check-input{
+.form-switch {
+  .form-check-input {
     border: 1px solid $gray-200;
     position: relative;
-    background-color: rgba($dark-gradient-state, .1);
-    height: $form-check-input-width + .02;
+    background-color: rgba($dark-gradient-state, 0.1);
+    height: $form-check-input-width + 0.02;
 
     &:after {
-      transition: transform $form-check-transition-time ease-in-out, background-color $form-check-transition-time ease-in-out;
+      transition: transform $form-check-transition-time ease-in-out,
+        background-color $form-check-transition-time ease-in-out;
       content: "";
       width: $form-switch-check-after-width;
       height: $form-switch-check-after-width;
@@ -23,8 +24,8 @@
     }
 
     &:checked {
-      border-color: rgba($dark-gradient-state, .95);
-      background-color: rgba($dark-gradient-state, .95);
+      border-color: rgba($dark-gradient-state, 0.95);
+      background-color: rgba($dark-gradient-state, 0.95);
     }
   }
 }

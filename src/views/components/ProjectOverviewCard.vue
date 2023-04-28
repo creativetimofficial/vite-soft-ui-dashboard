@@ -2,7 +2,11 @@
   <div class="card card-blog card-plain">
     <div class="position-relative">
       <a class="shadow-xl d-block border-radius-xl">
-        <img :src="img" alt="img-blur-shadow" class="shadow img-fluid border-radius-xl" />
+        <img
+          :src="img"
+          alt="img-blur-shadow"
+          class="shadow img-fluid border-radius-xl"
+        />
       </a>
     </div>
     <div class="px-1 pb-0 card-body">
@@ -12,7 +16,9 @@
       </a>
       <p class="mb-4 text-sm">{{ description }}</p>
       <div class="d-flex align-items-center justify-content-between">
-        <button type="button" class="mb-0 btn btn-outline-success btn-sm">View Project</button>
+        <button type="button" class="mb-0 btn btn-outline-success btn-sm">
+          View Project
+        </button>
         <div class="mt-2 avatar-group">
           <a
             href="javascript:;"
@@ -62,51 +68,51 @@ export default {
   props: {
     img: {
       type: String,
-      default: ""
+      default: "",
     },
     number: {
       type: Number,
-      default: 0
+      default: 0,
     },
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     description: {
       type: String,
-      default: ""
+      default: "",
     },
     imgTeam1: {
       type: String,
-      default: ""
+      default: "",
     },
     imgTeam2: {
       type: String,
-      default: ""
+      default: "",
     },
     imgTeam3: {
       type: String,
-      default: ""
+      default: "",
     },
     imgTeam4: {
       type: String,
-      default: ""
+      default: "",
     },
     titleTeam1: {
       type: String,
-      default: ""
+      default: "",
     },
     titleTeam2: {
       type: String,
-      default: ""
+      default: "",
     },
     titleTeam3: {
       type: String,
-      default: ""
+      default: "",
     },
     titleTeam4: {
       type: String,
-      default: ""
+      default: "",
     },
   },
 };

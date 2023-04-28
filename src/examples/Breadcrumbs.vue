@@ -10,16 +10,21 @@
           :class="textWhite"
           class="opacity-5 ps-2"
           href="#"
-        >لوحات القيادة</a>
+          >لوحات القيادة</a
+        >
         <a v-else :class="textWhite" class="opacity-8" href="#">Pages</a>
       </li>
       <li
         class="text-sm breadcrumb-item active"
         :class="textWhite ? 'text-white' : 'text-dark'"
         aria-current="page"
-      >{{ currentPage }}</li>
+      >
+        {{ currentPage }}
+      </li>
     </ol>
-    <h6 class="mb-0 font-weight-bolder" :class="textWhite ? 'text-white' : ''">{{ currentPage }}</h6>
+    <h6 class="mb-0 font-weight-bolder" :class="textWhite ? 'text-white' : ''">
+      {{ currentPage }}
+    </h6>
   </nav>
 </template>
 
@@ -30,13 +35,12 @@ export default {
     currentPage: {
       required: true,
       type: String,
-      default: ""
+      default: "",
     },
     textWhite: {
       type: String,
-      default: ""
+      default: "",
     },
   },
-
 };
 </script>

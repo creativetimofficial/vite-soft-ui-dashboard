@@ -1,6 +1,9 @@
 <template>
   <div class="fixed-plugin">
-    <a class="px-3 py-2 fixed-plugin-button text-dark position-fixed" @click="toggle">
+    <a
+      class="px-3 py-2 fixed-plugin-button text-dark position-fixed"
+      @click="toggle"
+    >
       <i class="py-2 fa fa-cog"></i>
     </a>
     <div class="shadow-lg card blur">
@@ -23,7 +26,10 @@
           <h6 class="mb-0">Sidebar Colors</h6>
         </div>
         <a href="#" class="switch-trigger background-color">
-          <div class="my-2 badge-colors" :class="$store.state.isRTL ? 'text-end' : ' text-start'">
+          <div
+            class="my-2 badge-colors"
+            :class="$store.state.isRTL ? 'text-end' : ' text-start'"
+          >
             <span
               class="badge filter bg-gradient-primary active"
               data-color="primary"
@@ -67,17 +73,21 @@
             class="px-3 mb-2 btn bg-gradient-success w-100"
             :class="ifTransparent === 'bg-transparent' ? 'active' : ''"
             @click="sidebarType('bg-transparent')"
-          >Transparent</button>
+          >
+            Transparent
+          </button>
           <button
             id="btn-white"
             class="px-3 mb-2 btn bg-gradient-success w-100 ms-2"
             :class="ifTransparent === 'bg-white' ? 'active' : ''"
             @click="sidebarType('bg-white')"
-          >White</button>
+          >
+            White
+          </button>
         </div>
-        <p
-          class="mt-2 text-sm d-xl-none d-block"
-        >You can change the sidenav type just on desktop view.</p>
+        <p class="mt-2 text-sm d-xl-none d-block">
+          You can change the sidenav type just on desktop view.
+        </p>
         <!-- Navbar Fixed -->
         <div class="mt-3">
           <h6 class="mb-0">Navbar Fixed</h6>
@@ -97,15 +107,18 @@
         <a
           class="btn bg-gradient-info w-100"
           href="https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro"
-        >Buy now</a>
+          >Buy now</a
+        >
         <a
           class="btn bg-gradient-dark w-100"
           href="https://www.creative-tim.com/product/vue-soft-ui-dashboard"
-        >Free demo</a>
+          >Free demo</a
+        >
         <a
           class="btn btn-outline-dark w-100"
           href="https://www.creative-tim.com/learning-lab/vue/overview/soft-ui-dashboard/"
-        >View documentation</a>
+          >View documentation</a
+        >
         <div class="text-center w-100">
           <a
             class="github-button"
@@ -114,7 +127,8 @@
             data-size="large"
             data-show-count="true"
             aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub"
-          >Star</a>
+            >Star</a
+          >
           <h6 class="mt-3">Thank you for sharing!</h6>
           <a
             href="https://twitter.com/intent/tweet?text=Check%20Vue%20Soft%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fvue-soft-ui-dashboard"
@@ -143,7 +157,7 @@ export default {
   props: {
     toggle: {
       type: Function,
-      default: () => { }
+      default: () => {},
     },
   },
   data() {
@@ -165,7 +179,8 @@ export default {
     // Deactivate sidenav type buttons on resize and small screens
     window.addEventListener("resize", this.sidenavTypeOnResize);
     window.addEventListener("load", this.sidenavTypeOnResize);
-  }, methods: {
+  },
+  methods: {
     ...mapMutations(["navbarMinimize", "sidebarType", "navbarFixed"]),
     ...mapActions(["toggleSidebarColor"]),
 
