@@ -32,6 +32,13 @@ export default createStore({
     isLoggedIn: false,
     role: "",
     accountName:"",
+    cinemaName: "",
+    isOpenPopupApprovalList: false,
+    isOpenPopupAddAccount: false,
+    isOpenDetailAccount: false,
+    isOpenPopupDetailCategoryMovie: false,
+    isOpenDetailTypeMovie: false,
+    isOpenPopupTemplateTimeCode: false
   },
   mutations: {
     toggleConfigurator(state) {

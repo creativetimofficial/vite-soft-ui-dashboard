@@ -26,19 +26,19 @@ export var slideitems = [
     text: "History"
   },
   {
-    name: "Revenue",
-    icon: "dashboard",
-    text: "Revenue"
-  },
-  {
-    name: "Payment",
-    icon: "dashboard",
-    text: "Payment"
-  },
-  {
     name: "Cinema Room",
     icon: "dashboard",
     text: "CinemaRoomManage"
+  },
+  {
+    name: "Account Manage",
+    icon: "dashboard",
+    text: "Account"
+  },
+  {
+    name: "Dictionary",
+    icon: "dashboard",
+    text: "Dictionary"
   }
 ];
 
@@ -46,9 +46,26 @@ export var slideitems = [
 export const listSeat = {
   row: 8,
   col: 10,
-  
+
 }
 
-export function convertLetter(number){
+export function convertLetter(number) {
   return String.fromCharCode(64 + number);
+}
+
+export function defaultRole(){
+  return [
+    {
+      role: 1,
+      nameRole: "Admin",
+    },
+    {
+      role: 2,
+      nameRole: "Employee",
+    },
+    {
+      role: 3,
+      nameRole: "Manager"
+    }
+  ]
 }

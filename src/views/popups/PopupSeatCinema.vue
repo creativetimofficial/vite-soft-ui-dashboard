@@ -155,7 +155,7 @@ export default {
         me.dataTemplateTime = data;
       });
 
-    this.$api.post("/CinemaRoom/GetListCustomer").then((data) => {
+    this.$api.post("/Account/GetListCustomer").then((data) => {
       me.dataCustomer = data;
       me.dataCustomerTemp = data;
     });

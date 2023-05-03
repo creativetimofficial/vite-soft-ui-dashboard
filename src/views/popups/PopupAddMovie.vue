@@ -17,6 +17,7 @@
               name="password"
               v-model="dataMovie.movieCode"
               :id="'movie_name'"
+              :isRequired="true"
             />
           </div>
           <div class="popup-input">
@@ -27,6 +28,7 @@
               name="password"
               v-model="dataMovie.movieName"
               :id="'movie_name'"
+              :isRequired="true"
             />
           </div>
           <div class="popup-input">
@@ -225,7 +227,6 @@ export default {
       this.$store.state.IsOpenPopup = false;
     },
     catchUrl(value) {
-      console.log(10);
       this.dataMovie.urlImage = value;
     },
     postMovie() {

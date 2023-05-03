@@ -61,6 +61,7 @@
                     {{ $t('donthaveaccount') }}
                     <a
                       href="javascript:;"
+                      @click="redirectSignup"
                       class="text-info text-gradient font-weight-bold"
                       >{{ $t('signup') }}</a
                     >
@@ -117,6 +118,7 @@ export default {
   methods: {
     loginAdmin() {
       let me = this;
+      this.$store.state.isShowLoading = true;
       this.$api
         .post("/UserLogin/login", {
           accountName: me.username,
@@ -129,8 +131,13 @@ export default {
             me.$store.dispatch("showToast","Tài khoản hoặc mật khẩu không đúng!");
           }
           me.$store.state.accountName = me.username;
+          this.$store.state.isShowLoading = false;
         });
       this.$store.state.isLoggedIn = true;
+    },
+
+    redirectSignup(){
+      router.push("/sign-up");
     },
 
     checkEnter(){

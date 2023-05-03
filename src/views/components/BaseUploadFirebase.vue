@@ -22,7 +22,7 @@ export default {
   emits: ["url-bind"],
   setup(props, { emit }) {
     const storage = useFirebaseStorage();
-    var linkImg = props.urlLink ? props.urlLink : "images/" + uuidv4();
+    var linkImg = props.urlLink ? props.urlLink : props.preUrl + uuidv4();
     var mountainFileRef = storageRef(storage, linkImg);
     const { url, uploadProgress, uploadError, uploadTask, upload } =
       useStorageFile(mountainFileRef);
@@ -81,6 +81,13 @@ export default {
     idUpload:{
       type: String,
       default: ""
+    },
+    /**
+     * Đường dẫn gốc mặc định
+     */
+    preUrl:{
+      type: String,
+      default: "images/"
     }
   },
   data() {

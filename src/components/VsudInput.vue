@@ -17,6 +17,7 @@
         :readonly="readonly"
         @blur="checkRequired()"
         @keydown.enter="checkEnter()"
+        :autocomplete="autocomplete"
       />
       <textarea
         :id="id"
@@ -81,7 +82,8 @@ export default {
     },
     isRequired: {type: Boolean, default: false},
     isMultiple: { type: Boolean, default: false },
-    readonly: Boolean
+    readonly: Boolean,
+    autocomplete: {type: String,default: 'off'}
   },
   data() {
     return {

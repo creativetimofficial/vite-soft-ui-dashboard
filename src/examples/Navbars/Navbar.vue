@@ -12,6 +12,7 @@
         class="mt-2 collapse navbar-collapse mt-sm-0 me-md-0 me-sm-4"
         :class="$store.state.isRTL ? 'px-0' : 'me-sm-4'"
       >
+        <div class="name-cinema text-dark">Rạp: {{ $store.state.cinemaName }}</div>
         <div
           class="pe-md-3 d-flex align-items-center"
           :class="$store.state.isRTL ? 'me-md-auto' : 'ms-md-auto'"
@@ -251,3 +252,9 @@ export default {
   },
 };
 </script>
+<style>
+#navbar .name-cinema{
+  font-size: 20px;
+    font-weight: 600;
+}
+</style>

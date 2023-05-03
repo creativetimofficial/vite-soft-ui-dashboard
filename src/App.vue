@@ -58,6 +58,7 @@ export default {
       const decodedToken = jwt.decode(token);
       this.$store.state.role = jwt.decode(token).role;
       this.$store.state.isLoggedIn = true;
+      this.$store.state.cinemaName = decodedToken.cinemaName;
     }
   },
   computed: {
