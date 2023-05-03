@@ -20,7 +20,6 @@ export function convertDateTime(input) {
   return datetime;
 }
 
-
 export function convertDateFormat(date) {
   // Tách ngày, tháng và năm từ chuỗi date
   var year = date.substring(0, 4);
@@ -28,7 +27,7 @@ export function convertDateFormat(date) {
   var day = date.substring(8, 10);
 
   // Tạo chuỗi định dạng mới
-  var newDate = day + '/' + month + '/' + year;
+  var newDate = day + "/" + month + "/" + year;
 
   return newDate;
 }
@@ -39,27 +38,50 @@ export function convertTimeFormat(time) {
   var minute = time.substring(3, 5);
 
   // Tạo chuỗi định dạng mới
-  var newTime = hour + ':' + minute;
+  var newTime = hour + ":" + minute;
 
   return newTime;
 }
 
-
 export function convertToType(a, type) {
-  switch(type) {
-    case 'Number':
+  switch (type) {
+    case "Number":
       return Number(a);
-    case 'String':
+    case "String":
       return String(a);
-    case 'Boolean':
+    case "Boolean":
       return Boolean(a);
-    case 'Array':
+    case "Array":
       return Array.from(a);
-    case 'Object':
+    case "Object":
       return Object(a);
-    case 'Date':
+    case "Date":
       return new Date(a);
     default:
       return a;
   }
+}
+
+export function getDataChart(Xaxis, Yaxis, name) {
+  return {
+    series: [{
+      name: name,
+      data: Yaxis,
+    }],
+    xaxis: {
+      categories: Xaxis,
+    },
+  };
+}
+
+export const initDataChart = {
+   
+    series: [{
+      name: "",
+      data: [],
+    }],
+    xaxis: {
+      categories: [],
+    },
+  
 }

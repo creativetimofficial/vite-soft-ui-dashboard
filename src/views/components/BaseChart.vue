@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isShowChart">
     <apexchart
       :width="widthChart"
       :type="typeChart"
@@ -19,28 +19,41 @@ export default {
       type: String,
       default: "500",
     },
-    categoryChartX: {
-      type: Array,
-      required: true,
+    titleY: {
+      type: String,
+      default: ""
     },
-    dataChart: {
-      type: Array,
-      required: true,
+    titleX: {
+      type: String,
+      default: ""
     },
-    categoryChartY: {
+    dataValue: {
       type: [Array, Object],
     },
   },
   created() {
-    this.series = this.dataChart;
-    this.chartOptions.xaxis.categories = this.categoryChartX;
-    this.chartOptions.yaxis.title.text = this.categoryChartY??"";
+    this.series = this.dataValue.series;
+    this.chartOptions.xaxis.categories = this.dataValue.xaxis.categories;
+    this.chartOptions.yaxis.title.text = this.titleY ?? "";
+    this.chartOptions.xaxis.title.text = this.titleX ?? "";
+  },
+  watch: {
+    dataValue(newVal) {
+      this.isShowChart = false;
+      this.series = this.dataValue.series;
+      this.chartOptions.xaxis.categories = this.dataValue.xaxis.categories;
+      this.isShowChart = true;
+    },
   },
   data: function () {
     return {
+      isShowChart: false,
       chartOptions: {
         xaxis: {
           categories: [],
+          title: {
+            text: "",
+          },
         },
         yaxis: {
           title: {},
@@ -57,6 +70,21 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    getDataChart(Xaxis, Yaxis, name) {
+      return {
+        series: [
+          {
+            name: name,
+            data: Yaxis,
+          },
+        ],
+        xaxis: {
+          categories: Xaxis,
+        },
+      };
+    },
   },
 };
 </script>
