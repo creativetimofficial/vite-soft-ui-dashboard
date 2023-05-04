@@ -20,7 +20,7 @@
       </div>
       <base-button
           :classButton="'button-blue'"
-          :titleButton="'Thêm mới'"
+          :titleButton="$t('Addnew')"
           @bindEvent="SaveState()"
         ></base-button>
     </div>

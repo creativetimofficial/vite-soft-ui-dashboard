@@ -10,37 +10,42 @@
       />
       <base-button
         :classButton="'button-blue'"
-        :titleButton="'Thêm mới'"
+        :titleButton="$t('Addnew')"
         @bindEvent="openPopup()"
       ></base-button>
     </div>
     <div class="report-manage-main">
       <div class="report-manage-container">
         <div class="report-by-day">
-          <div class="lable">Thống kê theo ngày</div>
+          <div class="lable">{{$t('Statisticsbyday')}}</div>
           <BaseChart
             :typeChart="'bar'"
-            :widthChart="'500'"
+            :widthChart="'600'"
             :dataValue="chartDayByMovie"
             :titleX="'Phim'"
+            :titleY="'VND'"
           ></BaseChart>
         </div>
-        <div class="report-by-day">
-          <div class="lable">Thống kê theo ngày</div>
+        <div class="report-by-month">
+          <div class="lable">{{ $t('Statisticsbymonth') }}</div>
           <BaseChart
             :typeChart="'bar'"
-            :widthChart="'500'"
+            :widthChart="'600'"
             :dataValue="chartThisMonth"
             :titleX="'Phim'"
+            :titleY="'VND'"
+
           ></BaseChart>
         </div>
-        <div class="report-by-day">
-          <div class="lable">Thống kê theo ngày</div>
+        <div class="report-by-year">
+          <div class="lable">{{ $t('Statisticsbyyear') }}</div>
           <BaseChart
             :typeChart="'bar'"
-            :widthChart="'500'"
+            :widthChart="'600'"
             :dataValue="chartThisYearByMonth"
-            :titleX="'Ngày'"
+            :titleX="'Tháng'"
+            :titleY="'VND'"
+
           ></BaseChart>
         </div>
       </div>
@@ -88,7 +93,7 @@ export default {
       let me = this;
       this.$store.state.isShowLoading = true;
       this.$api.post("/Report/GetDataChartThisMonth").then((data) => {
-        me.chartThisMonth = getDataChart(data.name, data.amount, "chart-month");
+        me.chartThisMonth = getDataChart(data.name, data.amount, "Doanh thu");
         me.$store.state.isShowLoading = false;
       });
     },
@@ -100,7 +105,7 @@ export default {
         me.chartThisYearByMonth = getDataChart(
           data.month,
           data.amount,
-          "chart-year"
+          "Doanh thu"
         );
         me.$store.state.isShowLoading = false;
       });
@@ -110,7 +115,7 @@ export default {
       let me = this;
       this.$store.state.isShowLoading = true;
       this.$api.post("/Report/GetDataChartDayByMovie").then((data) => {
-        me.chartDayByMovie = getDataChart(data.name, data.amount, "chart-day");
+        me.chartDayByMovie = getDataChart(data.name, data.amount, "Doanh thu");
         me.$store.state.isShowLoading = false;
       });
     },
@@ -119,6 +124,7 @@ export default {
 </script>
 <style lang="scss">
 .report-manage {
+  padding: 30px 28px 0;
   .report-manage-header {
     height: 60px;
     display: flex;
@@ -140,11 +146,24 @@ export default {
         rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
       background: #fff;
       border-radius: 10px;
-      padding: 20px 0;
+      padding: 20px 10px;
       margin-top: 30px;
       display: flex;
       flex-wrap: wrap;
       min-width: 500px;
+      justify-content: space-around;
+      .report-by-day, .report-by-month, .report-by-year{
+        border: 1px solid #111;
+        padding: 5px;
+        min-width: 600px;
+        min-height: 500px;
+        margin: 10px;
+        .lable{
+          display: flex;
+          justify-content: center;
+          font-weight: 700;
+        }
+      }
     }
   }
 }

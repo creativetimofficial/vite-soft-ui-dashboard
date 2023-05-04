@@ -11,20 +11,20 @@
       <div class="button-container">
         <base-button
           :classButton="'button-blue'"
-          :titleButton="'Thêm mới'"
+          :titleButton="$t('Addnew')"
           @bindEvent="openPopupAddAccount()"
         ></base-button>
         <div class="ml-1"></div>
         <base-button
           :classButton="'button-blue'"
-          :titleButton="'Phê duyệt'"
+          :titleButton="$t('Approve')"
           @bindEvent="openPopupApprovalList()"
         ></base-button>
       </div>
     </div>
     <div class="account-main">
       <div class="account-container-admin">
-        <div class="container-header">Tài khoản hệ thống</div>
+        <div class="container-header">{{$t('Systemaccount')}}</div>
         <div class="container-main">
           <div
             class="account-item"
@@ -56,12 +56,12 @@
                   : "manager"
               }}
             </p>
-            <button @click="openPopupDetail(item.accountID)">Chi tiết</button>
+            <button @click="openPopupDetail(item.accountID)">{{ $t('Detail') }}</button>
           </div>
         </div>
       </div>
       <div class="account-container-user">
-        <div class="container-header">Tài khoản khách hàng</div>
+        <div class="container-header">{{ $t('Customeraccount') }}</div>
         <div class="container-main">
           <div
             class="account-item"
@@ -81,7 +81,7 @@
             </div>
             <span> {{ item.name }}</span>
             <p class="job">{{ item.accountName }}</p>
-            <button>Chi tiết</button>
+            <button>{{ $t('Detail') }}</button>
           </div>
         </div>
       </div>

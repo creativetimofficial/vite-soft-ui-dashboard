@@ -86,7 +86,7 @@
           </button>
         </div>
         <p class="mt-2 text-sm d-xl-none d-block">
-          You can change the sidenav type just on desktop view.
+
         </p>
         <!-- Navbar Fixed -->
         <div class="mt-3">

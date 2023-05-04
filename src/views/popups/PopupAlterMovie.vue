@@ -159,14 +159,14 @@
       <div class="popup-footer">
         <base-button
           :classButton="'button-white'"
-          :titleButton="'Hủy'"
+          :titleButton="$t('Cancel')"
           @bindEvent="closeThisPopup()"
         ></base-button>
 
         <div class="ml-2"></div>
         <base-button
           :classButton="'button-blue'"
-          :titleButton="'Thêm'"
+          :titleButton="$t('Add')"
           @click="postMovie()"
         ></base-button>
       </div>

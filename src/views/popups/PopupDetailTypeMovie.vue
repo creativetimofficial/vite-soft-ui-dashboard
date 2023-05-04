@@ -6,15 +6,15 @@
           <div class="icon-close" @click="closeThisPopup()">
             <i class="fas fa-times"></i>
           </div>
-          <div class="header-title">Loại Phim</div>
+          <div class="header-title">{{ $t('TypeMovie') }}</div>
           <div class="line-space"></div>
         </div>
         <div class="popup-main">
           <div class="popup-get">
             <table id="table-type-movie">
               <thead>
-                <th class="category-code">Mã loại</th>
-                <th class="category-name">Tên loại</th>
+                <th class="category-code">{{ $t('Typemoviecode') }}</th>
+                <th class="category-name">{{ $t('Typemoviename') }}</th>
               </thead>
               <tbody>
                 <tr v-for="item in dataType" :key="item.categoryID">

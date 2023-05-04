@@ -125,7 +125,7 @@ export default {
           password: me.password,
         })
         .then((data) => {
-          localStorage.setItem("token", data.token);
+          sessionStorage.setItem("token", data.token);
           router.push("/");
           if(!data.token){
             me.$store.dispatch("showToast","Tài khoản hoặc mật khẩu không đúng!");
@@ -152,7 +152,7 @@ export default {
     this.$store.state.IsOutSide = true;
     body.classList.remove("bg-gray-100");
     this.$store.state.isLoggedIn = false;
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   },
   beforeUnmount() {
     this.$store.state.hideConfigButton = false;

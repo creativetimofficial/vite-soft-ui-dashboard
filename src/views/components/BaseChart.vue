@@ -5,6 +5,7 @@
       :type="typeChart"
       :options="chartOptions"
       :series="series"
+      :height="heightChart"
     ></apexchart>
   </div>
 </template>
@@ -18,6 +19,10 @@ export default {
     widthChart: {
       type: String,
       default: "500",
+    },
+    heightChart:{
+      type: String,
+      default: "500"
     },
     titleY: {
       type: String,

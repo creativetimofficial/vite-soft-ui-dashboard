@@ -3,10 +3,10 @@
     <div class="dictionary-header"></div>
     <div class="dictionary-main">
       <div class="movie-main">
-        <div class="movie-main-header">Danh mục phim</div>
+        <div class="movie-main-header">{{ $t('Moviedictionary') }}</div>
         <div class="movie-main-main">
           <button class="cta" @click="openPopupDetailTypeMovie">
-            <span>Loại phim</span>
+            <span>{{ $t('TypeMovie') }}</span>
             <svg viewBox="0 0 13 10" height="10px" width="15px">
               <path d="M1,5 L11,5"></path>
               <polyline points="8 1 12 5 8 9"></polyline>
@@ -14,7 +14,7 @@
           </button>
 
           <button class="cta" @click="openPopupDetailCategoryMovie">
-            <span>Thể loại phim</span>
+            <span>{{ $t('CategoryMovie') }}</span>
             <svg viewBox="0 0 13 10" height="10px" width="15px">
               <path d="M1,5 L11,5"></path>
               <polyline points="8 1 12 5 8 9"></polyline>
@@ -24,10 +24,10 @@
       </div>
       <div class="line-space"></div>
       <div class="template-main">
-        <div class="template-main-header">Danh mục suất chiếu</div>
+        <div class="template-main-header">{{ $t('Showtimedictionary') }}</div>
         <div class="template-main-main">
           <button class="cta" @click="openPopupDetailTemplateTimeCode">
-            <span>Khung giờ chiếu</span>
+            <span>{{$t('Timeframe')}}</span>
             <svg viewBox="0 0 13 10" height="10px" width="15px">
               <path d="M1,5 L11,5"></path>
               <polyline points="8 1 12 5 8 9"></polyline>

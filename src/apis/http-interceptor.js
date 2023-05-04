@@ -3,7 +3,7 @@ import axios from 'axios'
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
   // Do something before request is sent
-  config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+  config.headers.Authorization = `Bearer ${sessionStorage.getItem('token')}`
   config.headers.Accept = 'application/json'
   config.headers['Content-Type'] = 'application/json'
   return config

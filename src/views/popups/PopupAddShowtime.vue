@@ -2,7 +2,7 @@
   <div class="popup-add-showtime">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">Thêm suất chiếu phim {{ nameMovie }}</div>
+        <div class="popup-title">{{$t('Moremoviescreenings')}} {{ nameMovie }}</div>
         <div class="popup-icon-close" @click="closeThisPopup()">
           <i class="fas fa-times"></i>
         </div>
@@ -48,14 +48,14 @@
       <div class="popup-footer">
         <base-button
           :classButton="'button-white'"
-          :titleButton="'Hủy'"
+          :titleButton="$t('Cancel')"
           @bindEvent="closeThisPopup()"
         ></base-button>
 
         <div class="ml-2"></div>
         <base-button
           :classButton="'button-blue'"
-          :titleButton="'Thêm'"
+          :titleButton="$t('Add')"
           @click="createNewRoomCinema()"
         ></base-button>
       </div>
@@ -193,6 +193,7 @@ export default {
         font-weight: 700;
         font-size: 18px;
         color: #111;
+        text-align: center;
       }
       .popup-icon-close {
         position: absolute;

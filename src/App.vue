@@ -53,8 +53,8 @@ export default {
     BaseToast,
   },
   created() {
-    if (localStorage.getItem("token")) {
-  const token = localStorage.getItem('token');
+    if (sessionStorage.getItem("token")) {
+  const token = sessionStorage.getItem('token');
       const decodedToken = jwt.decode(token);
       this.$store.state.role = jwt.decode(token).role;
       this.$store.state.isLoggedIn = true;

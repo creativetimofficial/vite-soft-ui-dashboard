@@ -39,7 +39,7 @@
             item.time + "-" + convertDateFormat(item.showDate)
           }}</span>
           <span class="bold"> Loại vé: </span>
-          <span class="type-seat">{{ item.type == 1 ? "Thường" : "VIP" }}</span>
+          <span class="type-seat">{{ item.type == 1 ? $t('Normal') : "VIP" }}</span>
           <span class="bold"> Giá: </span>
           <span class="cost">{{ item.totalAmount + "VND" }}</span>
         </div>

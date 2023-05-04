@@ -3,10 +3,10 @@
     <div class="seatroom-header">
       <div class="seatroom-header-left">
         <i class="fas fa-long-arrow-alt-left" @click="closePopup()"></i>
-        <div class="content">Trở lại</div>
+        <div class="content">{{$t('Back')}}</div>
       </div>
       <div class="seatroom-header-center">
-        <div class="content-main">Các suất chiếu của phim {{ nameMovie }}</div>
+        <div class="content-main">{{ $t('Screeningsofthemovie') }} {{ nameMovie }}</div>
       </div>
     </div>
     <div class="template-time-code-main">
@@ -102,7 +102,7 @@
       <div class="footer-left">
         <base-button
           :classButton="'button-red'"
-          :titleButton="'Xóa phòng'"
+          :titleButton="$t('Deleteroom')"
           @bindEvent="deleteCinemaRoomVirtual()"
           v-if="$store.state.role == 'admin' && roomCinmeIDSelected"
         ></base-button>
@@ -110,7 +110,7 @@
       <div class="footer-right">
         <base-button
           :classButton="'button-white'"
-          :titleButton="'Hủy'"
+          :titleButton="$t('Cancel')"
           @bindEvent="closePopup()"
         ></base-button>
         <div class="ml-2"></div>

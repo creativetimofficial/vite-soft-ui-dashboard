@@ -17,13 +17,13 @@
         <div class="mr-1"></div>
         <base-button
           :classButton="'button-blue'"
-          :titleButton="'Thêm mới'"
+          :titleButton="$t('Addnew')"
           @bindEvent="openPopup()"
         ></base-button>
       </div>
     </div>
     <div class="cinema-room-main">
-      <div class="room-main-header">Danh sách phòng</div>
+      <div class="room-main-header">{{ $t('Roomlist') }}</div>
       <div class="room-container">
         <div
           class="room-item"

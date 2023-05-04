@@ -85,46 +85,63 @@ const routes = [
     path: "/showtime-manage",
     name: "ShowTime Manage",
     component: ShowTimeManage,
+    meta: { requiresAuth: true },
   },
   {
     path: "/payment",
     name: "Payment",
     component: Payment,
+    meta: { requiresAuth: true },
+
   },
   {
     path: "/revenue",
     name: "Revenue",
     component: Revenue,
+    meta: { requiresAuth: true },
+
   },
   {
     path: "/history",
     name: "History",
     component: History,
+    meta: { requiresAuth: true },
+
   },
   {
     path: "/report-statistic",
     name: "ReportAndStatistic",
     component: ReportAndStatistic,
+    meta: { requiresAuth: true },
+
   },
   {
     path: "/ticket",
     name: "Ticket",
     component: Ticket,
+    meta: { requiresAuth: true },
+
   },
   {
     path: "/showtime-manage/room-cinema",
     component: RoomCinema,
     name: "roomcinema-manage",
+    meta: { requiresAuth: true },
+
   },
   {
     path: "/cinemaroom-manage",
     component: CinemaRoom,
     name: "Cinema Room",
+    meta: { requiresAuth: true },
+
   },
   {
     path: "/dictionary",
     component: DictionaryMovie,
     name: "Dictionary",
+    meta: { requiresAuth: true },
+
   },
 ];
 
@@ -152,10 +169,10 @@ router.beforeEach((to, from, next) => {
 
 // Hàm check login với token
 function isLoggedIn() {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   store.state.isLoggedIn = true;
 
-  // Kiểm tra xem token đã được lưu trong localStorage chưa
+  // Kiểm tra xem token đã được lưu trong sessionStorage chưa
   if (token) {
     // Giải mã token để kiểm tra tính hợp lệ của nó
     const decodedToken = jwt.decode(token);
@@ -165,22 +182,22 @@ function isLoggedIn() {
     // Kiểm tra xem token có hết hạn hay không
     const expirationDate = new Date(decodedToken.exp * 1000);
     if (expirationDate <= new Date()) {
-      // Nếu token đã hết hạn, xóa nó khỏi localStorage và trả về false
-      localStorage.removeItem("token");
+      // Nếu token đã hết hạn, xóa nó khỏi sessionStorage và trả về false
+      sessionStorage.removeItem("token");
       return false;
     } else {
       // Nếu token hợp lệ, trả về true
       return true;
     }
   } else {
-    // Nếu token không tồn tại trong localStorage, trả về false
+    // Nếu token không tồn tại trong sessionStorage, trả về false
     return false;
   }
 }
 
 // Hàm check role
 function requireAdmin(to, from, next) {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!isLoggedIn(token)) {
     next("/sign-in");

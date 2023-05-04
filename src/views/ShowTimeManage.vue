@@ -1,23 +1,38 @@
 <template>
   <div class="showtime-manage">
+    <div class="showtime-header">
+      <div class="header-left">
+        <vsud-input
+          type="text"
+          :placeholder="$t('Search')"
+          name="search_movie"
+          v-model="searchValue"
+          :id="'search_movie'"
+        />
+      </div>
+    </div>
     <div class="showtime-main">
       <div
         class="showtime-movie"
         v-for="item in dataSource"
         :key="item.movieID"
       >
-        <div class="card-movie" @click="showPopup(item.movieID)">
+        <div
+          class="card-movie"
+          @click="showPopup(item.movieID)"
+          v-show="isShowMovie(item)"
+        >
           <base-image-download :linkImg="item.posterLink"></base-image-download>
           <div class="feature-container">
             <base-button
               :classButton="'button-blue'"
-              :titleButton="'Thêm suất chiếu'"
+              :titleButton="$t('Morescreenings')"
               @bindEvent="openPopupAddShowTime(item.movieID, item.movieName)"
             ></base-button>
             <div class="mt-2"></div>
             <base-button
               :classButton="'button-blue'"
-              :titleButton="'Xem suất chiếu'"
+              :titleButton="$t('Seeshowtimes')"
               @bindEvent="openPopupSeatCinema(item.movieID, item.movieName)"
             ></base-button>
           </div>
@@ -73,6 +88,7 @@ export default {
       roomCinmeIDSelected: "ca589116-d5b2-11ed-a44f-907841e9040c",
       movieIDSelected: "",
       movieNameSelected: "",
+      searchValue: "",
     };
   },
   methods: {
@@ -93,18 +109,63 @@ export default {
       this.movieNameSelected = name;
       this.$store.state.isOpenPopupSeat = true;
     },
+    isShowMovie(item) {
+      return (
+        item.movieName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        item.movieCode.toLowerCase().includes(this.searchValue.toLowerCase())
+      );
+    },
   },
 };
 </script>
 <style lang="scss">
 .showtime-manage {
+  .showtime-header {
+    .header-left {
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      background: #fff;
+      border-radius: 10px;
+      align-items: center;
+      .form-group {
+        margin-bottom: 0px !important;
+      }
+      .header-left {
+        display: flex;
+        .filter-movie {
+          height: 36px;
+          margin-left: 10px;
+          .el-select {
+            margin: 0 !important;
+            .el-input__inner,
+            .el-input__wrapper {
+              height: 36px;
+            }
+          }
+        }
+      }
+    }
+  }
   .mt-2 {
     margin-top: 10px;
   }
   padding: 30px 28px 0;
   .showtime-main {
+    min-height: calc(100vh - 275px);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px 10px;
+    margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
+    min-width: 500px;
+
     .showtime-movie {
       .card-movie {
         cursor: pointer;

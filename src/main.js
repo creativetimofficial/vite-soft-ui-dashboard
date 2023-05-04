@@ -18,6 +18,7 @@ import i18n from "@/i18n/config";
 import Vue3Toasity from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import VueApexCharts from "vue3-apexcharts";
+import "element-plus/theme-chalk/index.css";
 
   
 const app = createApp(App);

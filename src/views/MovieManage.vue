@@ -1,28 +1,54 @@
 <template>
   <div class="movie-manage">
     <div class="movie-manage-header">
-      <vsud-input
-        type="text"
-        :placeholder="$t('Search')"
-        name="search_movie"
-        v-model="searchValue"
-        :id="'search_movie'"
-      />
-      <base-button
-        :classButton="'button-blue'"
-        :titleButton="'Thêm mới'"
-        @bindEvent="openPopup()"
-      ></base-button>
+      <div class="header-left">
+        <vsud-input
+          type="text"
+          :placeholder="$t('Search')"
+          name="search_movie"
+          v-model="searchValue"
+          :id="'search_movie'"
+        />
+        <div class="filter-movie">
+          <el-select
+            v-model="typeFilter"
+            class="m-2"
+            placeholder="Select"
+            size="large"
+            @change="loadData"
+          >
+            <el-option
+              v-for="item in filterMovie"
+              :key="item.value"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </div>
+      </div>
+      <div class="header-right">
+        <base-button
+          :classButton="'button-blue'"
+          :titleButton="$t('Addnew')"
+          @bindEvent="openPopup()"
+        ></base-button>
+      </div>
     </div>
     <div class="movie-manage-container">
       <div class="movie-manage-main">
+        <div class="main-empty" v-if="dataSource.length<1">
+          Không có dữ liệu
+        </div>
         <div
           class="movie-item"
           v-for="item in dataSource"
           :key="item.movieID"
           v-show="isShowMovie(item)"
         >
-          <base-image-download :linkImg="item.posterLink" v-if="!isOpenTrailer(item.movieID)"></base-image-download>
+          <base-image-download
+            :linkImg="item.posterLink"
+            v-if="!isOpenTrailer(item.movieID)"
+          ></base-image-download>
           <div class="movie-trailer" v-if="isOpenTrailer(item.movieID)">
             <iframe
               width="120"
@@ -86,23 +112,27 @@
               </div>
             </div>
             <div class="movie-time-line">
-              Thời lượng: {{ item.timeLine }} phút
+              {{ $t("Timel") }}: {{ item.timeLine }} {{ $t("Min") }}
             </div>
             <div class="movie-from-date">
-              Ngày khởi chiếu: {{ convertDateFormat(item.fromDate) }}
+              {{ $t("nShowDate") }}: {{ convertDateFormat(item.fromDate) }}
             </div>
             <div class="movie-to-date">
-              Ngày kết thúc: {{ convertDateFormat(item.toDate) }}
+              {{ $t("nEndDate") }}: {{ convertDateFormat(item.toDate) }}
             </div>
             <div class="movie-release-date">
-              Ngày xuất bản: {{ convertDateFormat(item.releaseDate) }}
+              {{ $t("Releasedate") }}: {{ convertDateFormat(item.releaseDate) }}
             </div>
-            <div class="movie-actor">Diễn viên: {{ item.actor }}</div>
-            <div class="movie-direction">Đạo diễn: {{ item.directions }}</div>
+            <div class="movie-actor">{{ $t("nActor") }}: {{ item.actor }}</div>
+            <div class="movie-direction">
+              {{ $t("Director") }}: {{ item.directions }}
+            </div>
             <div class="movie-category" :title="item.categoryName">
-              Thể loại: {{ item.categoryName }}
+              {{ $t("CategoryMovie") }}: {{ item.categoryName }}
             </div>
-            <div class="movie-type">Loại phim: {{ item.typeName }}</div>
+            <div class="movie-type">
+              {{ $t("TypeMovie") }}: {{ item.typeName }}
+            </div>
           </div>
           <div class="movie-detail"></div>
         </div>
@@ -133,6 +163,7 @@
 
 <script>
 import { fields } from "@/constants/constantsmoviegrids.js";
+import { filterMovie } from "@/constants/constantsdefaults.js";
 import BaseLoading from "./components/BaseLoading.vue";
 import BaseButton from "./components/BaseButton.vue";
 import PopupAddMovie from "./popups/PopupAddMovie.vue";
@@ -155,16 +186,18 @@ export default {
     PopupAlterMovie,
   },
   setup() {
-    return { convertDateFormat };
+    return { convertDateFormat, filterMovie };
   },
   created() {
     let me = this;
     me.dataField = fields;
     this.$store.state.isShowLoading = true;
-    this.$api.post("/Movie/GetListMovie", { TypeFilter: me.typeFilter }).then((data) => {
-      me.dataSource = data;
-      this.$store.state.isShowLoading = false;
-    });
+    this.$api
+      .post("/Movie/GetListMovie", { TypeFilter: me.typeFilter })
+      .then((data) => {
+        me.dataSource = data;
+        this.$store.state.isShowLoading = false;
+      });
   },
   data() {
     return {
@@ -178,7 +211,7 @@ export default {
       openContexts: [],
       contentSelected: "",
       nameMovie: "",
-      typeFilter: 1
+      typeFilter: 1,
     };
   },
   methods: {
@@ -188,8 +221,8 @@ export default {
     },
     isShowMovie(item) {
       return (
-        item.movieName.includes(this.searchValue) ||
-        item.movieCode.includes(this.searchValue)
+        item.movieName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        item.movieCode.toLowerCase().includes(this.searchValue.toLowerCase())
       );
     },
 
@@ -232,14 +265,18 @@ export default {
     deleteMovie() {
       let me = this;
       this.$api.post("/Movie/DeleteMovie", me.rowSelected).then(() => {
-        location.reload();
+        me.loadData();
       });
     },
     loadData() {
       let me = this;
-      this.$api.post("/Movie/GetListMovie", { TypeFilter: me.typeFilter }).then((data) => {
-        me.dataSource = data;
-      });
+      this.$store.state.isShowLoading = true;
+      this.$api
+        .post("/Movie/GetListMovie", { TypeFilter: me.typeFilter })
+        .then((data) => {
+          me.dataSource = data;
+          me.$store.state.isShowLoading = false;
+        });
     },
     handleAdd() {
       this.$store.state.IsOpenPopup = false;
@@ -274,6 +311,20 @@ export default {
     .form-group {
       margin-bottom: 0px !important;
     }
+    .header-left {
+      display: flex;
+      .filter-movie {
+        height: 36px;
+        margin-left: 10px;
+        .el-select {
+          margin: 0 !important;
+          .el-input__inner,
+          .el-input__wrapper {
+            height: 36px;
+          }
+        }
+      }
+    }
   }
 
   #search_movie {
@@ -296,6 +347,7 @@ export default {
 
   .movie-manage-container {
     .movie-manage-main {
+      min-height: calc(100vh - 275px);
       box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
         rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
       background: #fff;

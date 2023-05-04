@@ -2,7 +2,7 @@
   <div class="popup-add-account">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">Thêm mới phim</div>
+        <div class="popup-title">{{ $t('Newmovies') }}</div>
         <div class="popup-icon-close" @click="closeThisPopup()">
           <i class="fas fa-times"></i>
         </div>
@@ -67,16 +67,16 @@
             <div class="radio-inputs">
               <label class="radio">
                 <input type="radio" v-model="gender" :value="1" />
-                <span class="name">Nam</span>
+                <span class="name">{{ $t('Male') }}</span>
               </label>
               <label class="radio">
                 <input type="radio" v-model="gender" :value="2" />
-                <span class="name">Nữ</span>
+                <span class="name">{{ $t('Female') }}</span>
               </label>
 
               <label class="radio">
                 <input type="radio" v-model="gender" :value="3" />
-                <span class="name">Khác</span>
+                <span class="name">{{ $t('Other') }}</span>
               </label>
             </div>
           </div>
@@ -127,14 +127,14 @@
       <div class="popup-footer">
         <base-button
           :classButton="'button-white'"
-          :titleButton="'Hủy'"
+          :titleButton="$t('Cancel')"
           @bindEvent="closeThisPopup()"
         ></base-button>
 
         <div class="ml-2"></div>
         <base-button
           :classButton="'button-blue'"
-          :titleButton="'Thêm'"
+          :titleButton="$t('Add')"
           @click="addAccount()"
         ></base-button>
       </div>

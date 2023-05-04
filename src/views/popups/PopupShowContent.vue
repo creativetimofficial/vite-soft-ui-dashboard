@@ -8,7 +8,7 @@
       <div class="movie-content-footer">
         <base-button
           :classButton="'button-blue'"
-          :titleButton="'Đóng'"
+          :titleButton="$t('Close')"
           @bindEvent="closePopup()"
         ></base-button>
       </div>

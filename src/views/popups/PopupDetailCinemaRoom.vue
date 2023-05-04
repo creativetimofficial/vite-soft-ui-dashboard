@@ -3,10 +3,10 @@
     <div class="cinemaroom-header">
       <div class="cinemaroom-header-left">
         <i class="fas fa-long-arrow-alt-left" @click="closePopup()"></i>
-        <div class="content">Trở lại</div>
+        <div class="content">{{$t('Back')}}</div>
       </div>
       <div class="cinemaroom-header-center">
-        <div class="content-main">Phòng chiếu {{ codeRoom }}</div>
+        <div class="content-main">{{ $t('Cinemaroom') }} {{ codeRoom }}</div>
       </div>
     </div>
     <div class="cinemaroom-main">
@@ -29,22 +29,22 @@
         </div>
       </div>
       <div class="description-seat">
-        <div class="note">Chú thích</div>
+        <div class="note">{{$t('Note')}}</div>
         <div class="seat-selected">
           <div class="color-vip"></div>
-          <div class="content-selected">Ghế VIP</div>
+          <div class="content-selected">{{ $t('VIPseat') }}</div>
         </div>
         <div class="seat-unselected">
           <div class="color-normal"></div>
-          <div class="content-unselected">Ghế thường</div>
+          <div class="content-unselected">{{ $t('Normalseat') }}</div>
         </div>
         <div class="seat-unuse">
           <div class="color-unuse"></div>
-          <div class="content-unuse">Bảo trì</div>
+          <div class="content-unuse">{{ $t('Maintenance') }}</div>
         </div>
         <div class="seat-selecting">
           <div class="color-selecting"></div>
-          <div class="content-selecting">Đang chọn</div>
+          <div class="content-selecting">{{ $t('Selecting') }}</div>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
         <div class="mr-2"></div>
         <base-button
           :classButton="'button-red'"
-          :titleButton="'Xóa phòng'"
+          :titleButton="$t('Deleteroom')"
           @bindEvent="showPopupDeleteRealRoom()"
           v-if="$store.state.role == 'admin'"
         ></base-button>
@@ -61,13 +61,13 @@
       <div class="cinema-footer-right">
         <base-button
           :classButton="'button-white'"
-          :titleButton="'Hủy'"
+          :titleButton="$t('Cancel')"
           @bindEvent="closePopup()"
         ></base-button>
         <div class="ml-2"></div>
         <base-button
           :classButton="'button-red'"
-          :titleButton="'Xóa ghế'"
+          :titleButton="$t('Deleteseat')"
           @bindEvent="showDeletePopup()"
         ></base-button>
         <div class="ml-2"></div>
@@ -76,7 +76,7 @@
             'button-blue',
             seatsSelecting.length ? '' : ' button-none',
           ]"
-          :titleButton="'Cập nhật thường'"
+          :titleButton="$t('Normalupdate')"
           @bindEvent="updateNormal()"
         ></base-button>
         <div class="ml-2"></div>
@@ -85,7 +85,7 @@
             'button-blue',
             seatsSelecting.length ? '' : ' button-none',
           ]"
-          :titleButton="'Cập nhật VIP'"
+          :titleButton="$t('VIPupdate')"
           @bindEvent="updateVIP()"
         ></base-button>
         <div class="ml-2"></div>
@@ -94,7 +94,7 @@
             'button-blue',
             seatsSelecting.length ? '' : ' button-none',
           ]"
-          :titleButton="'Cập nhật bảo trì'"
+          :titleButton="$t('Maintenanceupdate')"
           @bindEvent="updateNone()"
         ></base-button>
         <div class="ml-2"></div>

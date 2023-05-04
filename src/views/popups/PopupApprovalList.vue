@@ -2,7 +2,7 @@
   <div class="popup-approval">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">Phê duyệt tài khoản</div>
+        <div class="popup-title">{{ $t('Accountapproval') }}</div>
         <div class="popup-icon-close" @click="closeThisPopup()">
           <i class="fas fa-times"></i>
         </div>
@@ -20,7 +20,7 @@
             <div class="approval">
               <h3 class="approval__title">{{ item.name }}</h3>
               <p class="approval__content">
-                Tên tài khoản: {{ item.accountName }}
+                {{$t('Account')}}: {{ item.accountName }}
               </p>
               <div class="approval__date">
                 {{ convertDateFormat(item.createdDate) }}
@@ -29,7 +29,7 @@
                 class="approval__arrow"
                 @click="approvalAccount(item.accountID)"
               >
-                <div class="approval-button">Phê duyệt</div>
+                <div class="approval-button">{{ $t('Approve') }}</div>
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@
       <div class="popup-footer">
         <base-button
           :classButton="'button-white'"
-          :titleButton="'Đóng'"
+          :titleButton="$t('Close')"
           @bindEvent="closeThisPopup()"
         ></base-button>
       </div>

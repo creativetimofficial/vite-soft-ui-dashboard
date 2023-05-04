@@ -1,19 +1,29 @@
 <template>
   <div class="ticket-manage">
     <div class="ticket-manage-header">
-      <vsud-input
-        type="text"
-        :placeholder="$t('Search')"
-        name="search_movie"
-        v-model="searchValue"
-        :id="'search_movie'"
-      />
+      <div class="header-left">
+        <vsud-input
+          type="text"
+          :placeholder="$t('Search')"
+          name="search_movie"
+          v-model="searchValue"
+          :id="'search_movie'"
+        />
+        <div class="container-radio">
+          <el-radio-group v-model="filterTicket">
+            <el-radio-button label="0">Không chọn</el-radio-button>
+            <el-radio-button label="1">VIP</el-radio-button>
+            <el-radio-button label="2">Thường</el-radio-button>
+          </el-radio-group>
+        </div>
+      </div>
     </div>
     <div class="ticket-manage-main">
       <div
         class="ticket-container"
         v-for="(item, index) in listTicket"
         :key="index"
+        v-show="isShowTicket(item) && isFilterItem(item)"
       >
         <div class="ticket-item">
           <div class="item-header">
@@ -45,7 +55,7 @@
               v-if="isShowingChange(item.templateTicketID)"
             />
             <div class="type">
-              {{ $t("SeatType") }}: {{ item.type == 1 ? "Thường" : "VIP" }}
+              {{ $t("SeatType") }}: {{ item.type == 1 ? $t("Normal") : "VIP" }}
             </div>
           </div>
           <div class="item-feature" v-if="$store.state.role == 'admin'">
@@ -65,7 +75,7 @@
             >
               <base-button
                 :classButton="'button-white'"
-                :titleButton="'Hủy'"
+                :titleButton="$t('Cancel')"
                 @bindEvent="
                   () => {
                     item.cost = costSelected;
@@ -75,7 +85,7 @@
               ></base-button>
               <base-button
                 :classButton="'button-blue'"
-                :titleButton="'Lưu'"
+                :titleButton="$t('Save')"
                 @bindEvent="saveChangeMoney(item.templateTicketID, item.cost)"
               ></base-button>
             </div>
@@ -113,12 +123,37 @@ export default {
       listTicket: [],
       ticketSelected: "",
       costSelected: 0,
+      searchValue: "",
+      filterTicket: "0",
     };
   },
   methods: {
     showChangeMoney(id, cost) {
       this.ticketSelected = id;
       this.costSelected = cost;
+    },
+
+    isFilterItem(item) {
+      if ((this.filterTicket == "0")) {
+        return true;
+      }
+
+      if ((this.filterTicket == "1" && item.type != 1)) {
+        return true;
+      }
+
+      if ((this.filterTicket =="2" && item.type == 1)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    isShowTicket(item) {
+      return (
+        item.movieName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        item.movieCode.toLowerCase().includes(this.searchValue.toLowerCase())
+      );
     },
 
     isShowingChange(id) {
@@ -140,16 +175,24 @@ export default {
     },
 
     saveChangeMoney(id, cost) {
-        let me = this;
-      this.$api.post("/Ticket/UpdateCostOfTicket",{templateTicketID: id, cost: cost}).then((data) => {
-        if (data) {
+      let me = this;
+      this.$api
+        .post("/Ticket/UpdateCostOfTicket", {
+          templateTicketID: id,
+          cost: cost,
+        })
+        .then((data) => {
+          if (data) {
             me.ticketSelected = "";
             me.loadData();
-            me.$store.dispatch("showToast","Cập nhật thành công!");
-        }else{
-            me.$store.dispatch("showToast","Cập nhật không thành công, vui lòng thử lại!");
-        }
-      });
+            me.$store.dispatch("showToast", "Cập nhật thành công!");
+          } else {
+            me.$store.dispatch(
+              "showToast",
+              "Cập nhật không thành công, vui lòng thử lại!"
+            );
+          }
+        });
     },
   },
 };
@@ -170,6 +213,24 @@ export default {
 
     .form-group {
       margin-bottom: 0px !important;
+    }
+
+    .header-left {
+      display: flex;
+      .filter-movie {
+        height: 36px;
+        margin-left: 10px;
+      }
+    }
+    label.el-radio-button {
+      margin: 0px !important;
+    }
+
+    .container-radio {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
     }
   }
 

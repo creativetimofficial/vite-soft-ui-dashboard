@@ -9,15 +9,15 @@
         <div class="icon-add" @click="showUpdate()">
           <i class="far fa-plus-square fa-lg"></i>
         </div>
-        <div class="header-title">Khung giờ chiếu</div>
+        <div class="header-title">{{$t('Timeframe')}}</div>
         <div class="line-space"></div>
       </div>
       <div class="popup-main">
         <div class="popup-get">
           <table id="table-type-movie">
             <thead>
-              <th class="category-code">Mã khung giờ</th>
-              <th class="category-name">Khung giờ</th>
+              <th class="category-code">{{ $t('Timeframecode') }}</th>
+              <th class="category-name">{{$t('Timeframe')}}</th>
             </thead>
             <tbody>
               <tr v-for="item in dataTemplate" :key="item.categoryID">
@@ -29,7 +29,7 @@
         </div>
         <div class="popup-update" v-if="isOpenUpdate">
           <div class="line-space"></div>
-          <div class="update-title">Thêm mới khung giờ</div>
+          <div class="update-title">{{ $t("Moretimeframe") }}</div>
           <div class="input-content">
             <div class="popup-input">
               <label>{{ $t("TemplateTimeCode") }}</label>
@@ -56,14 +56,14 @@
           <div class="button-content">
             <base-button
               :classButton="'button-white'"
-              :titleButton="'Đóng'"
+              :titleButton="$t('Close')"
               @bindEvent="closeUpdate()"
             ></base-button>
 
             <div class="ml-1"></div>
             <base-button
               :classButton="'button-blue'"
-              :titleButton="'Lưu'"
+              :titleButton="$t('Save')"
               @click="saveTemplateTimeCode()"
             ></base-button>
           </div>
