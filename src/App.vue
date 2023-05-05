@@ -29,6 +29,7 @@
     />
   </main>
   <base-loading :isLoading="$store.state.isShowLoading"></base-loading>
+  <popup-setting v-if="$store.state.isShowSetting"></popup-setting>
 </template>
 <script>
 import { toast } from "vue3-toastify";
@@ -40,7 +41,8 @@ import AppFooter from "@/examples/Footer.vue";
 import BaseLoading from "./views/components/BaseLoading.vue";
 import BaseToast from "./views/components/BaseToast.vue";
 import { mapMutations } from "vuex";
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
+import PopupSetting from "./views/popups/PopupSetting.vue";
 
 export default {
   name: "App",
@@ -50,13 +52,15 @@ export default {
     Navbar,
     AppFooter,
     BaseLoading,
+    PopupSetting,
     BaseToast,
   },
   created() {
     if (sessionStorage.getItem("token")) {
-  const token = sessionStorage.getItem('token');
+      const token = sessionStorage.getItem("token");
       const decodedToken = jwt.decode(token);
       this.$store.state.role = jwt.decode(token).role;
+      this.$store.state.thisAccountName = jwt.decode(token).name;
       this.$store.state.isLoggedIn = true;
       this.$store.state.cinemaName = decodedToken.cinemaName;
     }

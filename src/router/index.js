@@ -133,6 +133,7 @@ const routes = [
     path: "/cinemaroom-manage",
     component: CinemaRoom,
     name: "Cinema Room",
+    beforeEnter: requireAdmin,
     meta: { requiresAuth: true },
 
   },

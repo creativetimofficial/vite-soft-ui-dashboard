@@ -58,7 +58,7 @@
             <a
               class="p-0 nav-link"
               :class="textWhite ? textWhite : 'text-body'"
-              @click="toggleConfigurator"
+              @click="showSetting"
             >
               <i class="cursor-pointer fa fa-cog fixed-plugin-button-nav"></i>
             </a>
@@ -249,6 +249,10 @@ export default {
       this.toggleSidebarColor("bg-white");
       this.navbarMinimize();
     },
+
+    showSetting(){
+      this.$store.state.isShowSetting = true;
+    }
   },
 };
 </script>

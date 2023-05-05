@@ -2,7 +2,7 @@
   <div class="popup-add-account">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">{{ $t('Newmovies') }}</div>
+        <div class="popup-title">{{ $t('NewAccount') }}</div>
         <div class="popup-icon-close" @click="closeThisPopup()">
           <i class="fas fa-times"></i>
         </div>

@@ -6,7 +6,7 @@
         <div class="icon-close" @click="closeThisPopup()">
           <i class="fas fa-times"></i>
         </div>
-        <div class="icon-add" @click="showUpdate()">
+        <div class="icon-add" @click="showUpdate()" v-if="$store.state.role == 'admin'">
           <i class="far fa-plus-square fa-lg"></i>
         </div>
         <div class="header-title">{{$t('Timeframe')}}</div>
