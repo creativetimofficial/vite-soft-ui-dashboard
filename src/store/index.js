@@ -41,7 +41,9 @@ export default createStore({
     isOpenPopupTemplateTimeCode: false,
     thisAccountName: "",
     isShowAccountSetting: false,
+    isShowPasswordSetting: false,
     isShowSetting: false,
+    isShowCommonSetting: false
   },
   mutations: {
     toggleConfigurator(state) {

@@ -85,3 +85,31 @@ export const initDataChart = {
     },
   
 }
+
+export function validatePassword(password) {
+  // Kiểm tra độ dài mật khẩu (ít nhất 8 ký tự)
+  if (password.length < 8) {
+    return false;
+  }
+
+  // Kiểm tra mật khẩu có chứa ký tự chữ cái không
+  if (!/[a-zA-Z]/.test(password)) {
+    return false;
+  }
+
+  // Kiểm tra mật khẩu có chứa số không
+  if (!/[0-9]/.test(password)) {
+    return false;
+  }
+
+  // Kiểm tra mật khẩu có chứa ký tự đặc biệt không
+  if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
+    return false;
+  }
+
+  // Tất cả các yêu cầu đã được đáp ứng, mật khẩu hợp lệ
+  return true;
+}
+
+
+

@@ -14,9 +14,9 @@
       <div class="left-main">
         <div class="setting-item" @click="changeOption(0)">
           <div class="item-icon shadow me-3 rounded-2">
-            <i class="fas fa-tools"></i>
+            <i class="fas fa-ticket-alt"></i>
           </div>
-          <div class="item-content">Cài đặt chung</div>
+          <div class="item-content">Vé</div>
         </div>
         <div class="setting-item" @click="changeOption(1)">
           <div class="item-icon shadow me-3 rounded-2">
@@ -33,17 +33,25 @@
       </div>
     </div>
     <div class="setting-main">
+      <common-setting
+        v-if="selection == 0 && $store.state.isShowCommonSetting"
+      ></common-setting>
       <account-setting
         v-if="selection == 1 && $store.state.isShowAccountSetting"
       ></account-setting>
+      <password-setting
+        v-if="selection == 2 && $store.state.isShowPasswordSetting"
+      ></password-setting>
     </div>
   </div>
 </template>
 <script>
 import AccountSetting from "./settingchild/AccountSetting.vue";
+import PasswordSetting from "./settingchild/PasswordSetting.vue";
+import CommonSetting from "./settingchild/CommonSetting.vue";
 export default {
   components: {
-    AccountSetting,
+    AccountSetting,PasswordSetting,CommonSetting
   },
   data() {
     return {
@@ -55,6 +63,8 @@ export default {
     changeOption(option) {
       this.selection = option;
       if (option === 1) this.$store.state.isShowAccountSetting = true;
+      if(option === 2) this.$store.state.isShowPasswordSetting = true;
+      if(option === 0) this.$store.state.isShowCommonSetting = true;
     },
     closeThisPopup(){
         this.$store.state.isShowSetting = false;
