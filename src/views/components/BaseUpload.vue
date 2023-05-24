@@ -112,6 +112,7 @@ export default {
   .upload-image {
     width: 100px;
     height: 100px;
+    border-radius: 10px;
     object-fit: cover;
   }
 }

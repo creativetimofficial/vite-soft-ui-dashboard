@@ -18,6 +18,7 @@
               v-model="dataMovie.movieCode"
               :id="'movie_name'"
               :isRequired="true"
+              :readonly="true"
             />
           </div>
           <div class="popup-input">
@@ -180,6 +181,8 @@ import VsudInput from "../../components/VsudInput.vue";
 import BaseButton from "../components/BaseButton.vue";
 import BaseUpload from "../components/BaseUpload.vue";
 import BaseUploadFirebase from "../components/BaseUploadFirebase.vue";
+import { increaseString } from "@/common/commonFunc";
+
 import { uuidv4 } from "../../common/uuid";
 export default {
   emits: ["add-click"],
@@ -198,6 +201,11 @@ export default {
     this.$api.post("/Movie/GetListCategoryMovie").then((data) => {
       me.dataMovie.categoryMovie = data;
     });
+
+    this.$api.post("/Movie/GetBiggestMovieCode").then((data)=>{
+      me.biggestMovieCode = data;
+      me.dataMovie.movieCode = increaseString(me.biggestMovieCode);
+    })
   },
   props: {},
   data() {
@@ -218,7 +226,8 @@ export default {
         urlImage: null,
         linkTrailer: null,
         language: null,
-        timeLine: null
+        timeLine: null,
+        biggestMovieCode: ""
       },
     };
   },

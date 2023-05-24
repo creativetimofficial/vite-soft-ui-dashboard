@@ -138,10 +138,11 @@ export default {
     flex-wrap: wrap;
     min-width: 1400px;
     .history-container {
+      width: 100%;
       min-width: 1400px;
       padding: 0 20px;
       .history-item {
-        width: 1350px;
+        width: 100%;
         color: #111;
         padding: 10px;
         margin: 5px 0;

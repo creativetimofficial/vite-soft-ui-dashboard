@@ -348,11 +348,13 @@ export default {
   .movie-manage-container {
     .movie-manage-main {
       min-height: calc(100vh - 275px);
+      justify-content: space-between;
+
       box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
         rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
       background: #fff;
       border-radius: 10px;
-      padding: 20px 0;
+      padding: 20px 20px 0 0;
       margin-top: 30px;
       display: flex;
       flex-wrap: wrap;

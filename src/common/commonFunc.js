@@ -111,5 +111,19 @@ export function validatePassword(password) {
   return true;
 }
 
+export function increaseString(str) {
+  let numberPart = str.match(/\d+$/)[0];
+  let nonNumberPart = str.slice(0, str.length - numberPart.length);
 
+  let increasedNumber = (parseInt(numberPart) + 1).toString().padStart(numberPart.length, "0");
 
+  if (increasedNumber.length > numberPart.length) {
+    let firstCharIndex = nonNumberPart.search(/[a-zA-Z]$/);
+    let firstChar = nonNumberPart.charAt(firstCharIndex);
+    let nextChar = String.fromCharCode(firstChar.charCodeAt(0) + 1);
+    nonNumberPart = nonNumberPart.slice(0, firstCharIndex) + nextChar;
+    increasedNumber = increasedNumber.slice(1);
+  }
+
+  return nonNumberPart + increasedNumber;
+}

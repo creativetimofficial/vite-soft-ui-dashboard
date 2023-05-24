@@ -1,19 +1,5 @@
 <template>
   <div class="report-manage">
-    <div class="report-manage-header">
-      <vsud-input
-        type="text"
-        :placeholder="$t('Search')"
-        name="search_movie"
-        v-model="searchValue"
-        :id="'search_movie'"
-      />
-      <base-button
-        :classButton="'button-blue'"
-        :titleButton="$t('Addnew')"
-        @bindEvent="openPopup()"
-      ></base-button>
-    </div>
     <div class="report-manage-main">
       <div class="report-manage-container">
         <div class="report-by-day">
@@ -124,7 +110,7 @@ export default {
 </script>
 <style lang="scss">
 .report-manage {
-  padding: 30px 28px 0;
+  padding: 0 28px 0;
   .report-manage-header {
     height: 60px;
     display: flex;

@@ -148,7 +148,10 @@ const i18n = createI18n({
       Selecting: "Selecting",
       Note: "Note",
       Cinemaroom: "Cinema room",
-      NewAccount: "New Account"
+      NewAccount: "New Account",
+      NowShowing: "Now Showing",
+      AccountName: "Account name",
+      Logout: "Logout"
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -293,7 +296,10 @@ const i18n = createI18n({
       Selecting: "Đang chọn",
       Note: "Chú thích",
       Cinemaroom: "Phòng chiếu",
-      NewAccount: "Thêm mới tài khoản"
+      NewAccount: "Thêm mới tài khoản",
+      NowShowing: "Phim đang chiếu",
+      AccountName: "Tên tài khoản",
+      Logout: "Đăng xuất"
     },
   },
 });

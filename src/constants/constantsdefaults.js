@@ -1,42 +1,42 @@
 export var slideitems = [
   {
     name: "Movie Manage",
-    icon: "virtual-reality",
+    icon: "movie",
     text: "moviemanage",
   },
   {
     name: "ShowTime Manage",
-    icon: "virtual-reality",
+    icon: "showtime",
     text: "showtimemanage",
   },
   {
     name: "Ticket",
-    icon: "dashboard",
+    icon: "tickets",
     text: "Ticket",
   },
   {
     name: "ReportAndStatistic",
-    icon: "dashboard",
+    icon: "reports",
     text: "ReportAndStatistic",
   },
   {
     name: "History",
-    icon: "dashboard",
+    icon: "historys",
     text: "History",
   },
   {
     name: "Cinema Room",
-    icon: "dashboard",
+    icon: "rooms",
     text: "CinemaRoomManage",
   },
   {
     name: "Account Manage",
-    icon: "dashboard",
+    icon: "users",
     text: "Account",
   },
   {
     name: "Dictionary",
-    icon: "dashboard",
+    icon: "dictionarys",
     text: "Dictionary",
   },
 ];

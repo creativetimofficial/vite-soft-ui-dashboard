@@ -113,7 +113,6 @@ export default {
     .movie-main-header {
       color: #234567;
       font-size: 20px;
-      text-decoration: underline;
       font-weight: 900;
       cursor: pointer;
       margin-bottom: 10px;
