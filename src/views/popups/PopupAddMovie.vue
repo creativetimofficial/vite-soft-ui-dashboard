@@ -2,7 +2,7 @@
   <div class="popup-add-movie">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">{{ $t('Newmovies') }}</div>
+        <div class="popup-title">{{ $t("Newmovies") }}</div>
         <div class="popup-icon-close" @click="closeThisPopup()">
           <i class="fas fa-times"></i>
         </div>
@@ -103,26 +103,52 @@
               ></base-upload-firebase>
             </div>
           </div>
+
+          <div class="mx-2"></div>
           <div class="popup-input popup-date group-combobox">
             <label>{{ $t("TypeMovie") }}</label>
-            <v-select
+            <!-- <v-select
               label="typeName"
               :options="dataMovie.typeMovie"
               :placeholder="$t('PTypeMovie')"
               v-model="dataMovie.selectedTypeMovie"
               :reduce="(typeName) => typeName.typeID"
-            ></v-select>
+            ></v-select> -->
+
+            <el-select v-model="dataMovie.typeID" clearable :placeholder="$t('PTypeMovie')">
+              <el-option
+                v-for="item in dataMovie.typeMovie"
+                :key="item.typeID"
+                :label="item.typeName"
+                :value="item.typeID"
+              />
+            </el-select>
           </div>
           <div class="popup-input popup-date group-combobox">
             <label>{{ $t("CategoryMovie") }}</label>
-            <v-select
+            <!-- <v-select
               label="categoryName"
               :options="dataMovie.categoryMovie"
               :placeholder="$t('PCategoryMovie')"
               v-model="dataMovie.selectedCategory"
               :reduce="(categoryName) => categoryName.categoryID"
               multiple
-            ></v-select>
+            ></v-select> -->
+
+            <el-select
+              v-model="dataMovie.categoryID"
+              multiple
+              collapse-tags
+              collapse-tags-tooltip
+              :placeholder="$t('PCategoryMovie')"
+            >
+              <el-option
+                v-for="item in dataMovie.categoryMovie"
+                :key="item.categoryID"
+                :label="item.categoryName"
+                :value="item.categoryID"
+              />
+            </el-select>
           </div>
         </div>
         <div class="popup-row-1">
@@ -139,7 +165,7 @@
           <div class="popup-input popup-date">
             <label>{{ $t("TimeLine") }}</label>
             <vsud-input
-              type="text"
+              type="number"
               :placeholder="$t('TimeLine')"
               name="password"
               v-model="dataMovie.timeLine"
@@ -148,13 +174,33 @@
           </div>
           <div class="popup-input popup-date">
             <label>{{ $t("Language") }}</label>
-            <vsud-input
+            <!-- <vsud-input
               type="text"
               :placeholder="$t('Language')"
               name="password"
               v-model="dataMovie.language"
               :id="'lang-movie'"
-            />
+            /> -->
+
+            <el-select v-model="dataMovie.language" :placeholder="$t('Language')">
+              <el-option
+                v-for="item in listLanguage"
+                :key="item.languageCode"
+                :label="item.languageName"
+                :value="item.languageCode"
+                clearable 
+              >
+                <span style="float: left">{{ item.languageName }}</span>
+                <span
+                  style="
+                    float: right;
+                    color: var(--el-text-color-secondary);
+                    font-size: 13px;
+                  "
+                  >{{ item.languageCode }}</span
+                >
+              </el-option>
+            </el-select>
           </div>
         </div>
       </div>
@@ -202,10 +248,14 @@ export default {
       me.dataMovie.categoryMovie = data;
     });
 
-    this.$api.post("/Movie/GetBiggestMovieCode").then((data)=>{
+    this.$api.post("/Movie/GetBiggestMovieCode").then((data) => {
       me.biggestMovieCode = data;
       me.dataMovie.movieCode = increaseString(me.biggestMovieCode);
-    })
+    });
+
+    this.$api.post("/Dictionary/GetListLanguage").then((data) => {
+      me.listLanguage = data;
+    });
   },
   props: {},
   data() {
@@ -227,8 +277,10 @@ export default {
         linkTrailer: null,
         language: null,
         timeLine: null,
-        biggestMovieCode: ""
+        biggestMovieCode: "",
       },
+
+      listLanguage: [],
     };
   },
   methods: {
@@ -255,7 +307,7 @@ export default {
         fromDate: this.dataMovie.fromdate,
         toDate: this.dataMovie.todate,
         categoryIDs: this.dataMovie.selectedCategory,
-        timeLine: this.dataMovie.timeLine
+        timeLine: this.dataMovie.timeLine,
       };
       this.$api
         .post("/Movie/InsertMovie", dataParam)
@@ -380,7 +432,7 @@ export default {
         width: 600px;
       }
 
-      .group-combobox{
+      .group-combobox {
         margin: auto 0;
       }
     }

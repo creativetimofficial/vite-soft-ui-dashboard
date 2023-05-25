@@ -151,7 +151,10 @@ const i18n = createI18n({
       NewAccount: "New Account",
       NowShowing: "Now Showing",
       AccountName: "Account name",
-      Logout: "Logout"
+      Logout: "Logout",
+      LanguageCode: "Language code",
+      LanguageName: "Language name",
+      Addnewlanguage: "Add new language"
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -299,7 +302,10 @@ const i18n = createI18n({
       NewAccount: "Thêm mới tài khoản",
       NowShowing: "Phim đang chiếu",
       AccountName: "Tên tài khoản",
-      Logout: "Đăng xuất"
+      Logout: "Đăng xuất",
+      LanguageCode: "Mã ngôn ngữ",
+      LanguageName: "Tên ngôn ngữ",
+      Addnewlanguage: "Thêm mới ngôn ngữ"
     },
   },
 });
