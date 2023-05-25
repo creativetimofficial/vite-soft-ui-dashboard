@@ -20,6 +20,14 @@
               <polyline points="8 1 12 5 8 9"></polyline>
             </svg>
           </button>
+
+          <button class="cta" @click="openPopupDetailLanguage">
+            <span>{{ $t('Language') }}</span>
+            <svg viewBox="0 0 13 10" height="10px" width="15px">
+              <path d="M1,5 L11,5"></path>
+              <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+          </button>
         </div>
       </div>
       <div class="line-space"></div>
@@ -46,17 +54,21 @@
     <PopupDetailTemplateTimeCode
       v-if="$store.state.isOpenPopupTemplateTimeCode"
     ></PopupDetailTemplateTimeCode>
+    <PopupDetailLanguage
+      v-if="$store.state.isOpenPopupDetailLanguage"
+    ></PopupDetailLanguage>
   </div>
 </template>
 <script>
 import PopupDetailCategoryMovie from "./popups/PopupDetailCategoryMovie.vue";
+import PopupDetailLanguage from './popups/PopupDetailLanguage.vue';
 import PopupDetailTemplateTimeCode from "./popups/PopupDetailTemplateTimeCode.vue";
 import PopupDetailTypeMovie from "./popups/PopupDetailTypeMovie.vue";
 export default {
   components: {
     PopupDetailCategoryMovie,
     PopupDetailTypeMovie,
-    PopupDetailTemplateTimeCode,
+    PopupDetailTemplateTimeCode,PopupDetailLanguage
   },
   methods: {
     openPopupDetailCategoryMovie() {
@@ -68,6 +80,9 @@ export default {
     openPopupDetailTemplateTimeCode() {
       this.$store.state.isOpenPopupTemplateTimeCode = true;
     },
+    openPopupDetailLanguage(){
+      this.$store.state.isOpenPopupDetailLanguage = true;
+    }
   },
 };
 </script>

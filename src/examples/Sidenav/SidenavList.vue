@@ -18,33 +18,7 @@
           </template>
         </sidenav-collapse>
       </li>
-      <li class="mt-3 nav-item">
-        <h6
-          class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6"
-          :class="$store.state.isRTL ? 'me-4' : 'ms-2'"
-        >PAGES</h6>
-      </li>
-      <!-- <li class="nav-item">
-        <sidenav-collapse nav-text="Profile" :to="{ name: $t('Profile') }">
-          <template #icon>
-            <icon name="customer-support" />
-          </template>
-        </sidenav-collapse>
-      </li> -->
-      <li class="nav-item">
-        <sidenav-collapse :nav-text="$t('signin')" :to="{ name: 'Sign In' }">
-          <template #icon>
-            <icon name="sign-in" />
-          </template>
-        </sidenav-collapse>
-      </li>
-      <li class="nav-item">
-        <sidenav-collapse :nav-text="$t('signup')" :to="{ name: 'Sign Up' }">
-          <template #icon>
-            <icon name="sign-up" />
-          </template>
-        </sidenav-collapse>
-      </li>
+      
     </ul>
   </div>
 </template>

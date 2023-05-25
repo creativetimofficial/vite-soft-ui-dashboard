@@ -2,12 +2,19 @@
   <div class="movie-manage">
     <div class="movie-manage-header">
       <div class="header-left">
-        <vsud-input
+        <!-- <vsud-input
           type="text"
           :placeholder="$t('Search')"
           name="search_movie"
           v-model="searchValue"
           :id="'search_movie'"
+        /> -->
+        <el-input
+          v-model="searchValue"
+          class="w-200 m-2"
+          size="large"
+          :placeholder="$t('Search')"
+          :suffix-icon="Search"
         />
         <div class="filter-movie">
           <el-select
@@ -36,7 +43,7 @@
     </div>
     <div class="movie-manage-container">
       <div class="movie-manage-main">
-        <div class="main-empty" v-if="dataSource.length<1">
+        <div class="main-empty" v-if="dataSource.length < 1">
           Không có dữ liệu
         </div>
         <div
@@ -173,6 +180,14 @@ import PopupDelete from "./popups/PopupDelete.vue";
 import { convertDateFormat } from "@/common/commonFunc";
 import PopupShowContent from "./popups/PopupShowContent.vue";
 import PopupAlterMovie from "./popups/PopupAlterMovie.vue";
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from "@element-plus/icons-vue";
 export default {
   name: "MovieManager",
   components: {
@@ -186,7 +201,7 @@ export default {
     PopupAlterMovie,
   },
   setup() {
-    return { convertDateFormat, filterMovie };
+    return { convertDateFormat, filterMovie,Search };
   },
   created() {
     let me = this;
@@ -313,6 +328,7 @@ export default {
     }
     .header-left {
       display: flex;
+      align-items: center;
       .filter-movie {
         height: 36px;
         margin-left: 10px;
@@ -346,14 +362,14 @@ export default {
   }
 
   .movie-manage-container {
+    min-height: calc(100vh - 275px);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background: #fff;
+    border-radius: 10px;
     .movie-manage-main {
-      min-height: calc(100vh - 275px);
       justify-content: space-between;
 
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-      background: #fff;
-      border-radius: 10px;
       padding: 20px 20px 0 0;
       margin-top: 30px;
       display: flex;

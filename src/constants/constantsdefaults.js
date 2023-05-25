@@ -81,3 +81,19 @@ export const filterMovie = [
     name: "Sắp chiếu",
   },
 ];
+
+
+export const filterHistory = [
+  {
+    value: 1,
+    name: "Đang chiếu",
+  },
+  {
+    value: 0,
+    name: "Tất cả",
+  },
+  {
+    value: 2,
+    name: "Sắp chiếu",
+  },
+];

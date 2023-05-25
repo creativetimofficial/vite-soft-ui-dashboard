@@ -24,7 +24,7 @@
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center mx-3" v-if="fullName">
-            Xin chào, {{ fullName }}
+            Xin chào, <span class="fw-bold">{{" " + fullName }}</span>
           </li>         
           <li class="nav-item d-flex align-items-center">
             <router-link
@@ -129,8 +129,10 @@ export default {
   async created() {
     let me = this;
     this.minNav;
-    this.loadListCinema();
-    this.cinemaSelected = jwt.decode(sessionStorage.getItem("token")).cinemaName;
+    // this.loadListCinema();
+    if(sessionStorage.getItem("token")){
+      this.cinemaSelected = jwt.decode(sessionStorage.getItem("token")).cinemaName;
+    }
 
   },
   updated() {
@@ -160,12 +162,12 @@ export default {
       this.$store.state.isShowSetting = true;
     },
 
-    async loadListCinema() {
-      let me = this;
-      await this.$api.post("/Account/GetListCinema").then((data) => {
-        me.listCinema = data;
-      });
-    },
+    // async loadListCinema() {
+    //   let me = this;
+    //   await this.$api.post("/Account/GetListCinema").then((data) => {
+    //     me.listCinema = data;
+    //   });
+    // },
 
     loadData() {
       let me = this;

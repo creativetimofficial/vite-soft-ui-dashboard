@@ -1,14 +1,63 @@
 <template>
   <div class="history-manage">
     <div class="history-manage-header">
-      <vsud-input
-        type="text"
-        :placeholder="$t('Search')"
-        name="search_movie"
-        v-model="searchValue"
-        :id="'search_movie'"
-        @enter-event="searchingEvent"
-      />
+      <div class="header-left">
+        <el-input
+          v-model="searchValue"
+          class="w-200 m-2"
+          size="large"
+          :placeholder="$t('Search')"
+          :suffix-icon="Search"
+        />
+
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          content="Chọn phòng"
+          placement="top"
+        >
+          <el-select
+            v-model="roomSelected"
+            class="m-2 w-99"
+            placeholder="Select"
+            size="large"
+            @change="filterByRoom"
+          >
+            <el-option
+              v-for="item in rooms"
+              :key="item.roomID"
+              :label="item.roomCode"
+              :value="item.roomCode"
+            />
+          </el-select>
+        </el-tooltip>
+
+        <div class="icon-filter-room">
+          <i class="fas fa-couch"></i>
+        </div>
+
+        <div class="mx-2"></div>
+
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          content="Chọn ngày"
+          placement="top"
+        >
+          <el-date-picker
+            v-model="dateSelected"
+            type="date"
+            placeholder="Chọn một ngày"
+            :shortcuts="shortcuts"
+            :size="'large'"
+            class="w-150 m-2"
+            @change="filterByRoom"
+          />
+        </el-tooltip>
+        <div class="icon-date">
+          <i class="fas fa-calendar-day"></i>
+        </div>
+      </div>
     </div>
     <div class="history-manage-main">
       <div class="history-container">
@@ -39,7 +88,9 @@
             item.time + "-" + convertDateFormat(item.showDate)
           }}</span>
           <span class="bold"> Loại vé: </span>
-          <span class="type-seat">{{ item.type == 1 ? $t('Normal') : "VIP" }}</span>
+          <span class="type-seat">{{
+            item.type == 1 ? $t("Normal") : "VIP"
+          }}</span>
           <span class="bold"> Giá: </span>
           <span class="cost">{{ item.totalAmount + "VND" }}</span>
         </div>
@@ -49,21 +100,29 @@
 </template>
 <script>
 import VsudInput from "../components/VsudInput.vue";
-import { convertDateFormat } from "@/common/commonFunc";
+import { convertDateFormat,convertDateString } from "@/common/commonFunc";
 import BaseButton from "./components/BaseButton.vue";
-
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from "@element-plus/icons-vue";
 export default {
   components: { VsudInput, BaseButton },
   setup() {
-    return { convertDateFormat };
+    return { convertDateFormat, Search };
   },
   created() {
     let me = this;
     this.loadData();
+    this.loadCinemaRoom();
   },
   mounted() {},
   watch: {
-    searchValue(oldVal, newVal) {
+    searchValue(newVal, oldVal) {
       this.dataHistoryTemp = this.dataHistory.filter(
         (x) =>
           x.phoneNumber.includes(newVal) ||
@@ -73,14 +132,56 @@ export default {
 
       if (!newVal) {
         this.dataHistoryTemp = this.dataHistory;
+        this.iconSearch = "icon-search";
+      } else {
+        this.iconSearch = "";
+      }
+
+      if (this.roomSelected != "Tất cả") {
+        this.dataHistoryTemp = this.dataHistoryTemp.filter(
+          (x) => x.roomCode == this.roomSelected
+        );
+      }
+
+      if(this.dateSelected){
+        this.dataHistoryTemp = this.dataHistoryTemp.filter(
+          (x) => convertDateFormat(x.createdDate) == convertDateFormat(convertDateString(this.dateSelected))
+        );
       }
     },
   },
   data() {
     return {
+      ID_ALL: "8ef432ed-faa9-11ed-a12b-88aedd095151",
       dataHistory: [],
       dataHistoryTemp: [],
       searchValue: "",
+      iconSearch: "icon-search",
+      rooms: [],
+      roomSelected: "Tất cả",
+      dateSelected: "",
+      shortcuts: [
+        {
+          text: "Hôm nay",
+          value: new Date(),
+        },
+        {
+          text: "Hôm qua",
+          value: () => {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            return date;
+          },
+        },
+        {
+          text: "Tuần trước",
+          value: () => {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+            return date;
+          },
+        },
+      ],
     };
   },
   methods: {
@@ -100,10 +201,30 @@ export default {
           x.movieName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
           x.customerName.toLowerCase().includes(this.searchValue.toLowerCase())
       );
+    },
 
-      if (!this.searchValue) {
-        this.dataHistoryTemp = this.dataHistory;
+    filterByRoom() {
+      let me = this;
+      this.searchingEvent();
+      if (this.roomSelected != "Tất cả") {
+        this.dataHistoryTemp = this.dataHistoryTemp.filter(
+          (x) => x.roomCode == this.roomSelected
+        );
       }
+
+      if(this.dateSelected){
+        this.dataHistoryTemp = this.dataHistoryTemp.filter(
+          (x) => convertDateFormat(x.createdDate) == convertDateFormat(convertDateString(this.dateSelected))
+        );
+      }
+    },
+
+    loadCinemaRoom() {
+      let me = this;
+      this.rooms = [{ roomID: this.ID_ALL, roomCode: "Tất cả" }];
+      this.$api.post("/CinemaRoom/GetListCinemaRoom").then((data) => {
+        me.rooms = me.rooms.concat(data);
+      });
     },
   },
 };
@@ -124,6 +245,18 @@ export default {
 
     .form-group {
       margin-bottom: 0px !important;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      .icon-search {
+        opacity: 0.6;
+      }
+
+      .el-input__prefix-inner {
+        display: none;
+      }
     }
   }
 

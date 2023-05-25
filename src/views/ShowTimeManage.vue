@@ -2,12 +2,12 @@
   <div class="showtime-manage">
     <div class="showtime-header">
       <div class="header-left">
-        <vsud-input
-          type="text"
-          :placeholder="$t('Search')"
-          name="search_movie"
+        <el-input
           v-model="searchValue"
-          :id="'search_movie'"
+          class="w-200 m-2"
+          size="large"
+          :placeholder="$t('Search')"
+          :suffix-icon="Search"
         />
       </div>
     </div>
@@ -60,12 +60,20 @@ import PopupSeatCinema from "./popups/PopupSeatCinema.vue";
 import CardMovie from "./components/CardMovie.vue";
 import BaseImageDownload from "./components/BaseImageDownload.vue";
 import PopupAddShowtime from "./popups/PopupAddShowtime.vue";
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from "@element-plus/icons-vue";
 export default {
   name: "ShowTimeManager",
   setup() {
     return {
       listSeat,
-      convertLetter,
+      convertLetter,Search
     };
   },
   components: {

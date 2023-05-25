@@ -1,13 +1,13 @@
 <template>
   <div class="cinema-room-manage">
     <div class="cinema-room-header">
-      <vsud-input
-        type="text"
-        :placeholder="$t('Search')"
-        name="search_movie"
-        v-model="searchValue"
-        :id="'search_movie'"
-      />
+      <el-input
+          v-model="searchValue"
+          class="w-200 m-2"
+          size="large"
+          :placeholder="$t('Search')"
+          :suffix-icon="Search"
+        />
       <div class="button-feature-container">
         <base-button
           :classButton="'button-blue'"
@@ -54,12 +54,25 @@ import BaseButton from "./components/BaseButton.vue";
 import VsudInput from "../components/VsudInput.vue";
 import PopupAddRealRoom from "./popups/PopupAddRealRoom.vue";
 import PopupDetailCinemaRoom from "./popups/PopupDetailCinemaRoom.vue";
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from "@element-plus/icons-vue";
 export default {
   components: {
     BaseButton,
     VsudInput,
     PopupAddRealRoom,
     PopupDetailCinemaRoom,
+  },
+  setup() {
+    return{
+      Search
+    }
   },
   created() {
     let me = this;
@@ -123,7 +136,7 @@ export default {
     }
   }
   .cinema-room-main {
-    margin-top: 10px;
+    margin-top: 30px;
     background: #fff;
     border-radius: 10px;
     padding: 10px 20px 30px 20px;

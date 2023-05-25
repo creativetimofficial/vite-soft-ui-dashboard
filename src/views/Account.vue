@@ -1,13 +1,13 @@
 <template>
   <div class="account-manage">
     <div class="account-header">
-      <vsud-input
-        type="text"
-        :placeholder="$t('Search')"
-        name="search_movie"
-        v-model="searchValue"
-        :id="'search_movie'"
-      />
+      <el-input
+          v-model="searchValue"
+          class="w-200 m-2"
+          size="large"
+          :placeholder="$t('Search')"
+          :suffix-icon="Search"
+        />
       <div class="button-container">
         <base-button
           :classButton="'button-blue'"
@@ -117,7 +117,14 @@ import PopupApprovalList from "./popups/PopupApprovalList.vue";
 import PopupAddAccount from "./popups/PopupAddAccount.vue";
 import PopupDelete from "./popups/PopupDelete.vue";
 import PopupDetailAccount from "./popups/PopupDetailAccount.vue";
-
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from "@element-plus/icons-vue";
 export default {
   components: {
     VsudInput,
@@ -130,7 +137,7 @@ export default {
   },
   setup(props) {
     return {
-      urlAvatarDefault,
+      urlAvatarDefault,Search
     };
   },
   created() {

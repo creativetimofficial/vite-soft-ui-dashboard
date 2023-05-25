@@ -2,12 +2,12 @@
   <div class="ticket-manage">
     <div class="ticket-manage-header">
       <div class="header-left">
-        <vsud-input
-          type="text"
-          :placeholder="$t('Search')"
-          name="search_movie"
+        <el-input
           v-model="searchValue"
-          :id="'search_movie'"
+          class="w-200 m-2"
+          size="large"
+          :placeholder="$t('Search')"
+          :suffix-icon="Search"
         />
         <div class="container-radio">
           <el-radio-group v-model="filterTicket">
@@ -100,12 +100,19 @@
 import VsudInput from "../components/VsudInput.vue";
 import { convertDateFormat } from "@/common/commonFunc";
 import BaseButton from "./components/BaseButton.vue";
-
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from "@element-plus/icons-vue";
 export default {
   components: { VsudInput, BaseButton },
   setup() {
     return {
-      convertDateFormat,
+      convertDateFormat,Search
     };
   },
   created() {
@@ -217,6 +224,7 @@ export default {
 
     .header-left {
       display: flex;
+      align-items: center;
       .filter-movie {
         height: 36px;
         margin-left: 10px;

@@ -19,9 +19,11 @@ import Vue3Toasity from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import VueApexCharts from "vue3-apexcharts";
 import "element-plus/theme-chalk/index.css";
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
   
 const app = createApp(App);
+
 app.use(i18n);
 app
   .use(VueFire, {
@@ -49,6 +51,9 @@ app.use(ElementPlus)
 app.use(VueApexCharts);
 app.component("v-select", VueSelect)
 app.component('EasyDataTable', Vue3EasyDataTable);
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 app.use(store);
 app.use(router);
 app.use(SoftUIDashboard); 

@@ -127,3 +127,12 @@ export function increaseString(str) {
 
   return nonNumberPart + increasedNumber;
 }
+
+export function convertDateString(dateString) {
+  var dateObject = new Date(dateString);
+  var year = dateObject.getFullYear();
+  var month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+  var day = dateObject.getDate().toString().padStart(2, '0');
+  var formattedDate = year + '-' + month + '-' + day + 'T00:00:00';
+  return formattedDate;
+}
