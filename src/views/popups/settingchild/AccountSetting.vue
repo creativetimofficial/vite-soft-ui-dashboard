@@ -18,7 +18,7 @@
           <div class="info-content">
             {{
               dataAccount.gender == 1
-                ? "Name"
+                ? "Nam"
                 : dataAccount.gender == 2
                 ? "Nữ"
                 : "Khác"
@@ -27,11 +27,11 @@
         </div>
         <div class="info-row">
           <div class="info-label">Email:</div>
-          <div class="info-content">{{ dataAccount.email ?? "" }}</div>
+          <div class="info-content">{{ dataAccount.email ?dataAccount.email: "<<Trống>>" }}</div>
         </div>
         <div class="info-row">
           <div class="info-label">Số điện thoại:</div>
-          <div class="info-content">{{ dataAccount.phoneNumber ?? "" }}</div>
+          <div class="info-content">{{ dataAccount.phoneNumber ? dataAccount.phoneNumber: "<<Trống>>" }}</div>
         </div>
         <div class="info-row">
           <div class="info-label">Loại tài khoản:</div>

@@ -18,15 +18,30 @@
         >
           <div class="input-group">
             <div class="filter-cinema">
-              <el-input v-model="cinemaSelected" readonly placeholder="Please input" />
+              <el-input
+                v-model="cinemaSelected"
+                readonly
+                placeholder="Please input"
+              />
             </div>
           </div>
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center mx-3" v-if="fullName">
-            Xin chào, <span class="fw-bold">{{" " + fullName }}</span>
-          </li>         
-          <li class="nav-item d-flex align-items-center">
+            Xin chào, <span class="fw-bold">{{ " " + fullName }}</span>
+          </li>
+          <el-tooltip
+            class="box-item"
+            effect="dark"
+            content="Cài đặt"
+            placement="top"
+          >
+            <li class="nav-item d-flex align-items-center mx-3 h-opacity" @click="showSetting">
+              <i class="fas fa-cog"></i>
+            </li>
+          </el-tooltip>
+
+          <li class="nav-item d-flex align-items-center h-opacity">
             <router-link
               :to="{ name: 'Sign In' }"
               class="px-0 nav-link font-weight-bold"
@@ -130,10 +145,11 @@ export default {
     let me = this;
     this.minNav;
     // this.loadListCinema();
-    if(sessionStorage.getItem("token")){
-      this.cinemaSelected = jwt.decode(sessionStorage.getItem("token")).cinemaName;
+    if (sessionStorage.getItem("token")) {
+      this.cinemaSelected = jwt.decode(
+        sessionStorage.getItem("token")
+      ).cinemaName;
     }
-
   },
   updated() {
     const navbar = document.getElementById("navbarBlur");

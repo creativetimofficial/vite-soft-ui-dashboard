@@ -368,7 +368,6 @@ export default {
     background: #fff;
     border-radius: 10px;
     .movie-manage-main {
-      justify-content: space-between;
 
       padding: 20px 20px 0 0;
       margin-top: 30px;

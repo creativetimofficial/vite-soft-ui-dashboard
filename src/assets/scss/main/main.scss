@@ -85,3 +85,24 @@ border: 3px solid transparent;
 .w-150{
   width: 150px!important;
 }
+
+.h-opacity{
+  &:hover{
+    opacity: 0.6;
+    cursor: pointer;
+  }
+}
+
+
+.color-black{
+  color: #000;
+
+  input{
+    color: #000!important;
+  }
+
+  .el-input__inner{
+    color: #000!important;
+
+  }
+}

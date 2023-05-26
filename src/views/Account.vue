@@ -275,10 +275,10 @@ export default {
         .account-item {
           width: 190px;
           height: 254px;
-          background: #3405a3;
+          background: #17c1e8;
           border-radius: 15px;
           box-shadow: 1px 5px 60px 0px #100a886b;
-          margin: 0 0 10px 20px;
+          margin: 20px;
           position: relative;
 
           .icon-delete {
@@ -309,7 +309,6 @@ export default {
         .account-item .account-item-border-top {
           width: 60%;
           height: 3%;
-          background: #6b64f3;
           margin: auto;
           border-radius: 0px 0px 15px 15px;
         }
@@ -335,7 +334,7 @@ export default {
         .account-item .img {
           width: 70px;
           height: 80px;
-          background: #6b64f3;
+          background: #1a72ff;
           border-radius: 15px;
           margin: auto;
           margin-top: 25px;
@@ -348,9 +347,10 @@ export default {
           border-radius: 8px;
           border: none;
           margin-top: 30px;
-          background: #6b64f3;
+          background: #1a72ff;
           color: white;
           font-weight: 600;
+          font-size: 13px;
         }
 
         .account-item button:hover {

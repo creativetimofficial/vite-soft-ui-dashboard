@@ -278,6 +278,8 @@ export default {
         language: null,
         timeLine: null,
         biggestMovieCode: "",
+        categoryID: null,
+        typeID: null
       },
 
       listLanguage: [],
@@ -299,14 +301,14 @@ export default {
         releaseDate: this.dataMovie.releasedate,
         actor: this.dataMovie.actor,
         directions: this.dataMovie.direction,
-        typeID: this.dataMovie.selectedTypeMovie,
+        typeID: this.dataMovie.typeID,
         language: this.dataMovie.language,
         trailerLink: this.dataMovie.trailerLink,
         posterLink: this.dataMovie.urlImage,
         content: this.dataMovie.content,
         fromDate: this.dataMovie.fromdate,
         toDate: this.dataMovie.todate,
-        categoryIDs: this.dataMovie.selectedCategory,
+        categoryIDs: this.dataMovie.categoryID,
         timeLine: this.dataMovie.timeLine,
       };
       this.$api

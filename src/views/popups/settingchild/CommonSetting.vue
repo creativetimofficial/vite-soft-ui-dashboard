@@ -10,15 +10,20 @@
             </div>
             Vé thường:
           </div>
-          <div class="info-content">{{ ticketNormal }}</div>
+          <!-- <div class="info-content">{{ ticketNormal }}</div> -->
           <div class="info-content">
             <el-input
-              v-if="isShowNormal"
+              class="color-black"
               v-model="ticketNormal"
               type="text"
               placeholder="Nhập giá vé"
               autocomplete="off"
+              :disabled="!isShowNormal"
+              ref="ticketnormal"
             />
+          </div>
+          <div class="info-content mx-2" v-if="isShowNormal" @click="updateTicketNormal">
+            <el-button type="primary" :icon="Check" circle />
           </div>
         </div>
         <div class="info-row">
@@ -28,15 +33,20 @@
             </div>
             Vé VIP:
           </div>
-          <div class="info-content">{{ ticketVip }}</div>
+          <!-- <div class="info-content">{{ ticketVip }}</div> -->
           <div class="info-content">
             <el-input
-              v-if="isShowVIP"
               v-model="ticketVip"
               type="text"
               placeholder="Nhập giá vé"
               autocomplete="off"
+              :disabled="!isShowVIP"
+              class="color-black"
+              ref="ticketvip"
             />
+          </div>
+          <div class="info-content mx-2" v-if="isShowVIP" @click="updateTicketVIP">
+            <el-button type="primary" :icon="Check" circle />
           </div>
         </div>
       </div>
@@ -44,7 +54,20 @@
   </div>
 </template>
 <script>
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from '@element-plus/icons-vue'
 export default {
+  setup() {
+    return{
+      Check,
+    }
+  },
   components: {},
   created() {
     let me = this;
@@ -76,16 +99,55 @@ export default {
     },
 
     showNormalInput() {
-      this.isShowNormal = true;
+      this.isShowNormal = !this.isShowNormal;
+      if (this.isShowNormal) {
+        this.$refs.ticketnormal.focus();
+      }
     },
     showVIPInput() {
-      this.isShowVIP = true;
+      this.isShowVIP = !this.isShowVIP;
+      if (this.isShowVIP) {
+        this.$refs.ticketvip.focus();
+      }
     },
+
+    updateTicketVIP(){
+      let me = this;
+      this.$store.state.isShowLoading = true;
+      this.$api.post("/DBOption/UpdateDBOption",{keyword: "Default_Seat_VIP",keyValue: me.ticketVip}).then((data)=>{
+        this.$store.dispatch("showToast","Cập nhật giá vé thành công!");
+        this.$store.state.isShowLoading = false;
+        me.isShowVIP = false;
+      })
+    },
+
+
+    updateTicketNormal(){
+      let me = this;
+      this.$store.state.isShowLoading = true;
+      this.$api.post("/DBOption/UpdateDBOption",{keyword: "Default_Seat_Normal",keyValue: me.ticketNormal}).then((data)=>{
+        this.$store.dispatch("showToast","Cập nhật giá vé thành công!");
+        this.$store.state.isShowLoading = false;
+        me.isShowNormal = false;
+
+      })
+    }
   },
 };
 </script>
 <style lang="scss">
 .common-child-setting {
+  .color-black {
+    color: #000;
+
+    input {
+      color: #000 !important;
+    }
+
+    .el-input__inner {
+      color: #000 !important;
+    }
+  }
   .common-info-header {
     font-style: italic;
     font-size: 12px;

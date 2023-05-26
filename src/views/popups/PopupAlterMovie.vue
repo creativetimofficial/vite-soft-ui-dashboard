@@ -237,6 +237,7 @@ export default {
   },
   created() {
     let me = this;
+    this.$store.state.isShowLoading = true;
     this.$api
       .post("/Movie/GetMovieAlterByMovieID", { movieID: me.idMovie })
       .then((data) => {
@@ -251,9 +252,11 @@ export default {
           (me.dataMovie.actor = data.actor),
           (me.dataMovie.directions = data.directions),
           (me.dataMovie.urlImage = data.posterLink),
-          (me.dataMovie.linkTrailer = data.linkTrailer),
+          (me.dataMovie.linkTrailer = data.trailerLink),
           (me.dataMovie.language = data.language),
           (me.dataMovie.timeLine = data.timeLine);
+    me.$store.state.isShowLoading = false;
+          
       });
     this.$api.post("/Movie/GetListTypeMovie").then((data) => {
       me.dataMovie.typeMovie = data;
@@ -315,7 +318,7 @@ export default {
         directions: this.dataMovie.directions,
         typeID: this.dataMovie.typeID,
         language: this.dataMovie.language,
-        trailerLink: this.dataMovie.trailerLink,
+        trailerLink: this.dataMovie.linkTrailer,
         posterLink: this.dataMovie.urlImage,
         content: this.dataMovie.content,
         fromDate: this.dataMovie.fromDate,
