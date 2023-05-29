@@ -69,51 +69,102 @@
           </div>
           <div class="movie-detail">
             <div class="movie-name">
-              <div
-                class="movie-content"
-                @click="openContent(item.movieName, item.content)"
+              <el-tooltip
+                class="box-item"
+                effect="dark"
+                :content="item.movieName + ' - ' + item.movieCode"
+                placement="top"
               >
-                {{ item.movieName }} - {{ item.movieCode }}
-              </div>
+                <div
+                  class="movie-content"
+                  @click="openContent(item.movieName, item.content)"
+                >
+                  {{ item.movieName }} - {{ item.movieCode }}
+                </div>
+              </el-tooltip>
+
               <div class="group-icon">
-                <div
-                  class="icon-trailer"
-                  v-if="!isOpenTrailer(item.movieID)"
-                  @click="openTrailer(item.movieID)"
+                <el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  :content="
+                    isOpenTrailer(item.movieID) ? $t('Close') : $t('Trailer')
+                  "
+                  placement="top"
                 >
-                  <i class="fas fa-film"></i>
-                </div>
-                <div
-                  class="icon-trailer"
-                  v-if="isOpenTrailer(item.movieID)"
-                  @click="openTrailer(item.movieID)"
-                >
-                  <i class="fas fa-times"></i>
-                </div>
-                <div class="icon-context-container">
-                  <div class="icon-trailer" @click="openContext(item.movieID)">
-                    <i
-                      class="fas fa-caret-down"
-                      v-if="!isOpenContext(item.movieID)"
-                    ></i>
-                    <i
-                      class="fas fa-caret-up"
-                      v-if="isOpenContext(item.movieID)"
-                    ></i>
+                  <div
+                    class="icon-trailer"
+                    v-if="!isOpenTrailer(item.movieID)"
+                    @click="openTrailer(item.movieID)"
+                  >
+                    <i class="fas fa-film"></i>
                   </div>
+                  <div
+                    class="icon-trailer"
+                    v-if="isOpenTrailer(item.movieID)"
+                    @click="openTrailer(item.movieID)"
+                  >
+                    <i class="fas fa-times"></i>
+                  </div>
+                </el-tooltip>
+
+                <div class="icon-context-container">
+                  <el-tooltip
+                    class="box-item"
+                    effect="dark"
+                    :content="
+                      isOpenContext(item.movieID)
+                        ? $t('Close')
+                        : $t('Moreoptions')
+                    "
+                    placement="top"
+                  >
+                    <div
+                      class="icon-trailer"
+                      @click="openContext(item.movieID)"
+                    >
+                      <i
+                        class="fas fa-caret-down"
+                        v-if="!isOpenContext(item.movieID)"
+                      ></i>
+                      <i
+                        class="fas fa-caret-up"
+                        v-if="isOpenContext(item.movieID)"
+                      ></i>
+                    </div>
+                  </el-tooltip>
+
                   <div
                     class="group-icon-down"
                     v-if="isOpenContext(item.movieID)"
                   >
-                    <div class="icon-down" @click="getAlterMovie(item.movieID)">
-                      <i class="fas fa-pen"></i>
-                    </div>
-                    <div
-                      class="icon-down"
-                      @click="getRowSelected(item.movieID)"
+                    <el-tooltip
+                      class="box-item"
+                      effect="dark"
+                      :content="$t('Edit')"
+                      placement="top"
                     >
-                      <i class="fas fa-trash-alt"></i>
-                    </div>
+                      <div
+                        class="icon-down"
+                        @click="getAlterMovie(item.movieID)"
+                      >
+                        <i class="fas fa-pen"></i>
+                      </div>
+                    </el-tooltip>
+
+                    <el-tooltip
+                      class="box-item"
+                      effect="dark"
+                      :content="$t('Delete')"
+                      placement="top"
+                    >
+                      <div
+                        class="icon-down"
+                        @click="getRowSelected(item.movieID)"
+                      >
+                        <i class="fas fa-trash-alt"></i>
+                      </div>
+                    </el-tooltip>
                   </div>
                 </div>
               </div>
@@ -130,13 +181,31 @@
             <div class="movie-release-date">
               {{ $t("Releasedate") }}: {{ convertDateFormat(item.releaseDate) }}
             </div>
-            <div class="movie-actor">{{ $t("nActor") }}: {{ item.actor }}</div>
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              :content="$t('Director') + ': ' + item.actor"
+              placement="top"
+            >
+              <div class="movie-actor">
+                {{ $t("nActor") }}: {{ item.actor }}
+              </div>
+            </el-tooltip>
+
             <div class="movie-direction">
               {{ $t("Director") }}: {{ item.directions }}
             </div>
-            <div class="movie-category" :title="item.categoryName">
-              {{ $t("CategoryMovie") }}: {{ item.categoryName }}
-            </div>
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              :content="$t('CategoryMovie') + ': ' + item.categoryName"
+              placement="top"
+            >
+              <div class="movie-category" :title="item.categoryName">
+                {{ $t("CategoryMovie") }}: {{ item.categoryName }}
+              </div>
+            </el-tooltip>
+
             <div class="movie-type">
               {{ $t("TypeMovie") }}: {{ item.typeName }}
             </div>
@@ -201,7 +270,7 @@ export default {
     PopupAlterMovie,
   },
   setup() {
-    return { convertDateFormat, filterMovie,Search };
+    return { convertDateFormat, filterMovie, Search };
   },
   created() {
     let me = this;
@@ -368,7 +437,6 @@ export default {
     background: #fff;
     border-radius: 10px;
     .movie-manage-main {
-
       padding: 20px 20px 0 0;
       margin-top: 30px;
       display: flex;

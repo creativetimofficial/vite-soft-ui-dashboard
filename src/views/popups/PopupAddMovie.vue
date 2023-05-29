@@ -3,9 +3,17 @@
     <div class="popup-container">
       <div class="popup-header">
         <div class="popup-title">{{ $t("Newmovies") }}</div>
-        <div class="popup-icon-close" @click="closeThisPopup()">
+        <el-tooltip
+        class="box-item"
+        effect="dark"
+        :content="$t('Close')"
+        placement="top"
+      >
+      <div class="popup-icon-close" @click="closeThisPopup()">
           <i class="fas fa-times"></i>
         </div>
+      </el-tooltip>
+
       </div>
       <div class="popup-main">
         <div class="popup-row-1 pt-25">

@@ -2,12 +2,12 @@
   <div class="account-manage">
     <div class="account-header">
       <el-input
-          v-model="searchValue"
-          class="w-200 m-2"
-          size="large"
-          :placeholder="$t('Search')"
-          :suffix-icon="Search"
-        />
+        v-model="searchValue"
+        class="w-200 m-2"
+        size="large"
+        :placeholder="$t('Search')"
+        :suffix-icon="Search"
+      />
       <div class="button-container">
         <base-button
           :classButton="'button-blue'"
@@ -24,16 +24,24 @@
     </div>
     <div class="account-main">
       <div class="account-container-admin">
-        <div class="container-header">{{$t('Systemaccount')}}</div>
+        <div class="container-header">{{ $t("Systemaccount") }}</div>
         <div class="container-main">
           <div
             class="account-item"
             v-for="item in dataAccountAdmin"
             :key="item.AccountID"
           >
-            <div class="icon-delete" @click="showDeletePopup(item.accountID)">
-              <i class="fas fa-trash-alt" style="color: #ffffff"></i>
-            </div>
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              :content="$t('Deleteaccount')"
+              placement="top"
+            >
+              <div class="icon-delete" @click="showDeletePopup(item.accountID)">
+                <i class="fas fa-trash-alt" style="color: #ffffff"></i>
+              </div>
+            </el-tooltip>
+
             <div class="account-item-border-top"></div>
             <div class="img">
               <base-image-download
@@ -56,12 +64,14 @@
                   : "manager"
               }}
             </p>
-            <button @click="openPopupDetail(item.accountID)">{{ $t('Detail') }}</button>
+            <button @click="openPopupDetail(item.accountID)">
+              {{ $t("Detail") }}
+            </button>
           </div>
         </div>
       </div>
       <div class="account-container-user">
-        <div class="container-header">{{ $t('Customeraccount') }}</div>
+        <div class="container-header">{{ $t("Customeraccount") }}</div>
         <div class="container-main">
           <div
             class="account-item"
@@ -81,7 +91,7 @@
             </div>
             <span> {{ item.name }}</span>
             <p class="job">{{ item.accountName }}</p>
-            <button>{{ $t('Detail') }}</button>
+            <!-- <button>{{ $t('Detail') }}</button> -->
           </div>
         </div>
       </div>
@@ -102,9 +112,9 @@
     :contentCustom="'Bạn có muốn xóa tài khoản vừa chọn không!'"
   ></popup-delete>
   <popup-detail-account
-  v-if="$store.state.isOpenDetailAccount"
-  :idAccount="accountIDSelected"
-  @update="loadData"
+    v-if="$store.state.isOpenDetailAccount"
+    :idAccount="accountIDSelected"
+    @update="loadData"
   ></popup-detail-account>
 </template>
 
@@ -137,7 +147,8 @@ export default {
   },
   setup(props) {
     return {
-      urlAvatarDefault,Search
+      urlAvatarDefault,
+      Search,
     };
   },
   created() {
@@ -154,7 +165,7 @@ export default {
     };
   },
   methods: {
-    openPopupDetail(id){
+    openPopupDetail(id) {
       this.accountIDSelected = id;
       this.$store.state.isOpenDetailAccount = true;
     },

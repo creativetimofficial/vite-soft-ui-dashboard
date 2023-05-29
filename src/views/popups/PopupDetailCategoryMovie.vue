@@ -3,18 +3,26 @@
     <div class="overlay" @click="closeThisPopup()"></div>
     <div class="popup-container">
       <div class="popup-header">
-        <div class="icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
-        </div>
-        <div class="header-title">{{ $t('CategoryMovie') }}</div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
+
+        <div class="header-title">{{ $t("CategoryMovie") }}</div>
         <div class="line-space"></div>
       </div>
       <div class="popup-main">
         <div class="popup-get">
           <table id="table-category">
             <thead>
-              <th class="category-code">{{ $t('Categorycode') }}</th>
-              <th class="category-name">{{$t('Categoryname')}}</th>
+              <th class="category-code">{{ $t("Categorycode") }}</th>
+              <th class="category-name">{{ $t("Categoryname") }}</th>
             </thead>
             <tbody>
               <tr v-for="item in dataCategory" :key="item.categoryID">

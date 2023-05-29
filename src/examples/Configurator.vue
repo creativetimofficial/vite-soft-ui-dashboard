@@ -1,16 +1,24 @@
 <template>
   <div class="fixed-plugin">
-    <a
-      class="px-3 py-2 fixed-plugin-button text-dark position-fixed"
-      @click="toggle"
+    <el-tooltip
+      class="box-item"
+      effect="dark"
+      :content="$t('Options')"
+      placement="top"
     >
-      <i class="py-2 fa fa-cog"></i>
-    </a>
+      <a
+        class="px-3 py-2 fixed-plugin-button text-dark position-fixed"
+        @click="toggle"
+      >
+        <i class="py-2 fa fa-cog"></i>
+      </a>
+    </el-tooltip>
+
     <div class="shadow-lg card blur">
       <div class="pt-3 pb-0 bg-transparent card-header">
         <div class="float-start">
-          <h5 class="mt-3 mb-0">{{ $t('appconfig') }}</h5>
-          <p>{{ $t('subappconfig') }}</p>
+          <h5 class="mt-3 mb-0">{{ $t("appconfig") }}</h5>
+          <p>{{ $t("subappconfig") }}</p>
         </div>
         <div class="mt-4 float-end" @click="toggle">
           <button class="p-0 btn btn-link text-dark fixed-plugin-close-button">
@@ -23,7 +31,7 @@
       <div class="pt-0 card-body pt-sm-3" v-show="!$store.state.IsOutSide">
         <!-- Sidebar Backgrounds -->
         <div>
-          <h6 class="mb-0">{{ $t('sidebarcolors') }}</h6>
+          <h6 class="mb-0">{{ $t("sidebarcolors") }}</h6>
         </div>
         <a href="#" class="switch-trigger background-color">
           <div
@@ -64,8 +72,8 @@
         </a>
         <!-- Sidenav Type -->
         <div class="mt-3">
-          <h6 class="mb-0">{{ $t('sidenavtype') }}</h6>
-          <p class="text-sm">{{ $t('subsidenavtype') }}</p>
+          <h6 class="mb-0">{{ $t("sidenavtype") }}</h6>
+          <p class="text-sm">{{ $t("subsidenavtype") }}</p>
         </div>
         <div class="d-flex">
           <button
@@ -74,7 +82,7 @@
             :class="ifTransparent === 'bg-transparent' ? 'active' : ''"
             @click="sidebarType('bg-transparent')"
           >
-            {{ $t('transparent') }}
+            {{ $t("transparent") }}
           </button>
           <button
             id="btn-white"
@@ -82,15 +90,13 @@
             :class="ifTransparent === 'bg-white' ? 'active' : ''"
             @click="sidebarType('bg-white')"
           >
-            {{ $t('white') }}
+            {{ $t("white") }}
           </button>
         </div>
-        <p class="mt-2 text-sm d-xl-none d-block">
-
-        </p>
+        <p class="mt-2 text-sm d-xl-none d-block"></p>
         <!-- Navbar Fixed -->
         <div class="mt-3">
-          <h6 class="mb-0">{{ $t('navbarfixed') }}</h6>
+          <h6 class="mb-0">{{ $t("navbarfixed") }}</h6>
         </div>
         <div class="form-check form-switch ps-0">
           <input
@@ -107,7 +113,7 @@
       </div>
       <div class="pt-0 card-body pt-sm-3">
         <div>
-          <h6 class="mb-0">{{ $t('languages') }}</h6>
+          <h6 class="mb-0">{{ $t("languages") }}</h6>
           <div class="form-check form-switch ps-0">
             <input
               id="languageFixed"
@@ -119,8 +125,7 @@
               @change="setLanguage($store.state.isVietNamese)"
             />
 
-          <div class="lang">{{ $t('lang') }}</div>
-            
+            <div class="lang">{{ $t("lang") }}</div>
           </div>
         </div>
       </div>
@@ -141,7 +146,7 @@ export default {
   data() {
     return {
       fixedKey: "",
-      languague: true
+      languague: true,
     };
   },
 
@@ -205,11 +210,11 @@ export default {
 };
 </script>
 <style lang="scss">
-.fixed-plugin{
-  .card-body{
+.fixed-plugin {
+  .card-body {
     flex: unset;
   }
-  .lang{
+  .lang {
     margin-left: 50px;
   }
 }

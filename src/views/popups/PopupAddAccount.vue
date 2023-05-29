@@ -2,10 +2,17 @@
   <div class="popup-add-account">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">{{ $t('NewAccount') }}</div>
-        <div class="popup-icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
-        </div>
+        <div class="popup-title">{{ $t("NewAccount") }}</div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="popup-icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
       </div>
       <div class="popup-main">
         <div class="popup-row-1 pt-25">
@@ -67,16 +74,16 @@
             <div class="radio-inputs">
               <label class="radio">
                 <input type="radio" v-model="gender" :value="1" />
-                <span class="name">{{ $t('Male') }}</span>
+                <span class="name">{{ $t("Male") }}</span>
               </label>
               <label class="radio">
                 <input type="radio" v-model="gender" :value="2" />
-                <span class="name">{{ $t('Female') }}</span>
+                <span class="name">{{ $t("Female") }}</span>
               </label>
 
               <label class="radio">
                 <input type="radio" v-model="gender" :value="3" />
-                <span class="name">{{ $t('Other') }}</span>
+                <span class="name">{{ $t("Other") }}</span>
               </label>
             </div>
           </div>
@@ -151,7 +158,7 @@ import { defaultRole } from "@/constants/constantsdefaults";
 
 import { uuidv4 } from "../../common/uuid";
 export default {
-  emits: ["add-click","update"],
+  emits: ["add-click", "update"],
   components: {
     BaseButton,
     VsudInput,

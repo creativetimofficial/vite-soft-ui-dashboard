@@ -3,9 +3,16 @@
     <div class="popup-container">
       <div class="popup-header">
         <div class="popup-title">Cập nhật phim</div>
-        <div class="popup-icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
-        </div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="popup-icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
       </div>
       <div class="popup-main">
         <div class="popup-row-1 pt-25">
@@ -111,7 +118,11 @@
               :reduce="(typeName) => typeName.typeID"
             ></v-select> -->
 
-            <el-select v-model="dataMovie.typeID" clearable :placeholder="$t('PTypeMovie')">
+            <el-select
+              v-model="dataMovie.typeID"
+              clearable
+              :placeholder="$t('PTypeMovie')"
+            >
               <el-option
                 v-for="item in dataMovie.typeMovie"
                 :key="item.typeID"
@@ -255,8 +266,7 @@ export default {
           (me.dataMovie.linkTrailer = data.trailerLink),
           (me.dataMovie.language = data.language),
           (me.dataMovie.timeLine = data.timeLine);
-    me.$store.state.isShowLoading = false;
-          
+        me.$store.state.isShowLoading = false;
       });
     this.$api.post("/Movie/GetListTypeMovie").then((data) => {
       me.dataMovie.typeMovie = data;

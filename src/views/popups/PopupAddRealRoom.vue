@@ -2,10 +2,17 @@
   <div class="popup-add-real-room">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">{{ $t('Moremovieroom') }}</div>
-        <div class="popup-icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
-        </div>
+        <div class="popup-title">{{ $t("Moremovieroom") }}</div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="popup-icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
       </div>
       <div class="popup-main">
         <div class="popup-row-1 mt-2">

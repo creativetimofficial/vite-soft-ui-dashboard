@@ -2,10 +2,17 @@
   <div class="popup-approval">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">{{ $t('Accountapproval') }}</div>
-        <div class="popup-icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
-        </div>
+        <div class="popup-title">{{ $t("Accountapproval") }}</div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="popup-icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
       </div>
       <div class="popup-main">
         <div class="popup-main-container">
@@ -14,13 +21,21 @@
             v-for="item in dataAccount"
             :key="item.accountID"
           >
-            <div class="icon-deny" @click="denyAccount(item.accountID)">
-              <i class="fas fa-ban"></i>
-            </div>
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              :content="$t('Reject')"
+              placement="top"
+            >
+              <div class="icon-deny" @click="denyAccount(item.accountID)">
+                <i class="fas fa-ban"></i>
+              </div>
+            </el-tooltip>
+
             <div class="approval">
               <h3 class="approval__title">{{ item.name }}</h3>
               <p class="approval__content">
-                {{$t('Account')}}: {{ item.accountName }}
+                {{ $t("Account") }}: {{ item.accountName }}
               </p>
               <div class="approval__date">
                 {{ convertDateFormat(item.createdDate) }}
@@ -29,7 +44,7 @@
                 class="approval__arrow"
                 @click="approvalAccount(item.accountID)"
               >
-                <div class="approval-button">{{ $t('Approve') }}</div>
+                <div class="approval-button">{{ $t("Approve") }}</div>
               </div>
             </div>
           </div>
@@ -53,7 +68,7 @@ import { uuidv4 } from "../../common/uuid";
 import { convertDateFormat } from "@/common/commonFunc";
 
 export default {
-  emits: ["add-click","update"],
+  emits: ["add-click", "update"],
   components: {
     BaseButton,
     VsudInput,
@@ -94,13 +109,12 @@ export default {
           me.$store.state.isShowLoading = false;
           me.loadData();
           me.$emit("update");
-          if(data){
-            me.$store.dispatch("showToast","Tài khoản đã được phê duyệt");
-          }else{
-            me.$store.dispatch("showToast","Có lỗi xảy ra. Vui lòng thử lại!");
+          if (data) {
+            me.$store.dispatch("showToast", "Tài khoản đã được phê duyệt");
+          } else {
+            me.$store.dispatch("showToast", "Có lỗi xảy ra. Vui lòng thử lại!");
           }
         });
-        
     },
     denyAccount(id) {
       let me = this;
@@ -110,10 +124,10 @@ export default {
         .then((data) => {
           me.$store.state.isShowLoading = false;
           me.loadData();
-          if(data){
-            me.$store.dispatch("showToast","Tài khoản đã từ chối phê duyệt!");
-          }else{
-            me.$store.dispatch("showToast","Có lỗi xảy ra. Vui lòng thử lại!");
+          if (data) {
+            me.$store.dispatch("showToast", "Tài khoản đã từ chối phê duyệt!");
+          } else {
+            me.$store.dispatch("showToast", "Có lỗi xảy ra. Vui lòng thử lại!");
           }
         });
     },

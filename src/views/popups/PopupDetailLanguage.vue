@@ -3,21 +3,36 @@
     <div class="overlay" @click="closeThisPopup()"></div>
     <div class="popup-container">
       <div class="popup-header">
-        <div class="icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
-        </div>
-        <div class="icon-add" @click="showUpdate()">
-          <i class="far fa-plus-square fa-lg"></i>
-        </div>
-        <div class="header-title">{{$t('Language')}}</div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Addnew')"
+          placement="top"
+        >
+          <div class="icon-add" @click="showUpdate()">
+            <i class="far fa-plus-square fa-lg"></i>
+          </div>
+        </el-tooltip>
+
+        <div class="header-title">{{ $t("Language") }}</div>
         <div class="line-space"></div>
       </div>
       <div class="popup-main">
         <div class="popup-get">
           <table id="table-language">
             <thead>
-              <th class="category-code">{{ $t('LanguageCode') }}</th>
-              <th class="category-name">{{$t('LanguageName')}}</th>
+              <th class="category-code">{{ $t("LanguageCode") }}</th>
+              <th class="category-name">{{ $t("LanguageName") }}</th>
             </thead>
             <tbody>
               <tr v-for="item in dataTemplate" :key="item.languageCode">
@@ -92,7 +107,7 @@ export default {
       time: "",
       isOpenUpdate: false,
       languageCode: "",
-      languageName: ""
+      languageName: "",
     };
   },
   methods: {

@@ -89,12 +89,13 @@
       </div>
 
       <div class="user-select">
-        <div class="note">Chọn người dùng</div>
+        <div class="note">{{ $t('Chooseacustomer') }}</div>
         <v-select
           label="name"
           :options="dataCustomerTemp"
           v-model="accountSelected"
           :reduce="(typeName) => typeName.accountID"
+          :placeholder="$t('Chooseacustomer')"
         ></v-select>
       </div>
     </div>

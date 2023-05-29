@@ -154,7 +154,13 @@ const i18n = createI18n({
       Logout: "Logout",
       LanguageCode: "Language code",
       LanguageName: "Language name",
-      Addnewlanguage: "Add new language"
+      Addnewlanguage: "Add new language",
+      Moreoptions: "More options",
+      Edit: "Edit",
+      Options: "Options",
+      Chooseacustomer: "Choose a customer",
+      Deleteaccount: "Delete account",
+      Reject: "Reject"
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -305,7 +311,13 @@ const i18n = createI18n({
       Logout: "Đăng xuất",
       LanguageCode: "Mã ngôn ngữ",
       LanguageName: "Tên ngôn ngữ",
-      Addnewlanguage: "Thêm mới ngôn ngữ"
+      Addnewlanguage: "Thêm mới ngôn ngữ",
+      Moreoptions: "Thêm tùy chọn",
+      Edit: "Chỉnh sửa",
+      Options: "Tùy chọn",
+      Chooseacustomer:"Chọn khách hàng",
+      Deleteaccount: "Xóa tài khoản",
+      Reject: "Từ chối"
     },
   },
 });

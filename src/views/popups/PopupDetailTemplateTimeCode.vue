@@ -3,21 +3,41 @@
     <div class="overlay" @click="closeThisPopup()"></div>
     <div class="popup-container">
       <div class="popup-header">
-        <div class="icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
-        </div>
-        <div class="icon-add" @click="showUpdate()" v-if="$store.state.role == 'admin'">
-          <i class="far fa-plus-square fa-lg"></i>
-        </div>
-        <div class="header-title">{{$t('Timeframe')}}</div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
+
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Addnew')"
+          placement="top"
+        >
+          <div
+            class="icon-add"
+            @click="showUpdate()"
+            v-if="$store.state.role == 'admin'"
+          >
+            <i class="far fa-plus-square fa-lg"></i>
+          </div>
+        </el-tooltip>
+
+        <div class="header-title">{{ $t("Timeframe") }}</div>
         <div class="line-space"></div>
       </div>
       <div class="popup-main">
         <div class="popup-get">
           <table id="table-type-movie">
             <thead>
-              <th class="category-code">{{ $t('Timeframecode') }}</th>
-              <th class="category-name">{{$t('Timeframe')}}</th>
+              <th class="category-code">{{ $t("Timeframecode") }}</th>
+              <th class="category-name">{{ $t("Timeframe") }}</th>
             </thead>
             <tbody>
               <tr v-for="item in dataTemplate" :key="item.categoryID">
