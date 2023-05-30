@@ -171,10 +171,10 @@
             />
           </div>
           <div class="popup-input popup-date">
-            <label>{{ $t("TimeLine") }}</label>
+            <label>{{ $t("RunningTime") }}</label>
             <vsud-input
               type="number"
-              :placeholder="$t('TimeLine')"
+              :placeholder="$t('RunningTime')"
               name="password"
               v-model="dataMovie.timeLine"
               :id="'lang-movie'"
@@ -247,6 +247,7 @@ export default {
     BaseUploadFirebase,
   },
   created() {
+    this.$store.state.isShowLoading = true;
     let me = this;
     this.$api.post("/Movie/GetListTypeMovie").then((data) => {
       me.dataMovie.typeMovie = data;
@@ -263,6 +264,8 @@ export default {
 
     this.$api.post("/Dictionary/GetListLanguage").then((data) => {
       me.listLanguage = data;
+    me.$store.state.isShowLoading = false;
+
     });
   },
   props: {},

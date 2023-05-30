@@ -64,6 +64,11 @@ export default {
       this.$store.state.isLoggedIn = true;
       this.$store.state.cinemaName = decodedToken.cinemaName;
     }
+
+    this.$i18n.locale = localStorage.getItem('locale')??'vi';
+
+
+  
   },
   computed: {
     navClasses() {

@@ -4,31 +4,31 @@
         <div class="icon-close" @click="closeThisPopup">
             <i class="fas fa-times fa-lg"></i>
         </div>
-      <div class="header-title">{{ headerName[selection] }}</div>
+      <div class="header-title">{{ $t(headerName[selection]) }}</div>
     </div>
     <div class="setting-left">
       <div class="left-header">
-        <div class="header-title">Cài Đặt</div>
+        <div class="header-title">{{ $t('Setting') }}</div>
       </div>
       <div class="line-space"></div>
       <div class="left-main">
-        <div class="setting-item" @click="changeOption(0)">
+        <div class="setting-item" @click="changeOption(0)" :class="selection==0?' selected':''">
           <div class="item-icon shadow me-3 rounded-2">
             <i class="fas fa-ticket-alt"></i>
           </div>
-          <div class="item-content">Vé</div>
+          <div class="item-content">{{ $t('Ticket') }}</div>
         </div>
-        <div class="setting-item" @click="changeOption(1)">
+        <div class="setting-item" @click="changeOption(1)" :class="selection==1?' selected':''">
           <div class="item-icon shadow me-3 rounded-2">
             <i class="fas fa-user-cog"></i>
           </div>
-          <div class="item-content">Tài khoản</div>
+          <div class="item-content">{{ $t('Account') }}</div>
         </div>
-        <div class="setting-item" @click="changeOption(2)">
+        <div class="setting-item" @click="changeOption(2)" :class="selection==2?' selected':''">
           <div class="item-icon shadow me-3 rounded-2">
             <i class="fas fa-key"></i>
           </div>
-          <div class="item-content">Mật khẩu</div>
+          <div class="item-content">{{ $t('Password') }}</div>
         </div>
       </div>
     </div>
@@ -53,10 +53,13 @@ export default {
   components: {
     AccountSetting,PasswordSetting,CommonSetting
   },
+  mounted() {
+    this.$store.state.isShowCommonSetting = true;
+  },
   data() {
     return {
-      selection: 1,
-      headerName: ["Cài đặt chung", "Thông tin tài khoản","Mật khẩu"],
+      selection: 0,
+      headerName: ["TicketInformation", "AccountInformation","Password"],
     };
   },
   methods: {
@@ -168,6 +171,15 @@ export default {
     height: calc(100% - 60px);
     width: 100%;
     margin-top: 60px;
+  }
+
+  .selected{
+    background: #409eff;
+    color: #fff;
+    border-radius: 6px;
+    .item-icon{
+      border: 1px solid #fff;
+    }
   }
 }
 </style>

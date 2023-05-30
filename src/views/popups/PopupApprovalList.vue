@@ -110,9 +110,9 @@ export default {
           me.loadData();
           me.$emit("update");
           if (data) {
-            me.$store.dispatch("showToast", "Tài khoản đã được phê duyệt");
+            me.$store.dispatch("showToast", this.$t('Accountapproved'));
           } else {
-            me.$store.dispatch("showToast", "Có lỗi xảy ra. Vui lòng thử lại!");
+            me.$store.dispatch("showToast", this.$t('HaveErrorTryAgain'));
           }
         });
     },
@@ -125,9 +125,9 @@ export default {
           me.$store.state.isShowLoading = false;
           me.loadData();
           if (data) {
-            me.$store.dispatch("showToast", "Tài khoản đã từ chối phê duyệt!");
+            me.$store.dispatch("showToast", this.$t('Accountdeniedapproval'));
           } else {
-            me.$store.dispatch("showToast", "Có lỗi xảy ra. Vui lòng thử lại!");
+            me.$store.dispatch("showToast", this.$t('HaveErrorTryAgain'));
           }
         });
     },

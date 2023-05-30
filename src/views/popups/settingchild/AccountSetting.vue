@@ -1,47 +1,47 @@
 <template>
   <div class="account-child-setting">
     <div class="account-info-header">
-      Nếu muốn thay đổi thông tin tài khoản. Vui lòng liên hệ quản trị viên.
+      {{ $t("AccountSettingNote") }}
     </div>
     <div class="account-info-container">
       <div class="account-info">
         <div class="info-row">
-          <div class="info-label">Tên tài khoản:</div>
+          <div class="info-label">{{$t('AccountName')}}:</div>
           <div class="info-content">{{ dataAccount.accountName }}</div>
         </div>
         <div class="info-row">
-          <div class="info-label">Họ và tên:</div>
+          <div class="info-label">{{ $t('Fullname') }}:</div>
           <div class="info-content">{{ dataAccount.name }}</div>
         </div>
         <div class="info-row">
-          <div class="info-label">Giới tính:</div>
+          <div class="info-label">{{ $t('Gender') }}:</div>
           <div class="info-content">
             {{
               dataAccount.gender == 1
-                ? "Nam"
+                ? $t('Male')
                 : dataAccount.gender == 2
-                ? "Nữ"
-                : "Khác"
+                ? $t('Female')
+                : $t("Other")
             }}
           </div>
         </div>
         <div class="info-row">
-          <div class="info-label">Email:</div>
-          <div class="info-content">{{ dataAccount.email ?dataAccount.email: "<<Trống>>" }}</div>
+          <div class="info-label">{{ $t('Email') }}:</div>
+          <div class="info-content">{{ dataAccount.email ?dataAccount.email: $t("EmptyL") }}</div>
         </div>
         <div class="info-row">
-          <div class="info-label">Số điện thoại:</div>
-          <div class="info-content">{{ dataAccount.phoneNumber ? dataAccount.phoneNumber: "<<Trống>>" }}</div>
+          <div class="info-label">{{$t('PhoneNumber')}}:</div>
+          <div class="info-content">{{ dataAccount.phoneNumber ? dataAccount.phoneNumber: $t("EmptyL") }}</div>
         </div>
         <div class="info-row">
-          <div class="info-label">Loại tài khoản:</div>
+          <div class="info-label">{{$t('AccountType')}}:</div>
           <div class="info-content">
             {{
               dataAccount.role == 1
-                ? "Quản trị viên"
+                ? $t("Admin")
                 : dataAccount.role == 2
-                ? "Nhân viên"
-                : "Quản lý"
+                ? $t("Employee")
+                : $t("Manager")
             }}
           </div>
         </div>

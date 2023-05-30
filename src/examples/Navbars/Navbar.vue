@@ -28,12 +28,12 @@
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center mx-3" v-if="fullName">
-            Xin chào, <span class="fw-bold">{{ " " + fullName }}</span>
+            {{ $t('Hello') }}, <span>{{ " " }}</span> <span class="fw-bold">{{fullName }}</span>
           </li>
           <el-tooltip
             class="box-item"
             effect="dark"
-            content="Cài đặt"
+            :content="$t('Setting')"
             placement="top"
           >
             <li class="nav-item d-flex align-items-center mx-3 h-opacity" @click="showSetting">

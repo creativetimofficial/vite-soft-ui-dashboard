@@ -146,7 +146,7 @@ export default {
               if (data) {
                 me.$store.dispatch(
                   "showToast",
-                  "Tài khoản đã được đưa vào hàng chờ! Liên hệ quản trị viên để được phê duyệt"
+                  this.$t('ApproveAccountContent')
                 );
               } else {
                 me.$store.dispatch("showToast", "Đăng ký thất bại!");
@@ -154,7 +154,7 @@ export default {
               me.$store.state.isShowLoading = false;
             });
         } else {
-          this.$store.dispatch("showToast", "Tài khoản đã tồn tại");
+          this.$store.dispatch("showToast", this.$t('Accountalreadyexists'));
           me.$store.state.isShowLoading = false;
         }
       }

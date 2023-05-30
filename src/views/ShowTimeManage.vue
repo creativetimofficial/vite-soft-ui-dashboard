@@ -178,7 +178,7 @@ export default {
       .card-movie {
         cursor: pointer;
         border-radius: 10px;
-        box-shadow: 0px 5px 10px 0px rgba(0, 255, 255, 0.7);
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -220,7 +220,7 @@ export default {
 
         &:hover {
           transform: translateY(-5px);
-          box-shadow: 0px 10px 20px 2px rgba(0, 255, 255, 0.7);
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
           .feature-container {
             display: flex !important;
           }

@@ -5,7 +5,7 @@
     :ref="'dxtable'"
     @selection-changed="onSelectionChanged"
     @row-click="dataTrans"
-    noDataText="Không có dữ liệu"
+    :noDataText="$t('Nodata')"
     :hoverStateEnabled="true"
     :key-expr="keyExpr"
     v-model:selected-row-keys="selectedRowKeys"

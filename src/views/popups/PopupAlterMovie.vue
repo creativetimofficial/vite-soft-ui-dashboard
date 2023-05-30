@@ -2,7 +2,7 @@
   <div class="popup-alter-movie">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">Cập nhật phim</div>
+        <div class="popup-title">{{ $t("Updatemovie") }}</div>
         <el-tooltip
           class="box-item"
           effect="dark"
@@ -170,10 +170,10 @@
             />
           </div>
           <div class="popup-input popup-date">
-            <label>{{ $t("TimeLine") }}</label>
+            <label>{{ $t("RunningTime") }}</label>
             <vsud-input
               type="number"
-              :placeholder="$t('TimeLine')"
+              :placeholder="$t('RunningTime')"
               name="password"
               v-model="dataMovie.timeLine"
               :id="'lang-movie'"
@@ -314,7 +314,6 @@ export default {
       this.$store.state.isOpenPopupAlterMovie = false;
     },
     catchUrl(value) {
-      console.log(10);
       this.dataMovie.urlImage = value;
     },
     postMovie() {
@@ -336,9 +335,10 @@ export default {
         categoryIDs: JSON.stringify(this.dataMovie.categoryID),
         timeLine: this.dataMovie.timeLine,
       };
-      this.$api
-        .post("/Movie/AlterMovieByID", dataParam)
-        .then(() => me.$emit("add-click"));
+      this.$api.post("/Movie/AlterMovieByID", dataParam).then(() => {
+        me.$emit("add-click");
+        me.$store.dispatch("showToast", me.$t("UpdateSuccessful"));
+      });
     },
   },
 };

@@ -354,7 +354,7 @@ export default {
       this.$api
         .post("/Movie/UpdateSeatRoomCinema", me.seatsSelecting)
         .then(() => {
-          me.$store.dispatch("showToast", "Đặt vé thành công!");
+          me.$store.dispatch("showToast", this.$t('Ticketbookingsuccessful'));
           me.loadDataSeat(me.roomCinmeIDSelected);
         });
 
@@ -382,10 +382,10 @@ export default {
         })
         .then((data) => {
           if (data) {
-            me.$store.dispatch("showToast", "Xóa phòng thành công!");
+            me.$store.dispatch("showToast", this.$t('Deleteroomsuccessfully'));
             me.$store.state.isOpenPopupSeat = false;
           } else {
-            me.$store.dispatch("showToast", "Xóa phòng không thành công!");
+            me.$store.dispatch("showToast", this.$t('Roomdeletionfailed'));
           }
           me.$store.state.isShowLoading = false;
         });

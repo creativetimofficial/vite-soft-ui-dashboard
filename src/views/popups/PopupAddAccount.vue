@@ -71,21 +71,26 @@
           </div>
           <div class="popup-input popup-radio">
             <label>{{ $t("Gender") }}</label>
-            <div class="radio-inputs">
+            <!-- <div class="radio-inputs">
               <label class="radio">
                 <input type="radio" v-model="gender" :value="1" />
-                <span class="name">{{ $t("Male") }}</span>
+                <span class="name">{{$t('Male')}}</span>
               </label>
               <label class="radio">
                 <input type="radio" v-model="gender" :value="2" />
-                <span class="name">{{ $t("Female") }}</span>
+                <span class="name">{{$t('Female')}}</span>
               </label>
 
               <label class="radio">
                 <input type="radio" v-model="gender" :value="3" />
-                <span class="name">{{ $t("Other") }}</span>
+                <span class="name">{{$t('Other')}}</span>
               </label>
-            </div>
+            </div> -->
+            <el-radio-group v-model="gender" size="large">
+              <el-radio-button :label="1">{{ $t("Male") }}</el-radio-button>
+              <el-radio-button :label="2">{{ $t("Female") }}</el-radio-button>
+              <el-radio-button :label="3">{{ $t("Other") }}</el-radio-button>
+            </el-radio-group>
           </div>
           <div class="popup-input popup-date">
             <label>{{ $t("PhoneNumber") }}</label>
@@ -100,23 +105,49 @@
         <div class="popup-row-1">
           <div class="popup-input popup-date group-combobox">
             <label>{{ $t("Role") }}</label>
-            <v-select
+            <!-- <v-select
               label="nameRole"
               :options="listRole"
               :placeholder="$t('Role')"
               v-model="role"
               :reduce="(typeName) => typeName.role"
-            ></v-select>
+            ></v-select> -->
+            <el-select
+              v-model="role"
+              collapse-tags
+              collapse-tags-tooltip
+              :placeholder="$t('Role')"
+            >
+              <el-option
+                v-for="item in listRole"
+                :key="item.role"
+                :label="item.nameRole"
+                :value="item.role"
+              />
+            </el-select>
           </div>
           <div class="popup-input popup-date group-combobox">
             <label>{{ $t("Cinema") }}</label>
-            <v-select
+            <!-- <v-select
               label="cinemaName"
               :options="listCinema"
               :placeholder="$t('Cinema')"
               v-model="cinemaID"
               :reduce="(categoryName) => categoryName.cinemaID"
-            ></v-select>
+            ></v-select> -->
+            <el-select
+              v-model="cinemaID"
+              collapse-tags
+              collapse-tags-tooltip
+              :placeholder="$t('Cinema')"
+            >
+              <el-option
+                v-for="item in listCinema"
+                :key="item.cinemaID"
+                :label="item.cinemaName"
+                :value="item.cinemaID"
+              />
+            </el-select>
           </div>
           <div class="popup-input ml-2">
             <div class="group-typemovie">
@@ -223,9 +254,9 @@ export default {
         })
         .then((data) => {
           if (data) {
-            me.$store.dispatch("showToast", "Thêm tài khoản thành công!");
+            me.$store.dispatch("showToast", this.$t('Successfullyaddedaccount'));
           } else {
-            me.$store.dispatch("showToast", "Thêm tài khoản thất bại!");
+            me.$store.dispatch("showToast", this.$t('Addingaccountfailed'));
           }
           me.$store.state.isOpenPopupAddAccount = false;
           me.$store.state.isShowLoading = false;
@@ -350,7 +381,13 @@ export default {
         }
 
         .popup-radio {
-          width: 320px;
+          margin-right: 15px;
+          .el-radio-group {
+            display: block;
+            label {
+              margin: 0 !important;
+            }
+          }
         }
 
         .radio-inputs {

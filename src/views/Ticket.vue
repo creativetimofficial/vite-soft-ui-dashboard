@@ -11,9 +11,9 @@
         />
         <div class="container-radio">
           <el-radio-group v-model="filterTicket">
-            <el-radio-button label="0">Không chọn</el-radio-button>
-            <el-radio-button label="1">VIP</el-radio-button>
-            <el-radio-button label="2">Thường</el-radio-button>
+            <el-radio-button label="0">{{ $t('All') }}</el-radio-button>
+            <el-radio-button label="1">{{ $t('VIP') }}</el-radio-button>
+            <el-radio-button label="2">{{ $t('Normal') }}</el-radio-button>
           </el-radio-group>
         </div>
       </div>
@@ -46,7 +46,7 @@
           </div>
           <div class="border-dash"></div>
           <div class="item-footer">
-            <div class="cost">{{ $t("Cost") }}: {{ item.cost }} VND (VAT)</div>
+            <div class="cost">{{ $t("Cost") }}: {{ formatNumber(item.cost) }} VND (VAT)</div>
             <input
               type="text"
               name="cost_ticket"
@@ -65,7 +65,7 @@
             >
               <base-button
                 :classButton="'button-blue'"
-                :titleButton="'Đổi giá'"
+                :titleButton="$t('Exchangeprice')"
                 @bindEvent="showChangeMoney(item.templateTicketID, item.cost)"
               ></base-button>
             </div>
@@ -98,7 +98,7 @@
 </template>
 <script>
 import VsudInput from "../components/VsudInput.vue";
-import { convertDateFormat } from "@/common/commonFunc";
+import { convertDateFormat,formatNumber } from "@/common/commonFunc";
 import BaseButton from "./components/BaseButton.vue";
 import {
   Check,
@@ -112,7 +112,7 @@ export default {
   components: { VsudInput, BaseButton },
   setup() {
     return {
-      convertDateFormat,Search
+      convertDateFormat,Search,formatNumber
     };
   },
   created() {
@@ -192,11 +192,11 @@ export default {
           if (data) {
             me.ticketSelected = "";
             me.loadData();
-            me.$store.dispatch("showToast", "Cập nhật thành công!");
+            me.$store.dispatch("showToast", this.$t('UpdateSuccessful'));
           } else {
             me.$store.dispatch(
               "showToast",
-              "Cập nhật không thành công, vui lòng thử lại!"
+              this.$t('Updatefailedpleasetryagain')
             );
           }
         });

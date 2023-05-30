@@ -108,7 +108,7 @@
   <popup-delete
     v-if="isShowDeletePopupRealRoom"
     @delete-click="deleteRealRoom()"
-    :contentCustom="'Bạn có muốn xóa phòng này?'"
+    :contentCustom="$t('DeleteRoomContent')"
   ></popup-delete>
 </template>
 
@@ -170,7 +170,7 @@ export default {
         .post("/CinemaRoom/DeleteRealRoom", { roomID: me.idRoom })
         .then(() => {
           location.reload();
-          me.$store.dispatch("showToast","Xóa thành công!");
+          me.$store.dispatch("showToast",this.$t('Deletesuccessfully'));
         });
     },
 

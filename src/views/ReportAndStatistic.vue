@@ -8,7 +8,7 @@
             :typeChart="'bar'"
             :widthChart="'600'"
             :dataValue="chartDayByMovie"
-            :titleX="'Phim'"
+            :titleX="$t('Movie')"
             :titleY="'VND'"
           ></BaseChart>
         </div>
@@ -18,7 +18,7 @@
             :typeChart="'bar'"
             :widthChart="'600'"
             :dataValue="chartThisMonth"
-            :titleX="'Phim'"
+            :titleX="$t('Movie')"
             :titleY="'VND'"
 
           ></BaseChart>

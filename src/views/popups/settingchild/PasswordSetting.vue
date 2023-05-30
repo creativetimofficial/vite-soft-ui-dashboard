@@ -1,12 +1,12 @@
 <template>
   <div class="password-child-setting">
     <div class="password-info-header">
-      Vui lòng nhập mật khẩu hiện tại trước khi thay đổi mật khẩu mới
+      {{ $t("PasswordSettingNote") }}
     </div>
     <div class="password-info-container">
       <div class="password-info">
         <div class="info-row">
-          <div class="info-label">Nhập mật khẩu hiện tại:</div>
+          <div class="info-label">{{ $t("Entercurrentpassword") }}:</div>
           <div class="info-content">
             <input
               type="password"
@@ -19,31 +19,31 @@
             <el-input
               v-model="presentPassword"
               type="password"
-              placeholder="Nhập mật khẩu"
+              :placeholder="$t('EnterPassword')"
               show-password
               autocomplete="off"
             />
           </div>
         </div>
         <div class="info-row">
-          <div class="info-label">Nhập mật khẩu mới:</div>
+          <div class="info-label">{{ $t("Enteryournewpassword") }}:</div>
           <div class="info-content">
             <el-input
               v-model="newPassword"
               type="password"
-              placeholder="Nhập mật khẩu"
+              :placeholder="$t('EnterPassword')"
               show-password
               autocomplete="off"
             />
           </div>
         </div>
         <div class="info-row">
-          <div class="info-label">Nhập lại mật khẩu mới:</div>
+          <div class="info-label">{{ $t("Reenterthepassword") }}:</div>
           <div class="info-content">
             <el-input
               v-model="newPasswordTemp"
               type="password"
-              placeholder="Nhập mật khẩu"
+              :placeholder="$t('EnterPassword')"
               show-password
               autocomplete="off"
             />
@@ -52,9 +52,9 @@
         <div class="info-row">
           <div class="info-label"></div>
           <div class="info-content">
-            <el-button color="#626aef" :dark="true" @click="changePassword()"
-              >Đồng ý</el-button
-            >
+            <el-button color="#626aef" :dark="true" @click="changePassword()">{{
+              $t("Save")
+            }}</el-button>
           </div>
         </div>
       </div>
@@ -94,24 +94,24 @@ export default {
 
     validateChangePassword() {
       if (this.dataAccount.password != this.presentPassword) {
-        this.$store.dispatch("showToast", "Mật khẩu nhập không đúng!");
+        this.$store.dispatch("showToast", this.$t('Passwordenteredisincorrect'));
         return false;
       }
 
       if (!this.newPassword) {
-        this.$store.dispatch("showToast", "Vui lòng nhập mật khẩu mới!");
+        this.$store.dispatch("showToast", this.$t('Pleaseenteranewpassword'));
         return false;
       }
 
       if (this.newPassword != this.newPasswordTemp) {
-        this.$store.dispatch("showToast", "Mật khẩu mới không trùng khớp!");
+        this.$store.dispatch("showToast", this.$t('Newpassworddoesnotmatch'));
         return false;
       }
 
       if (!validatePassword(this.newPassword)) {
         this.$store.dispatch(
           "showToast",
-          "Mật khẩu phải đủ 8 chữ cái chứa ít nhất một số và 1 ký tự đặc biệt"
+          this.$t('PasswordNotTrue')
         );
         return false;
       }
@@ -133,16 +133,13 @@ export default {
             if (!data) {
               me.$store.dispatch(
                 "showToast",
-                "Có lỗi xảy ra vui lòng thử lại!"
+                this.$t('HaveErrorTryAgain')
               );
             } else {
               me.presentPassword = "";
               me.newPassword = "";
               me.newPasswordTemp = "";
-              me.$store.dispatch(
-                "showToast",
-                "Cập nhật mật khẩu thành công!"
-              );
+              me.$store.dispatch("showToast", this.$t('Passwordupdatesuccessful'));
             }
             me.$store.state.isShowLoading = false;
           });

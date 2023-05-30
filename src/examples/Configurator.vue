@@ -114,15 +114,18 @@
       <div class="pt-0 card-body pt-sm-3">
         <div>
           <h6 class="mb-0">{{ $t("languages") }}</h6>
-          <div class="form-check form-switch ps-0">
-            <input
-              id="languageFixed"
+          <div class="form-check form-switch ps-0 d-flex align-items-center">
+            <el-switch
               v-model="languague"
-              class="mt-1 form-check-input"
-              :class="$store.state.isRTL ? 'float-end  me-auto' : ' ms-auto'"
-              type="checkbox"
-              :checked="$store.state.isVietNamese"
-              @change="setLanguage($store.state.isVietNamese)"
+              class="ml-2"
+              inline-prompt
+              style="
+                --el-switch-on-color: #409eff;
+                --el-switch-off-color: #409eff;
+              "
+              active-text="VI"
+              inactive-text="EN"
+              @change="setLanguage()"
             />
 
             <div class="lang">{{ $t("lang") }}</div>
@@ -158,6 +161,9 @@ export default {
       return this.sidenavTypeOnResize;
     },
   },
+  created() {
+    this.languague = (localStorage.getItem('locale') == 'vi' || !localStorage.getItem('locale'));
+  },
   beforeMount() {
     this.$store.state.isTransparent = "bg-transparent";
     // Deactivate sidenav type buttons on resize and small screens
@@ -176,12 +182,14 @@ export default {
     /**
      * Hàm thực hiện đổi ngôn ngữ
      */
-    setLanguage(isVietNamese) {
-      this.$store.state.isVietNamese = !isVietNamese;
-      if (this.$store.state.isVietNamese) {
-        this.$i18n.locale = "vi";
-      } else {
+    setLanguage() {
+
+      if (localStorage.getItem('locale') == 'vi'||(localStorage.getItem('locale') == 'vi' || !localStorage.getItem('locale'))) {
+        localStorage.locale = "en";
         this.$i18n.locale = "en";
+      } else {
+        localStorage.locale = "vi";
+        this.$i18n.locale = "vi";
       }
     },
 
@@ -215,7 +223,7 @@ export default {
     flex: unset;
   }
   .lang {
-    margin-left: 50px;
+    margin-left: 12px;
   }
 }
 </style>

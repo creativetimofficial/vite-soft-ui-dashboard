@@ -122,7 +122,7 @@ export default {
     checkRequired(){
       if(this.isRequired && !this.modelValue){
         this.isEmpty =  true;
-        this.$store.dispatch('showToast',"Trường không được để trống");
+        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
       }else{
         this.isEmpty  = false;
       }

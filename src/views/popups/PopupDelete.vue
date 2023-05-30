@@ -2,7 +2,7 @@
   <div class="popup-movie-delete">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">Nhắc nhở</div>
+        <div class="popup-title">{{ $t('Notification') }}</div>
         <el-tooltip
           class="box-item"
           effect="dark"
@@ -18,7 +18,7 @@
         {{
           contentCustom
             ? contentCustom
-            : "Bạn có muốn xóa bản ghi vừa chọn không!" + content
+            : $t('DefaultDeleteContent') + content
         }}
       </div>
       <div class="popup-footer">

@@ -1,6 +1,6 @@
 <template>
   <div class="common-child-setting">
-    <div class="common-info-header">Thông tin giá vé mặc định</div>
+    <div class="common-info-header">{{$t('TicketSettingNote')}}</div>
     <div class="common-info-container">
       <div class="common-info">
         <div class="info-row">
@@ -8,7 +8,7 @@
             <div class="icon-edit" @click="showNormalInput">
               <i class="fas fa-edit"></i>
             </div>
-            Vé thường:
+            {{ $t('NormalTicket') }}:
           </div>
           <!-- <div class="info-content">{{ ticketNormal }}</div> -->
           <div class="info-content">
@@ -16,7 +16,7 @@
               class="color-black"
               v-model="ticketNormal"
               type="text"
-              placeholder="Nhập giá vé"
+              :placeholder="$t('Enterthefare')"
               autocomplete="off"
               :disabled="!isShowNormal"
               ref="ticketnormal"
@@ -31,14 +31,14 @@
             <div class="icon-edit" @click="showVIPInput">
               <i class="fas fa-edit"></i>
             </div>
-            Vé VIP:
+            {{ $t('VIPTicket') }}:
           </div>
           <!-- <div class="info-content">{{ ticketVip }}</div> -->
           <div class="info-content">
             <el-input
               v-model="ticketVip"
               type="text"
-              placeholder="Nhập giá vé"
+              :placeholder="$t('Enterthefare')"
               autocomplete="off"
               :disabled="!isShowVIP"
               class="color-black"
@@ -115,7 +115,7 @@ export default {
       let me = this;
       this.$store.state.isShowLoading = true;
       this.$api.post("/DBOption/UpdateDBOption",{keyword: "Default_Seat_VIP",keyValue: me.ticketVip}).then((data)=>{
-        this.$store.dispatch("showToast","Cập nhật giá vé thành công!");
+        this.$store.dispatch("showToast",this.$t("UpdateTicketDone"));
         this.$store.state.isShowLoading = false;
         me.isShowVIP = false;
       })
@@ -126,7 +126,7 @@ export default {
       let me = this;
       this.$store.state.isShowLoading = true;
       this.$api.post("/DBOption/UpdateDBOption",{keyword: "Default_Seat_Normal",keyValue: me.ticketNormal}).then((data)=>{
-        this.$store.dispatch("showToast","Cập nhật giá vé thành công!");
+        this.$store.dispatch("showToast",this.$t("UpdateTicketDone"));
         this.$store.state.isShowLoading = false;
         me.isShowNormal = false;
 

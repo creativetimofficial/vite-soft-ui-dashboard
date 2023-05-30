@@ -144,7 +144,7 @@ export default {
           })
           .then((data) => {
             if (data) {
-              me.$store.dispatch("showToast", "Lưu thành công!");
+              me.$store.dispatch("showToast", this.$t("Savesuccessfully"));
               me.templateTimeCode = "";
               me.time = "";
               me.isOpenUpdate = false;
@@ -153,13 +153,13 @@ export default {
             } else {
               me.$store.dispatch(
                 "showToast",
-                "Có lỗi xảy ra. Vui lòng thử lại!"
+                this.$t('HaveErrorTryAgain')
               );
               me.$store.state.isShowLoading = false;
             }
           });
       } else {
-        me.$store.dispatch("showToast", "Chưa nhập đủ thông tin!");
+        me.$store.dispatch("showToast", this.$t('Notenoughinformation'));
         me.$store.state.isShowLoading = false;
       }
     },

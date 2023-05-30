@@ -70,15 +70,15 @@ export function defaultRole() {
 export const filterMovie = [
   {
     value: 1,
-    name: "Đang chiếu",
+    name: "NowShowing",
   },
   {
     value: 0,
-    name: "Tất cả",
+    name: "All",
   },
   {
     value: 2,
-    name: "Sắp chiếu",
+    name: "ComingSoon",
   },
 ];
 
@@ -86,14 +86,14 @@ export const filterMovie = [
 export const filterHistory = [
   {
     value: 1,
-    name: "Đang chiếu",
+    name: "NowShowing",
   },
   {
     value: 0,
-    name: "Tất cả",
+    name: "All",
   },
   {
     value: 2,
-    name: "Sắp chiếu",
+    name: "ComingSoon",
   },
 ];

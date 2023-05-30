@@ -6,10 +6,10 @@
   >
     <ul class="navbar-nav">
       <li class="mt-3 nav-item">
-        <h6
+        <!-- <h6
           class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6"
           :class="$store.state.isRTL ? 'me-4' : 'ms-2'"
-        >{{ $t('FEATURE') }}</h6>
+        >{{ $t('FEATURE') }}</h6> -->
       </li>
       <li class="nav-item" v-for="item in dataItem" :key="item.name">
         <sidenav-collapse :nav-text="$t(item.text)" :to="{ name: item.name}">

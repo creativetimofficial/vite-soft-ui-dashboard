@@ -136,3 +136,8 @@ export function convertDateString(dateString) {
   var formattedDate = year + '-' + month + '-' + day + 'T00:00:00';
   return formattedDate;
 }
+
+
+export function formatNumber(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}

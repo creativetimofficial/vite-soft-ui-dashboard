@@ -114,7 +114,7 @@ export default {
           me.$emit("add-click");
           me.$store.state.isShowLoading = false;
           me.$store.state.isShowPopupAddRealRoom = false;
-          me.$store.dispatch("showToast", "Thêm mới thành công");
+          me.$store.dispatch("showToast", $t('Successfullyaddednew'));
         });
     },
   },

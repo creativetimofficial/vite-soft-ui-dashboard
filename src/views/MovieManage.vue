@@ -27,7 +27,7 @@
             <el-option
               v-for="item in filterMovie"
               :key="item.value"
-              :label="item.name"
+              :label="$t(item.name)"
               :value="item.value"
             />
           </el-select>
@@ -44,7 +44,7 @@
     <div class="movie-manage-container">
       <div class="movie-manage-main">
         <div class="main-empty" v-if="dataSource.length < 1">
-          Không có dữ liệu
+          {{ $t('Nodata') }}
         </div>
         <div
           class="movie-item"
@@ -170,7 +170,7 @@
               </div>
             </div>
             <div class="movie-time-line">
-              {{ $t("Timel") }}: {{ item.timeLine }} {{ $t("Min") }}
+              {{ $t("RunningTime") }}: {{ item.timeLine }} {{ $t("Min") }}
             </div>
             <div class="movie-from-date">
               {{ $t("nShowDate") }}: {{ convertDateFormat(item.fromDate) }}
@@ -350,6 +350,7 @@ export default {
       let me = this;
       this.$api.post("/Movie/DeleteMovie", me.rowSelected).then(() => {
         me.loadData();
+        me.$store.dispatch('showToast',me.$t('Deletesuccessfully'))
       });
     },
     loadData() {

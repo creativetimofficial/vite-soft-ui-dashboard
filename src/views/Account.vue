@@ -109,7 +109,7 @@
   <popup-delete
     v-if="$store.state.isOpenPopupDelete"
     @delete-click="deleteAccount()"
-    :contentCustom="'Bạn có muốn xóa tài khoản vừa chọn không!'"
+    :contentCustom="$t('DeleteAccountContent')"
   ></popup-delete>
   <popup-detail-account
     v-if="$store.state.isOpenDetailAccount"
@@ -206,9 +206,9 @@ export default {
         .post("/Account/DeleteAccount", { accountID: me.accountIDSelected })
         .then((data) => {
           if (data) {
-            me.$store.dispatch("showToast", "Xóa tài khoản thành công!");
+            me.$store.dispatch("showToast", this.$t("Accountdeletionsuccessful"));
           } else {
-            me.$store.dispatch("showToast", "Xóa thất bại. Vui lòng thử lại!");
+            me.$store.dispatch("showToast", this.$t('DeletefailedPleasetryagain'));
           }
           this.$store.state.isShowLoading = false;
 

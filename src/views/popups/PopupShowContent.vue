@@ -1,9 +1,9 @@
 <template>
   <div class="movie-content-manage">
     <div class="movie-content-container">
-      <div class="movie-content-header">Nội dung phim {{ nameMovie }}</div>
+      <div class="movie-content-header">{{$t('MovieContent') + " "}} {{ nameMovie }}</div>
       <div class="movie-content-main">
-        {{ contentMovie ?? 'Không có nội dung phim' }}
+        {{ contentMovie ?? $t('Nomoviecontent') }}
       </div>
       <div class="movie-content-footer">
         <base-button

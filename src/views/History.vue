@@ -13,7 +13,7 @@
         <el-tooltip
           class="box-item"
           effect="dark"
-          content="Chọn phòng"
+          :content="$t('Room')"
           placement="top"
         >
           <el-select
@@ -41,13 +41,13 @@
         <el-tooltip
           class="box-item"
           effect="dark"
-          content="Chọn ngày"
+          :content="$t('Date')"
           placement="top"
         >
           <el-date-picker
             v-model="dateSelected"
             type="date"
-            placeholder="Chọn một ngày"
+            :placeholder="$t('PickADay')"
             :shortcuts="shortcuts"
             :size="'large'"
             class="w-150 m-2"
@@ -67,32 +67,32 @@
           :key="item"
           v-show="item.parentID"
         >
-          <span class="bold">Ngày: </span>
+          <span class="bold">{{$t('Day')}}: </span>
 
           <span class="create-date">{{
-            convertDateFormat(item.createdDate)
+            convertDateFormat(item.createdDate) + " "
           }}</span>
-          <span class="bold"> Khách hàng: </span>
+          <span class="bold"> {{$t('Customer') }}: </span>
           <span class="name"
-            >{{ item.customerName ? item.customerName : "Ẩn danh"
-            }}{{ item.phoneNumber ? " - " + item.phoneNumber : "" }}</span
+            >{{ item.customerName ? item.customerName : $t("Incognito")
+            }} {{ + " " + item.phoneNumber ? " - " + item.phoneNumber : " " }}</span
           >
-          <span class="bold"> đã mua Vé phim: </span>
-          <span class="name-movie">{{ item.movieName }}</span>
-          <span class="bold"> Vị trí ghế: </span>
-          <span class="seat-name">{{ item.seatName }}</span>
-          <span class="bold"> Phòng: </span>
-          <span class="room-code">{{ item.roomCode }}</span
-          ><span class="bold"> Chiếu lúc: </span>
+          <span class="bold"> {{" " + $t('boughtmovietickets')}}: </span>
+          <span class="name-movie">{{ item.movieName + " "}}</span>
+          <span class="bold"> {{$t('Seatposition')}}: </span>
+          <span class="seat-name">{{ item.seatName + " "}}</span>
+          <span class="bold"> {{ $t('Room') }}: </span>
+          <span class="room-code">{{ item.roomCode + " "}}</span
+          ><span class="bold"> {{$t('Showat')}}: </span>
           <span class="post-date">{{
-            item.time + "-" + convertDateFormat(item.showDate)
+            item.time + "-" + convertDateFormat(item.showDate)+ " "
           }}</span>
-          <span class="bold"> Loại vé: </span>
+          <span class="bold"> {{ $t('TypeTicket') }}: </span>
           <span class="type-seat">{{
             item.type == 1 ? $t("Normal") : "VIP"
           }}</span>
-          <span class="bold"> Giá: </span>
-          <span class="cost">{{ item.totalAmount + "VND" }}</span>
+          <span class="bold"> {{ " " + $t('Cost') }}: </span>
+          <span class="cost">{{ formatNumber(item.totalAmount) + " VND" }}</span>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@
 </template>
 <script>
 import VsudInput from "../components/VsudInput.vue";
-import { convertDateFormat,convertDateString } from "@/common/commonFunc";
+import { convertDateFormat,convertDateString,formatNumber } from "@/common/commonFunc";
 import BaseButton from "./components/BaseButton.vue";
 import {
   Check,
@@ -113,7 +113,7 @@ import {
 export default {
   components: { VsudInput, BaseButton },
   setup() {
-    return { convertDateFormat, Search };
+    return { convertDateFormat, Search,formatNumber };
   },
   created() {
     let me = this;

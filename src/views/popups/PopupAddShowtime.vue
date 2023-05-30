@@ -10,7 +10,7 @@
       <div class="popup-main">
         <div class="popup-row-1 mt-2">
           <div class="popup-input popup-date">
-            <label>Chọn ngày</label>
+            <label>{{ $t('Choosedate') }}</label>
             <el-date-picker
               v-model="dataMovie.postDate"
               type="date"
@@ -20,7 +20,7 @@
             />
           </div>
           <div class="popup-input popup-date ">
-            <label>Chọn phòng chiếu</label>
+            <label>{{ $t('Chooseascreeningroom') }}</label>
             <v-select
               label="roomCode"
               :options="dataRoom"
@@ -33,7 +33,7 @@
         </div>
         <div class="popup-row-1" v-if="showTemplate">
           <div class="popup-input group-combobox">
-            <label>Chọn giờ chiếu</label>
+            <label>{{ $t('Chooseshowtime') }}</label>
             <v-select
               label="time"
               :options="dataMovie.templateTime"

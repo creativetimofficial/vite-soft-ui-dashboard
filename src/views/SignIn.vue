@@ -128,7 +128,7 @@ export default {
           sessionStorage.setItem("token", data.token);
           router.push("/");
           if(!data.token){
-            me.$store.dispatch("showToast","Tài khoản hoặc mật khẩu không đúng!");
+            me.$store.dispatch("showToast",this.$t('Incorrectaccountorpassword'));
           }
           me.$store.state.accountName = me.username;
           this.$store.state.isShowLoading = false;

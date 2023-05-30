@@ -2,10 +2,17 @@
   <div class="popup-detail-account">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">{{ $t('Accountdetails') }}</div>
-        <div class="popup-icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
-        </div>
+        <div class="popup-title">{{ $t("Accountdetails") }}</div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="popup-icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
       </div>
       <div class="popup-main">
         <div class="popup-row-1 pt-25">
@@ -67,7 +74,7 @@
           </div>
           <div class="popup-input popup-radio">
             <label>{{ $t("Gender") }}</label>
-            <div class="radio-inputs">
+            <!-- <div class="radio-inputs">
               <label class="radio">
                 <input type="radio" v-model="gender" :value="1" />
                 <span class="name">{{$t('Male')}}</span>
@@ -81,7 +88,12 @@
                 <input type="radio" v-model="gender" :value="3" />
                 <span class="name">{{$t('Other')}}</span>
               </label>
-            </div>
+            </div> -->
+            <el-radio-group v-model="gender" size="large">
+              <el-radio-button :label="1">{{ $t("Male") }}</el-radio-button>
+              <el-radio-button :label="2">{{ $t("Female") }}</el-radio-button>
+              <el-radio-button :label="3">{{ $t("Other") }}</el-radio-button>
+            </el-radio-group>
           </div>
           <div class="popup-input popup-date">
             <label>{{ $t("PhoneNumber") }}</label>
@@ -96,23 +108,49 @@
         <div class="popup-row-1">
           <div class="popup-input popup-date group-combobox">
             <label>{{ $t("Role") }}</label>
-            <v-select
+            <!-- <v-select
               label="nameRole"
               :options="listRole"
               :placeholder="$t('Role')"
               v-model="role"
               :reduce="(typeName) => typeName.role"
-            ></v-select>
+            ></v-select> -->
+            <el-select
+              v-model="role"
+              collapse-tags
+              collapse-tags-tooltip
+              :placeholder="$t('Role')"
+            >
+              <el-option
+                v-for="item in listRole"
+                :key="item.role"
+                :label="item.nameRole"
+                :value="item.role"
+              />
+            </el-select>
           </div>
           <div class="popup-input popup-date group-combobox">
             <label>{{ $t("Cinema") }}</label>
-            <v-select
+            <!-- <v-select
               label="cinemaName"
               :options="listCinema"
               :placeholder="$t('Cinema')"
               v-model="cinemaID"
               :reduce="(categoryName) => categoryName.cinemaID"
-            ></v-select>
+            ></v-select> -->
+            <el-select
+              v-model="cinemaID"
+              collapse-tags
+              collapse-tags-tooltip
+              :placeholder="$t('Cinema')"
+            >
+              <el-option
+                v-for="item in listCinema"
+                :key="item.cinemaID"
+                :label="item.cinemaName"
+                :value="item.cinemaID"
+              />
+            </el-select>
           </div>
           <div class="popup-input ml-2">
             <div class="group-typemovie">
@@ -197,18 +235,20 @@ export default {
   methods: {
     loadDataAccount() {
       let me = this;
-      this.$api.post("/Account/GetAccountByID",{accountID: me.idAccount}).then((data) => {
-        me.accountName = data.accountName;
-        me.password = data.password;
-        me.role = data.role;
-        me.gender = data.gender;
-        me.dateOfBirth = data.dateOfBirth;
-        me.email = data.email;
-        me.cinemaID = data.cinemaID;
-        me.avatar = data.avatar??"";
-        me.phoneNumber = data.phoneNumber;
-        me.name = data.name;
-      });
+      this.$api
+        .post("/Account/GetAccountByID", { accountID: me.idAccount })
+        .then((data) => {
+          me.accountName = data.accountName;
+          me.password = data.password;
+          me.role = data.role;
+          me.gender = data.gender;
+          me.dateOfBirth = data.dateOfBirth;
+          me.email = data.email;
+          me.cinemaID = data.cinemaID;
+          me.avatar = data.avatar ?? "";
+          me.phoneNumber = data.phoneNumber;
+          me.name = data.name;
+        });
     },
     closeThisPopup() {
       this.$store.state.isOpenDetailAccount = false;
@@ -237,13 +277,13 @@ export default {
           phoneNumber: me.phoneNumber,
           cinemaID: me.cinemaID,
           avatar: me.avatar,
-          accountID: me.idAccount
+          accountID: me.idAccount,
         })
         .then((data) => {
           if (data) {
-            me.$store.dispatch("showToast", "Cập nhật tài khoản thành công!");
+            me.$store.dispatch("showToast", this.$t("Accountupdatesuccessful"));
           } else {
-            me.$store.dispatch("showToast", "Cập nhật tài khoản thất bại!");
+            me.$store.dispatch("showToast", this.$t("Accountupdatefailed"));
           }
           me.$store.state.isOpenDetailAccount = false;
           me.$store.state.isShowLoading = false;
@@ -368,7 +408,13 @@ export default {
         }
 
         .popup-radio {
-          width: 320px;
+          margin-right: 15px;
+          .el-radio-group {
+            display: block;
+            label {
+              margin: 0 !important;
+            }
+          }
         }
 
         .radio-inputs {
