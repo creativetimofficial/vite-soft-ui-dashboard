@@ -1,14 +1,21 @@
 <template>
   <div class="common-child-setting">
-    <div class="common-info-header">{{$t('TicketSettingNote')}}</div>
+    <div class="common-info-header">{{ $t("TicketSettingNote") }}</div>
     <div class="common-info-container">
       <div class="common-info">
         <div class="info-row">
           <div class="info-label">
-            <div class="icon-edit" @click="showNormalInput">
-              <i class="fas fa-edit"></i>
-            </div>
-            {{ $t('NormalTicket') }}:
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              :content="$t('Close')"
+              placement="top"
+            >
+              <div class="icon-edit" @click="showNormalInput">
+                <i class="fas fa-edit"></i>
+              </div>
+            </el-tooltip>
+            {{ $t("NormalTicket") }}:
           </div>
           <!-- <div class="info-content">{{ ticketNormal }}</div> -->
           <div class="info-content">
@@ -22,16 +29,27 @@
               ref="ticketnormal"
             />
           </div>
-          <div class="info-content mx-2" v-if="isShowNormal" @click="updateTicketNormal">
+          <div
+            class="info-content mx-2"
+            v-if="isShowNormal"
+            @click="updateTicketNormal"
+          >
             <el-button type="primary" :icon="Check" circle />
           </div>
         </div>
         <div class="info-row">
           <div class="info-label">
-            <div class="icon-edit" @click="showVIPInput">
-              <i class="fas fa-edit"></i>
-            </div>
-            {{ $t('VIPTicket') }}:
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              :content="$t('Close')"
+              placement="top"
+            >
+              <div class="icon-edit" @click="showVIPInput">
+                <i class="fas fa-edit"></i>
+              </div>
+            </el-tooltip>
+            {{ $t("VIPTicket") }}:
           </div>
           <!-- <div class="info-content">{{ ticketVip }}</div> -->
           <div class="info-content">
@@ -45,7 +63,11 @@
               ref="ticketvip"
             />
           </div>
-          <div class="info-content mx-2" v-if="isShowVIP" @click="updateTicketVIP">
+          <div
+            class="info-content mx-2"
+            v-if="isShowVIP"
+            @click="updateTicketVIP"
+          >
             <el-button type="primary" :icon="Check" circle />
           </div>
         </div>
@@ -61,12 +83,12 @@ import {
   Message,
   Search,
   Star,
-} from '@element-plus/icons-vue'
+} from "@element-plus/icons-vue";
 export default {
   setup() {
-    return{
+    return {
       Check,
-    }
+    };
   },
   components: {},
   created() {
@@ -111,27 +133,35 @@ export default {
       }
     },
 
-    updateTicketVIP(){
+    updateTicketVIP() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/DBOption/UpdateDBOption",{keyword: "Default_Seat_VIP",keyValue: me.ticketVip}).then((data)=>{
-        this.$store.dispatch("showToast",this.$t("UpdateTicketDone"));
-        this.$store.state.isShowLoading = false;
-        me.isShowVIP = false;
-      })
+      this.$api
+        .post("/DBOption/UpdateDBOption", {
+          keyword: "Default_Seat_VIP",
+          keyValue: me.ticketVip,
+        })
+        .then((data) => {
+          this.$store.dispatch("showToast", this.$t("UpdateTicketDone"));
+          this.$store.state.isShowLoading = false;
+          me.isShowVIP = false;
+        });
     },
 
-
-    updateTicketNormal(){
+    updateTicketNormal() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/DBOption/UpdateDBOption",{keyword: "Default_Seat_Normal",keyValue: me.ticketNormal}).then((data)=>{
-        this.$store.dispatch("showToast",this.$t("UpdateTicketDone"));
-        this.$store.state.isShowLoading = false;
-        me.isShowNormal = false;
-
-      })
-    }
+      this.$api
+        .post("/DBOption/UpdateDBOption", {
+          keyword: "Default_Seat_Normal",
+          keyValue: me.ticketNormal,
+        })
+        .then((data) => {
+          this.$store.dispatch("showToast", this.$t("UpdateTicketDone"));
+          this.$store.state.isShowLoading = false;
+          me.isShowNormal = false;
+        });
+    },
   },
 };
 </script>

@@ -4,16 +4,15 @@
       <div class="popup-header">
         <div class="popup-title">{{ $t("Newmovies") }}</div>
         <el-tooltip
-        class="box-item"
-        effect="dark"
-        :content="$t('Close')"
-        placement="top"
-      >
-      <div class="popup-icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
-        </div>
-      </el-tooltip>
-
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="popup-icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
       </div>
       <div class="popup-main">
         <div class="popup-row-1 pt-25">
@@ -69,6 +68,9 @@
               type="date"
               :placeholder="$t('PickADay')"
               :size="size"
+              ref="fromdate"
+              @blur="checkEmptyFromDate(dataMovie.fromdate)"
+              :class="isEmptyFromDate?'isEmpty':''"
             />
           </div>
           <div class="popup-input popup-date">
@@ -78,6 +80,9 @@
               type="date"
               :placeholder="$t('PickADay')"
               :size="size"
+              ref="todate"
+              @blur="checkEmptyToDate(dataMovie.todate)"
+              :class="isEmptyToDate?'isEmpty':''"
             />
           </div>
           <div class="popup-input popup-date">
@@ -115,15 +120,14 @@
           <div class="mx-2"></div>
           <div class="popup-input popup-date group-combobox">
             <label>{{ $t("TypeMovie") }}</label>
-            <!-- <v-select
-              label="typeName"
-              :options="dataMovie.typeMovie"
+            <el-select
+              v-model="dataMovie.typeID"
+              clearable
               :placeholder="$t('PTypeMovie')"
-              v-model="dataMovie.selectedTypeMovie"
-              :reduce="(typeName) => typeName.typeID"
-            ></v-select> -->
+              @blur="checkEmptyTypeMovie(dataMovie.typeID)"
+              :class="isEmptyTypeMovie?'isEmpty':''"
 
-            <el-select v-model="dataMovie.typeID" clearable :placeholder="$t('PTypeMovie')">
+            >
               <el-option
                 v-for="item in dataMovie.typeMovie"
                 :key="item.typeID"
@@ -134,21 +138,15 @@
           </div>
           <div class="popup-input popup-date group-combobox">
             <label>{{ $t("CategoryMovie") }}</label>
-            <!-- <v-select
-              label="categoryName"
-              :options="dataMovie.categoryMovie"
-              :placeholder="$t('PCategoryMovie')"
-              v-model="dataMovie.selectedCategory"
-              :reduce="(categoryName) => categoryName.categoryID"
-              multiple
-            ></v-select> -->
-
             <el-select
               v-model="dataMovie.categoryID"
               multiple
               collapse-tags
               collapse-tags-tooltip
               :placeholder="$t('PCategoryMovie')"
+              @blur="checkEmptyCategoryMovie(dataMovie.categoryID)"
+              :class="isEmptyCategoryMovie?'isEmpty':''"
+
             >
               <el-option
                 v-for="item in dataMovie.categoryMovie"
@@ -182,21 +180,16 @@
           </div>
           <div class="popup-input popup-date">
             <label>{{ $t("Language") }}</label>
-            <!-- <vsud-input
-              type="text"
-              :placeholder="$t('Language')"
-              name="password"
+            <el-select
               v-model="dataMovie.language"
-              :id="'lang-movie'"
-            /> -->
-
-            <el-select v-model="dataMovie.language" :placeholder="$t('Language')">
+              :placeholder="$t('Language')"
+            >
               <el-option
                 v-for="item in listLanguage"
                 :key="item.languageCode"
                 :label="item.languageName"
                 :value="item.languageCode"
-                clearable 
+                clearable
               >
                 <span style="float: left">{{ item.languageName }}</span>
                 <span
@@ -264,8 +257,7 @@ export default {
 
     this.$api.post("/Dictionary/GetListLanguage").then((data) => {
       me.listLanguage = data;
-    me.$store.state.isShowLoading = false;
-
+      me.$store.state.isShowLoading = false;
     });
   },
   props: {},
@@ -290,10 +282,15 @@ export default {
         timeLine: null,
         biggestMovieCode: "",
         categoryID: null,
-        typeID: null
+        typeID: null,
       },
 
       listLanguage: [],
+
+      isEmptyFromDate: false,
+      isEmptyToDate: false,
+      isEmptyTypeMovie: false,
+      isEmptyCategoryMovie: false
     };
   },
   methods: {
@@ -305,26 +302,74 @@ export default {
     },
     postMovie() {
       let me = this;
-      let dataParam = {
-        movieID: uuidv4(),
-        movieCode: this.dataMovie.movieCode,
-        movieName: this.dataMovie.movieName,
-        releaseDate: this.dataMovie.releasedate,
-        actor: this.dataMovie.actor,
-        directions: this.dataMovie.direction,
-        typeID: this.dataMovie.typeID,
-        language: this.dataMovie.language,
-        trailerLink: this.dataMovie.trailerLink,
-        posterLink: this.dataMovie.urlImage,
-        content: this.dataMovie.content,
-        fromDate: this.dataMovie.fromdate,
-        toDate: this.dataMovie.todate,
-        categoryIDs: this.dataMovie.categoryID,
-        timeLine: this.dataMovie.timeLine,
-      };
-      this.$api
-        .post("/Movie/InsertMovie", dataParam)
-        .then(() => me.$emit("add-click"));
+      let check = this.validateMovie();
+      if (check) {
+        let dataParam = {
+          movieID: uuidv4(),
+          movieCode: this.dataMovie.movieCode,
+          movieName: this.dataMovie.movieName,
+          releaseDate: this.dataMovie.releasedate,
+          actor: this.dataMovie.actor,
+          directions: this.dataMovie.direction,
+          typeID: this.dataMovie.typeID,
+          language: this.dataMovie.language,
+          trailerLink: this.dataMovie.trailerLink,
+          posterLink: this.dataMovie.urlImage,
+          content: this.dataMovie.content,
+          fromDate: this.dataMovie.fromdate,
+          toDate: this.dataMovie.todate,
+          categoryIDs: this.dataMovie.categoryID,
+          timeLine: this.dataMovie.timeLine,
+        };
+        this.$api
+          .post("/Movie/InsertMovie", dataParam)
+          .then(() => me.$emit("add-click"));
+      }
+    },
+
+    checkEmptyFromDate(value){
+      this.isEmptyFromDate = !value?true:false;
+      if(this.isEmptyFromDate){
+        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
+      }
+    },
+
+    checkEmptyToDate(value){
+      this.isEmptyToDate = !value?true:false;
+      if(this.isEmptyToDate){
+        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
+      }
+    },
+
+    checkEmptyCategoryMovie(value){
+      if(value.length){
+        this.isEmptyCategoryMovie = false;
+      }else{
+        this.isEmptyCategoryMovie = true;
+        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
+
+      }
+    },
+
+    checkEmptyTypeMovie(value){
+      if(value){
+        this.isEmptyTypeMovie = false;
+      }else{
+        this.isEmptyTypeMovie = true;
+        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
+
+      }
+    },
+
+    validateMovie() {
+      let check = true;
+      if(!this.dataMovie.fromdate){
+        this.$refs.fromdate.focus();
+        this.$store.dispatch("showToast",this.$t('Notenoughinformation'))
+        check = false;
+      }
+
+      return check;
     },
   },
 };
@@ -339,6 +384,13 @@ export default {
   }
   .form-control {
     height: 40px;
+  }
+
+  .isEmpty{
+    .el-input__wrapper{
+      border: 1px solid red;
+      box-shadow: unset !important;
+    }
   }
   position: fixed;
   top: 0;
