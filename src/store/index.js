@@ -45,6 +45,7 @@ export default createStore({
     isShowSetting: false,
     isShowCommonSetting: false,
     isOpenPopupDetailLanguage: false,
+    isShowCinemaSetting: false
   },
   mutations: {
     toggleConfigurator(state) {

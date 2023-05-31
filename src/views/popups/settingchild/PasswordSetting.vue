@@ -1,5 +1,5 @@
 <template>
-  <div class="password-child-setting">
+  <div class="cinema-setting">
     <div class="password-info-header">
       {{ $t("PasswordSettingNote") }}
     </div>
@@ -150,7 +150,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.password-child-setting {
+.cinema-setting {
   .password-info-header {
     font-style: italic;
     font-size: 12px;

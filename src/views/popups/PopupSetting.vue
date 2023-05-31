@@ -30,7 +30,7 @@
           </div>
           <div class="item-content">{{ $t('Password') }}</div>
         </div>
-        <div class="setting-item" @click="changeOption(3)" :class="selection==2?' selected':''" v-if="$store.state.role == 'admin'">
+        <div class="setting-item" @click="changeOption(3)" :class="selection==3?' selected':''" v-if="$store.state.role == 'admin'">
           <div class="item-icon shadow me-3 rounded-2">
             <i class="fas fa-laptop-house"></i>
           </div>
@@ -48,16 +48,20 @@
       <password-setting
         v-if="selection == 2 && $store.state.isShowPasswordSetting"
       ></password-setting>
+      <cinema-setting
+        v-if="selection == 3 && $store.state.isShowCinemaSetting"
+      ></cinema-setting>
     </div>
   </div>
 </template>
 <script>
+import CinemaSetting from "./settingchild/CinemaSetting.vue";
 import AccountSetting from "./settingchild/AccountSetting.vue";
 import PasswordSetting from "./settingchild/PasswordSetting.vue";
 import CommonSetting from "./settingchild/CommonSetting.vue";
 export default {
   components: {
-    AccountSetting,PasswordSetting,CommonSetting
+    AccountSetting,PasswordSetting,CommonSetting,CinemaSetting
   },
   mounted() {
     this.$store.state.isShowCommonSetting = true;
@@ -65,7 +69,7 @@ export default {
   data() {
     return {
       selection: 0,
-      headerName: ["TicketInformation", "AccountInformation","Password"],
+      headerName: ["TicketInformation", "AccountInformation","Password","Cinema"],
     };
   },
   methods: {
@@ -74,6 +78,7 @@ export default {
       if (option === 1) this.$store.state.isShowAccountSetting = true;
       if(option === 2) this.$store.state.isShowPasswordSetting = true;
       if(option === 0) this.$store.state.isShowCommonSetting = true;
+      if(option === 3) this.$store.state.isShowCinemaSetting = true;
     },
     closeThisPopup(){
         this.$store.state.isShowSetting = false;

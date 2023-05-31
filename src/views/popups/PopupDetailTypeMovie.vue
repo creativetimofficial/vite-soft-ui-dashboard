@@ -13,7 +13,20 @@
             <i class="fas fa-times"></i>
           </div>
         </el-tooltip>
-
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Addnew')"
+          placement="top"
+        >
+          <div
+            class="icon-add"
+            @click="showUpdate()"
+            v-if="$store.state.role == 'admin'"
+          >
+            <i class="far fa-plus-square fa-lg"></i>
+          </div>
+        </el-tooltip>
         <div class="header-title">{{ $t("TypeMovie") }}</div>
         <div class="line-space"></div>
       </div>
@@ -32,14 +45,60 @@
             </tbody>
           </table>
         </div>
-        <div class="popup-update"></div>
+        <div class="popup-update" v-if="isOpenUpdate">
+          <div class="line-space"></div>
+          <div class="update-title">{{ $t("Addnewmovietype") }}</div>
+          <div class="input-content">
+            <div class="popup-input">
+              <label>{{ $t("TypeCode") }}</label>
+              <vsud-input
+                type="text"
+                :placeholder="$t('TypeCode')"
+                v-model="typeCode"
+                :id="'movie_name'"
+                :isRequired="true"
+              />
+            </div>
+            <div class="ml-1"></div>
+            <div class="popup-input">
+              <label>{{ $t("TypeName") }}</label>
+              <vsud-input
+                type="text"
+                :placeholder="$t('TypeName')"
+                v-model="typeName"
+                :id="'movie_name'"
+                :isRequired="true"
+              />
+            </div>
+          </div>
+          <div class="button-content">
+            <base-button
+              :classButton="'button-white'"
+              :titleButton="$t('Close')"
+              @bindEvent="closeUpdate()"
+            ></base-button>
+
+            <div class="ml-1"></div>
+            <base-button
+              :classButton="'button-blue'"
+              :titleButton="$t('Save')"
+              @click="saveTypeMovie()"
+            ></base-button>
+          </div>
+        </div>
       </div>
       <div class="popup-footer"></div>
     </div>
   </div>
 </template>
 <script>
+import VsudInput from "../../components/VsudInput.vue";
+import BaseButton from "../components/BaseButton.vue";
 export default {
+  components: {
+    VsudInput,
+    BaseButton,
+  },
   created() {
     let me = this;
     this.loadData();
@@ -47,6 +106,9 @@ export default {
   data() {
     return {
       dataType: [],
+      typeCode: "",
+      typeName: "",
+      isOpenUpdate: false
     };
   },
   methods: {
@@ -58,6 +120,41 @@ export default {
       this.$api.post("/Movie/GetListTypeMovie").then((data) => {
         this.dataType = data;
       });
+    },
+    showUpdate() {
+      this.isOpenUpdate = true;
+    },
+
+    closeUpdate() {
+      this.isOpenUpdate = false;
+    },
+
+    saveTypeMovie() {
+      let me = this;
+      this.$store.state.isShowLoading = true;
+      if (me.typeCode && me.typeName) {
+        this.$api
+          .post("/Dictionary/InsertTypeMovie", {
+            typeCode: me.typeCode,
+            typeName: me.typeName,
+          })
+          .then((data) => {
+            if (data) {
+              me.$store.dispatch("showToast", this.$t("Savesuccessfully"));
+              me.typeCode = "";
+              me.typeName = "";
+              me.isOpenUpdate = false;
+              me.loadData();
+              me.$store.state.isShowLoading = false;
+            } else {
+              me.$store.dispatch("showToast", this.$t("HaveErrorTryAgain"));
+              me.$store.state.isShowLoading = false;
+            }
+          });
+      } else {
+        me.$store.dispatch("showToast", this.$t("Notenoughinformation"));
+        me.$store.state.isShowLoading = false;
+      }
     },
   },
 };

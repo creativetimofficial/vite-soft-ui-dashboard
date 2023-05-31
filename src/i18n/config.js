@@ -244,7 +244,15 @@ const i18n = createI18n({
       BlankMovieName: "Movie name cannot be left blank",
       BlankPoster: "Poster cannot be left blank",
       Roomnamealreadyexists: 'Room name already exists',
-      Cinema: "Cinema"
+      Cinema: "Cinema",
+      CinemaSettingContent: "Create a new cinema, data such as fare information and catalog data will be carried away, other data will not be retained",
+      DataName: "Data name",
+      CinemaName: "Cinema name",
+      WarningBlankCinemaName: "Cinema name cannot be blank!",
+      TypeCode: "Type code",
+      TypeName: "Type name",
+      Addnewmovietype: "Add new movie type",
+      Addnewcategorymovie: "Add new category movie"
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -484,7 +492,15 @@ const i18n = createI18n({
       BlankMovieName: "Tên phim không thể để trống",
       BlankPoster: "Poster không thể để trống",
       Roomnamealreadyexists: "Tên phòng đã tồn tại",
-      Cinema: "Rạp phim"
+      Cinema: "Rạp phim",
+      CinemaSettingContent: "Tạo một rạp chiếu phim mới, các dữ liệu như thông tin giá vé và dữ liệu danh mục sẽ được mang đi, các dữ liệu khác sẽ không được giữ lại",
+      DataName: "Tên dữ liệu",
+      CinemaName: "Tên rạp phim",
+      WarningBlankCinemaName: "Tên rạp phim không được để trống!",
+      TypeCode: "Mã loại",
+      TypeName: "Tên loại",
+      Addnewmovietype: "Thêm mới loại phim",
+      Addnewcategorymovie: "Thêm mới thể loại phim"
     },
   },
 });
