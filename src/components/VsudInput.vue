@@ -83,7 +83,11 @@ export default {
     isRequired: {type: Boolean, default: false},
     isMultiple: { type: Boolean, default: false },
     readonly: Boolean,
-    autocomplete: {type: String,default: 'off'}
+    autocomplete: {type: String,default: 'off'},
+    customToast: {
+      type: String,
+      default: ""
+    }
   },
   data() {
     return {
@@ -122,7 +126,8 @@ export default {
     checkRequired(){
       if(this.isRequired && !this.modelValue){
         this.isEmpty =  true;
-        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
+        
+        this.$store.dispatch('showToast',this.customToast?this.customToast:this.$t('Fieldcannotbeleftblank'));
       }else{
         this.isEmpty  = false;
       }

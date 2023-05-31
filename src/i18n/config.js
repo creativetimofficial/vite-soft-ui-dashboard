@@ -236,7 +236,15 @@ const i18n = createI18n({
       Fieldcannotbeleftblank: "Field cannot be left blank",
       Nodata: "No data",
       DefaultDeleteContent: "Do you want to delete the selected record?",
-      Notification: "Notification"
+      Notification: "Notification",
+      BlankStartDate: "The start date cannot be left blank",
+      BlankToDate: "The end date cannot be left blank",
+      BlankCategoryMovie: "Category cannot be left blank",
+      BlankTypeMovie: "Movie type cannot be left blank",
+      BlankMovieName: "Movie name cannot be left blank",
+      BlankPoster: "Poster cannot be left blank",
+      Roomnamealreadyexists: 'Room name already exists',
+      Cinema: "Cinema"
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -468,7 +476,15 @@ const i18n = createI18n({
       Fieldcannotbeleftblank: "Trường không được để trống!",
       Nodata: "Không có dữ liệu",
       DefaultDeleteContent: "Bạn có muốn xóa bản ghi vừa chọn không?",
-      Notification: "Thông báo"
+      Notification: "Thông báo",
+      BlankStartDate: "Ngày bắt đầu không thể để trống",
+      BlankToDate: "Ngày kết thúc không thể để trống",
+      BlankCategoryMovie: "Thể loại phim không thể để tróng",
+      BlankTypeMovie: "Loại phim không thể để trống",
+      BlankMovieName: "Tên phim không thể để trống",
+      BlankPoster: "Poster không thể để trống",
+      Roomnamealreadyexists: "Tên phòng đã tồn tại",
+      Cinema: "Rạp phim"
     },
   },
 });

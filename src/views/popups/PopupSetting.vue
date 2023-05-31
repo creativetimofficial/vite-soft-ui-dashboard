@@ -30,6 +30,12 @@
           </div>
           <div class="item-content">{{ $t('Password') }}</div>
         </div>
+        <div class="setting-item" @click="changeOption(3)" :class="selection==2?' selected':''" v-if="$store.state.role == 'admin'">
+          <div class="item-icon shadow me-3 rounded-2">
+            <i class="fas fa-laptop-house"></i>
+          </div>
+          <div class="item-content">{{ $t('Cinema') }}</div>
+        </div>
       </div>
     </div>
     <div class="setting-main">

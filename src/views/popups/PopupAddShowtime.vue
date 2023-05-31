@@ -17,6 +17,7 @@
               :placeholder="$t('PickADay')"
               :size="size"
               @change="checkHideTemplate"
+              :disabled-date="disabledDates"
             />
           </div>
           <div class="popup-input popup-date ">
@@ -142,7 +143,12 @@ export default {
       this.$api.post('/Movie/CreateNewRoomCinema',{movieID: me.idMovie,roomID: me.dataRoomSelected,postDate: convertDateTime(me.dataMovie.postDate),listTemplateTimeCode: me.dataMovie.selectTemplateCode }).then(()=>{
         location.reload();
       })
-    }
+    },
+    disabledDates(time) {
+      const today = new Date(); // Lấy ngày hiện tại
+      today.setHours(0, 0, 0, 0); // Đặt giờ, phút, giây, mili giây thành 0 để so sánh chỉ với ngày
+      return time.getTime() < today.getTime(); // Trả về true nếu ngày truyền vào nhỏ hơn ngày hiện tại (bao gồm cả ngày hôm qua)
+    },
   },
 };
 </script>

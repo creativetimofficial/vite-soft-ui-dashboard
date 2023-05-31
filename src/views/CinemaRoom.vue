@@ -41,6 +41,7 @@
   </div>
   <popup-add-real-room
     v-if="$store.state.isShowPopupAddRealRoom"
+    :listRoom="rooms"
     @add-click="loadData()"
   ></popup-add-real-room>
   <popup-detail-cinema-room

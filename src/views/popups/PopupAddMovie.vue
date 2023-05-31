@@ -29,7 +29,7 @@
             />
           </div>
           <div class="popup-input">
-            <label>{{ $t("MovieName") }}</label>
+            <label>{{ $t("MovieName") }} *</label>
             <vsud-input
               type="text"
               :placeholder="$t('MovieName')"
@@ -37,6 +37,8 @@
               v-model="dataMovie.movieName"
               :id="'movie_name'"
               :isRequired="true"
+              :customToast="$t('BlankMovieName')"
+              ref="moviename"
             />
           </div>
           <div class="popup-input">
@@ -62,19 +64,19 @@
         </div>
         <div class="popup-row-1">
           <div class="popup-input popup-date">
-            <label>{{ $t("FromDate") }}</label>
+            <label>{{ $t("FromDate") }} *</label>
             <el-date-picker
               v-model="dataMovie.fromdate"
               type="date"
               :placeholder="$t('PickADay')"
               :size="size"
               ref="fromdate"
-              @blur="checkEmptyFromDate(dataMovie.fromdate)"
-              :class="isEmptyFromDate?'isEmpty':''"
+              @blur="checkEmptyFromDate()"
+              :class="isEmptyFromDate ? 'isEmpty' : ''"
             />
           </div>
           <div class="popup-input popup-date">
-            <label>{{ $t("ToDate") }}</label>
+            <label>{{ $t("ToDate") }} *</label>
             <el-date-picker
               v-model="dataMovie.todate"
               type="date"
@@ -82,7 +84,7 @@
               :size="size"
               ref="todate"
               @blur="checkEmptyToDate(dataMovie.todate)"
-              :class="isEmptyToDate?'isEmpty':''"
+              :class="isEmptyToDate ? 'isEmpty' : ''"
             />
           </div>
           <div class="popup-input popup-date">
@@ -119,14 +121,13 @@
 
           <div class="mx-2"></div>
           <div class="popup-input popup-date group-combobox">
-            <label>{{ $t("TypeMovie") }}</label>
+            <label>{{ $t("TypeMovie") }} *</label>
             <el-select
               v-model="dataMovie.typeID"
               clearable
               :placeholder="$t('PTypeMovie')"
               @blur="checkEmptyTypeMovie(dataMovie.typeID)"
-              :class="isEmptyTypeMovie?'isEmpty':''"
-
+              :class="isEmptyTypeMovie ? 'isEmpty' : ''"
             >
               <el-option
                 v-for="item in dataMovie.typeMovie"
@@ -137,7 +138,7 @@
             </el-select>
           </div>
           <div class="popup-input popup-date group-combobox">
-            <label>{{ $t("CategoryMovie") }}</label>
+            <label>{{ $t("CategoryMovie") }} *</label>
             <el-select
               v-model="dataMovie.categoryID"
               multiple
@@ -145,8 +146,7 @@
               collapse-tags-tooltip
               :placeholder="$t('PCategoryMovie')"
               @blur="checkEmptyCategoryMovie(dataMovie.categoryID)"
-              :class="isEmptyCategoryMovie?'isEmpty':''"
-
+              :class="isEmptyCategoryMovie ? 'isEmpty' : ''"
             >
               <el-option
                 v-for="item in dataMovie.categoryMovie"
@@ -290,7 +290,9 @@ export default {
       isEmptyFromDate: false,
       isEmptyToDate: false,
       isEmptyTypeMovie: false,
-      isEmptyCategoryMovie: false
+      isEmptyCategoryMovie: false,
+      isEmptyMovieName: false,
+      isEmptyLinkPoster: false,
     };
   },
   methods: {
@@ -327,48 +329,86 @@ export default {
       }
     },
 
-    checkEmptyFromDate(value){
-      this.isEmptyFromDate = !value?true:false;
-      if(this.isEmptyFromDate){
-        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
+    checkEmptyMovieName() {
+      this.$refs.moviename.checkRequired();
+      if (this.dataMovie.movieName) {
+        this.isEmptyMovieName = false;
+      } else {
+        this.isEmptyMovieName = true;
       }
     },
 
-    checkEmptyToDate(value){
-      this.isEmptyToDate = !value?true:false;
-      if(this.isEmptyToDate){
-        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
+    checkEmptyFromDate() {
+      setTimeout(() => {
+        this.isEmptyFromDate = !this.dataMovie.fromdate ? true : false;
+        if (this.isEmptyFromDate) {
+          this.$store.dispatch("showToast", this.$t("BlankStartDate"));
+        }
+      }, 100);
+    },
+
+    checkEmptyToDate() {
+      this.isEmptyToDate = !this.dataMovie.todate ? true : false;
+      if (this.isEmptyToDate) {
+        this.$store.dispatch("showToast", this.$t("BlankToDate"));
       }
     },
 
-    checkEmptyCategoryMovie(value){
-      if(value.length){
-        this.isEmptyCategoryMovie = false;
-      }else{
-        this.isEmptyCategoryMovie = true;
-        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
+    checkEmptyCategoryMovie() {
+      setTimeout(() => {
+        if (this.dataMovie.categoryID.length) {
+          this.isEmptyCategoryMovie = false;
+        } else {
+          this.isEmptyCategoryMovie = true;
+          this.$store.dispatch("showToast", this.$t("BlankCategoryMovie"));
+        }
+      }, 100);
+    },
 
+    checkEmptyTypeMovie() {
+      setTimeout(() => {
+        if (this.dataMovie.typeID) {
+          this.isEmptyTypeMovie = false;
+        } else {
+          this.isEmptyTypeMovie = true;
+          this.$store.dispatch("showToast", this.$t("BlankTypeMovie"));
+        }
+      }, 100);
+    },
+
+    checkEmptyPoster() {
+      if (this.dataMovie.urlImage) {
+        this.isEmptyLinkPoster = false;
+      } else {
+        this.isEmptyLinkPoster = true;
+        this.$store.dispatch("showToast", this.$t("BlankPoster"));
       }
     },
 
-    checkEmptyTypeMovie(value){
-      if(value){
-        this.isEmptyTypeMovie = false;
-      }else{
-        this.isEmptyTypeMovie = true;
-        this.$store.dispatch('showToast',this.$t('Fieldcannotbeleftblank'));
-
+    checkRequireMovie() {
+      if (
+        this.isEmptyCategoryMovie ||
+        this.isEmptyFromDate ||
+        this.isEmptyToDate ||
+        this.isEmptyMovieName ||
+        this.isEmptyLinkPoster ||
+        this.isEmptyTypeMovie
+      ) {
+        return false;
+      } else {
+        return true;
       }
     },
 
     validateMovie() {
       let check = true;
-      if(!this.dataMovie.fromdate){
-        this.$refs.fromdate.focus();
-        this.$store.dispatch("showToast",this.$t('Notenoughinformation'))
-        check = false;
-      }
-
+      this.checkEmptyMovieName();
+      this.checkEmptyFromDate();
+      this.checkEmptyToDate();
+      this.checkEmptyPoster();
+      this.checkEmptyTypeMovie();
+      this.checkEmptyCategoryMovie();
+      check = this.checkRequireMovie();
       return check;
     },
   },
@@ -386,8 +426,8 @@ export default {
     height: 40px;
   }
 
-  .isEmpty{
-    .el-input__wrapper{
+  .isEmpty {
+    .el-input__wrapper {
       border: 1px solid red;
       box-shadow: unset !important;
     }

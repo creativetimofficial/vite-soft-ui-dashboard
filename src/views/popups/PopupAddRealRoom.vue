@@ -85,7 +85,11 @@ export default {
     BaseUploadFirebase,
   },
   created() {},
-  props: {},
+  props: {
+    listRoom: {
+      type: Array,
+    },
+  },
   watch: {},
   data() {
     return {
@@ -103,19 +107,31 @@ export default {
     },
     createNewRoomCinema() {
       let me = this;
-      this.$store.state.isShowLoading = true;
-      this.$api
-        .post("/CinemaRoom/CreateNewRealRoom", {
-          roomCode: me.roomCode,
-          colSeat: me.colSeat,
-          rowSeat: me.rowSeat,
-        })
-        .then(() => {
-          me.$emit("add-click");
-          me.$store.state.isShowLoading = false;
-          me.$store.state.isShowPopupAddRealRoom = false;
-          me.$store.dispatch("showToast", $t('Successfullyaddednew'));
-        });
+      let check = this.validateExistRoom();
+      if (check) {
+        this.$store.state.isShowLoading = true;
+        this.$api
+          .post("/CinemaRoom/CreateNewRealRoom", {
+            roomCode: me.roomCode,
+            colSeat: me.colSeat,
+            rowSeat: me.rowSeat,
+          })
+          .then(() => {
+            me.$emit("add-click");
+            me.$store.state.isShowLoading = false;
+            me.$store.state.isShowPopupAddRealRoom = false;
+            me.$store.dispatch("showToast", this.$t("Successfullyaddednew"));
+          });
+      }
+    },
+
+    validateExistRoom() {
+      let check = this.listRoom.find((x) => x.roomCode == this.roomCode);
+      if (check) {
+        this.$store.dispatch("showToast", this.$t("Roomnamealreadyexists"));
+        return false;
+      }
+      return true;
     },
   },
 };

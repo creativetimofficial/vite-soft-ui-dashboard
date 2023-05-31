@@ -50,6 +50,7 @@
   </div>
 </template>
 <script>
+import jwt from "jsonwebtoken";
 export default {
   components: {},
   created() {
@@ -64,10 +65,11 @@ export default {
   methods: {
     loadData() {
       let me = this;
+      const token = sessionStorage.getItem("token");
       this.$store.state.isShowLoading = true;
       this.$api
         .post("/Account/GetAccountByAccountName", {
-          accountName: me.$store.state.thisAccountName,
+          accountName: jwt.decode(token).name,
         })
         .then((data) => {
           me.dataAccount = data;

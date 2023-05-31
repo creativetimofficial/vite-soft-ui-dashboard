@@ -184,7 +184,7 @@
             <el-tooltip
               class="box-item"
               effect="dark"
-              :content="$t('Director') + ': ' + item.actor"
+              :content="$t('nActor') + ': ' + item.actor"
               placement="top"
             >
               <div class="movie-actor">

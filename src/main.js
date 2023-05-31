@@ -20,6 +20,8 @@ import 'vue3-toastify/dist/index.css';
 import VueApexCharts from "vue3-apexcharts";
 import "element-plus/theme-chalk/index.css";
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import locale from 'element-plus/lib/locale/lang/vi'; // Import Vietnamese language pack
+import 'dayjs/locale/vi'; // Import Vietnamese language for dayjs library
 
   
 const app = createApp(App);
@@ -47,6 +49,8 @@ app.use(
     // ...
   }
 )
+
+app.use(ElementPlus, { locale });
 app.use(ElementPlus)
 app.use(VueApexCharts);
 app.component("v-select", VueSelect)
