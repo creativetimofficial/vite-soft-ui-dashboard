@@ -32,13 +32,13 @@ export default {
   props: {
     customClass: {
       type: String,
-      default: ""
+      default: "",
     },
   },
   data() {
     return {
       logo,
-      sidenavActiveBgColors: 'success'
+      sidenavActiveBgColors: "success",
     };
   },
 };

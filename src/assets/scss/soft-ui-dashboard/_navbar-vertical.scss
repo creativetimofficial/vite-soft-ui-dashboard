@@ -85,7 +85,8 @@
             min-height: 100%;
             padding-left: 0;
             padding-right: 0; // Target IE 10 & 11
-            @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+            @media all and (-ms-high-contrast: none),
+              (-ms-high-contrast: active) {
               min-height: none;
               height: 100%;
             }
@@ -171,7 +172,11 @@
   @each $color, $value in $theme-colors {
     &[data-color="#{$color}"] {
       .navbar-nav > .nav-item > .nav-link.active .icon {
-        @include gradient-directional(nth(#{$value}, 1) 0%, nth(#{$value}, -1) 100%, $deg: 310deg);
+        @include gradient-directional(
+          nth(#{$value}, 1) 0%,
+          nth(#{$value}, -1) 100%,
+          $deg: 310deg
+        );
       }
     }
   }
@@ -268,7 +273,7 @@
     }
 
     .sidenav {
-      &.fixed-start~.main-content {
+      &.fixed-start ~ .main-content {
         margin-left: 0 !important;
       }
     }
@@ -292,7 +297,11 @@
         }
 
         .icon {
-          @include gradient-directional(nth($light, 1) 0%, nth($light, -1) 100%, $deg: 310deg);
+          @include gradient-directional(
+            nth($light, 1) 0%,
+            nth($light, -1) 100%,
+            $deg: 310deg
+          );
         }
       }
     }
@@ -309,7 +318,11 @@
     background-color: $white;
 
     .icon {
-      @include gradient-directional(nth($primary, 1) 0%, nth($primary, -1) 100%, $deg: 310deg);
+      @include gradient-directional(
+        nth($primary, 1) 0%,
+        nth($primary, -1) 100%,
+        $deg: 310deg
+      );
 
       svg {
         .color-background,
@@ -322,7 +335,8 @@
 }
 
 .navbar-main {
-  transition: box-shadow $transition-base-time ease-in, background-color $transition-base-time ease-in;
+  transition: box-shadow $transition-base-time ease-in,
+    background-color $transition-base-time ease-in;
 
   &.fixed-top {
     width: calc(100% - (#{$navbar-vertical-open-width} + #{$spacer * 1.5} * 3));
@@ -341,11 +355,11 @@
       font-variant: normal;
       text-rendering: auto;
       -webkit-font-smoothing: antialiased;
-      font-family: 'Font Awesome 5 Free';
+      font-family: "Font Awesome 5 Free";
       font-weight: 700;
       content: "\f107";
       margin-left: auto;
-      color: rgba($dark-gradient-state,0.5);
+      color: rgba($dark-gradient-state, 0.5);
       @include transition($transition-base);
     }
     // Expanded
@@ -369,7 +383,7 @@
               position: relative;
               background-color: transparent;
               box-shadow: none;
-              color: rgba($dark-gradient-state,0.5);
+              color: rgba($dark-gradient-state, 0.5);
               margin-left: $navbar-vertical-collapse-margin-left;
 
               &:before {

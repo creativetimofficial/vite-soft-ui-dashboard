@@ -31,15 +31,15 @@ export default {
     },
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     desc: {
       type: String,
-      default: ""
+      default: "",
     },
     price: {
       type: String,
-      default: ""
+      default: "",
     },
   },
 };

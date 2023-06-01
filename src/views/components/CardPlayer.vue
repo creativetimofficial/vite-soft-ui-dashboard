@@ -5,9 +5,9 @@
     <div class="cursor-pointer">
       <div
         class="full-background"
-         :style="{
-      backgroundImage:`url(${bgImg})`,
-    }"
+        :style="{
+          backgroundImage: `url(${bgImg})`,
+        }"
       ></div>
       <div class="card-body">
         <h5 class="mb-0 text-white">Some Kind Of Blues</h5>
@@ -47,13 +47,13 @@
 </template>
 
 <script>
-import bgImg from '@/assets/img/curved-images/curved1.jpg'
+import bgImg from "@/assets/img/curved-images/curved1.jpg";
 export default {
   name: "CardPlayer",
   data() {
     return {
-      bgImg
-    }
+      bgImg,
+    };
   },
 };
 </script>

@@ -10,7 +10,8 @@
         to="/dashboard"
         v-bind="$attrs"
         :class="isBlur ? 'text-dark' : 'text-white'"
-      >Vite Soft UI Dashboard</router-link>
+        >Vite Soft UI Dashboard</router-link
+      >
       <button
         class="navbar-toggler shadow-none ms-2"
         type="button"
@@ -79,7 +80,8 @@
               href="https://www.creative-tim.com/product/vue-soft-ui-dashboard"
               class="btn btn-sm btn-round mb-0 me-1"
               :class="isBlur ? 'bg-gradient-dark' : 'bg-gradient-success'"
-            >Free download</a>
+              >Free download</a
+            >
           </li>
         </ul>
       </div>
@@ -97,11 +99,11 @@ export default {
   props: {
     btnBackground: {
       type: String,
-      default: ""
+      default: "",
     },
     isBlur: {
       type: String,
-      default: ""
+      default: "",
     },
     darkMode: {
       type: Boolean,

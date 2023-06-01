@@ -33,7 +33,7 @@ export default {
     },
     icon: {
       type: String,
-      default: ""
+      default: "",
     },
     dismissible: {
       type: Boolean,

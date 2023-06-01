@@ -27,7 +27,10 @@
       </li>
 
       <li class="nav-item">
-        <sidenav-collapse nav-text="Virtual Reality" :to="{ name: 'Virtual Reality' }">
+        <sidenav-collapse
+          nav-text="Virtual Reality"
+          :to="{ name: 'Virtual Reality' }"
+        >
           <template #icon>
             <icon name="virtual-reality" />
           </template>
@@ -44,7 +47,9 @@
         <h6
           class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6"
           :class="$store.state.isRTL ? 'me-4' : 'ms-2'"
-        >PAGES</h6>
+        >
+          PAGES
+        </h6>
       </li>
       <li class="nav-item">
         <sidenav-collapse nav-text="Profile" :to="{ name: 'Profile' }">
@@ -82,7 +87,8 @@
       class="btn bg-gradient-success mt-4 w-100"
       href="https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro?ref=vsud"
       type="button"
-    >Upgrade to pro</a>
+      >Upgrade to pro</a
+    >
   </div>
 </template>
 <script>
@@ -100,7 +106,7 @@ export default {
   props: {
     cardBg: {
       type: String,
-      default: ""
+      default: "",
     },
   },
   data() {

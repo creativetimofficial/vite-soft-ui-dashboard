@@ -1,5 +1,5 @@
 @mixin badge-variant($bg) {
-	color: saturate(darken($bg, 10%), 10);
+  color: saturate(darken($bg, 10%), 10);
   background-color: lighten($bg, 32%);
 
   &[href] {
@@ -8,5 +8,5 @@
       text-decoration: none;
       background-color: darken($bg, 12%);
     }
-	}
+  }
 }

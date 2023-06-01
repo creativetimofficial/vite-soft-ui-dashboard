@@ -16,7 +16,9 @@
           </span>
           <div class="timeline-content">
             <h6 class="text-dark text-sm font-weight-bold mb-0">{{ order }}</h6>
-            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ date }}</p>
+            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+              {{ date }}
+            </p>
           </div>
         </div>
         <div class="timeline-block mb-3">
@@ -24,8 +26,12 @@
             <i class="ni ni-html5 text-danger text-gradient"></i>
           </span>
           <div class="timeline-content">
-            <h6 class="text-dark text-sm font-weight-bold mb-0">{{ newOrder }}</h6>
-            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ orderDate }}</p>
+            <h6 class="text-dark text-sm font-weight-bold mb-0">
+              {{ newOrder }}
+            </h6>
+            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+              {{ orderDate }}
+            </p>
           </div>
         </div>
         <div class="timeline-block mb-3">
@@ -33,8 +39,12 @@
             <i class="ni ni-cart text-info text-gradient"></i>
           </span>
           <div class="timeline-content">
-            <h6 class="text-dark text-sm font-weight-bold mb-0">{{ payment }}</h6>
-            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ paymentDate }}</p>
+            <h6 class="text-dark text-sm font-weight-bold mb-0">
+              {{ payment }}
+            </h6>
+            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+              {{ paymentDate }}
+            </p>
           </div>
         </div>
         <div class="timeline-block mb-3">
@@ -42,8 +52,12 @@
             <i class="ni ni-credit-card text-warning text-gradient"></i>
           </span>
           <div class="timeline-content">
-            <h6 class="text-dark text-sm font-weight-bold mb-0">{{ newCard }}</h6>
-            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ newCardDate }}</p>
+            <h6 class="text-dark text-sm font-weight-bold mb-0">
+              {{ newCard }}
+            </h6>
+            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+              {{ newCardDate }}
+            </p>
           </div>
         </div>
         <div class="timeline-block mb-3">
@@ -51,8 +65,12 @@
             <i class="ni ni-key-25 text-primary text-gradient"></i>
           </span>
           <div class="timeline-content">
-            <h6 class="text-dark text-sm font-weight-bold mb-0">{{ unlockPackages }}</h6>
-            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ unlockPackagesDate }}</p>
+            <h6 class="text-dark text-sm font-weight-bold mb-0">
+              {{ unlockPackages }}
+            </h6>
+            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+              {{ unlockPackagesDate }}
+            </p>
           </div>
         </div>
         <div v-if="newOrder2" class="timeline-block">
@@ -60,8 +78,12 @@
             <i class="ni ni-money-coins text-dark text-gradient"></i>
           </span>
           <div class="timeline-content">
-            <h6 class="text-dark text-sm font-weight-bold mb-0">{{ newOrder2 }}</h6>
-            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ newOrder2Date }}</p>
+            <h6 class="text-dark text-sm font-weight-bold mb-0">
+              {{ newOrder2 }}
+            </h6>
+            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+              {{ newOrder2Date }}
+            </p>
           </div>
         </div>
       </div>
@@ -123,11 +145,11 @@ export default {
     },
     newOrder2: {
       type: String,
-      default: ""
+      default: "",
     },
     newOrder2Date: {
       type: String,
-      default: ""
+      default: "",
     },
   },
 };

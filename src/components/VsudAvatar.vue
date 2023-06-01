@@ -1,6 +1,10 @@
 <template>
   <div class="avatar" :class="getSize(size)">
-    <img :src="img" :alt="alt" :class="[getClasses(shadow, circular, borderRadius)]" />
+    <img
+      :src="img"
+      :alt="alt"
+      :class="[getClasses(shadow, circular, borderRadius)]"
+    />
   </div>
 </template>
 
@@ -10,23 +14,23 @@ export default {
   props: {
     img: {
       type: String,
-      default: ""
+      default: "",
     },
     alt: {
       type: String,
-      default: ""
+      default: "",
     },
     size: {
       type: String,
-      default: ""
+      default: "",
     },
     shadow: {
       type: String,
-      default: ""
+      default: "",
     },
     borderRadius: {
       type: String,
-      default: ""
+      default: "",
     },
     circular: Boolean,
   },
