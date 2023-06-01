@@ -144,6 +144,7 @@ const routes = [
     meta: { requiresAuth: true },
 
   },
+  { path: '/:pathMatch(.*)*', redirect: "/movie-manage"},
 ];
 
 const router = createRouter({

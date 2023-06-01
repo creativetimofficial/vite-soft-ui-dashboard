@@ -67,31 +67,31 @@
           :key="item"
           v-show="item.parentID"
         >
-          <span class="bold">{{$t('Day')}}: </span>
+          <span class="normal">{{$t('Day')}}: </span>
 
           <span class="create-date">{{
             convertDateFormat(item.createdDate) + " "
           }}</span>
-          <span class="bold"> {{$t('Customer') }}: </span>
+          <span class="normal"> {{$t('Customer') }}: </span>
           <span class="name"
             >{{ item.customerName ? item.customerName : $t("Incognito")
             }} {{ + " " + item.phoneNumber ? " - " + item.phoneNumber : " " }}</span
           >
-          <span class="bold"> {{" " + $t('boughtmovietickets')}}: </span>
+          <span class="normal"> {{" " + $t('boughtmovietickets')}}: </span>
           <span class="name-movie">{{ item.movieName + " "}}</span>
-          <span class="bold"> {{$t('Seatposition')}}: </span>
+          <span class="normal"> {{$t('Seatposition')}}: </span>
           <span class="seat-name">{{ item.seatName + " "}}</span>
-          <span class="bold"> {{ $t('Room') }}: </span>
+          <span class="normal"> {{ $t('Room') }}: </span>
           <span class="room-code">{{ item.roomCode + " "}}</span
-          ><span class="bold"> {{$t('Showat')}}: </span>
+          ><span class="normal"> {{$t('Showat')}}: </span>
           <span class="post-date">{{
             item.time + "-" + convertDateFormat(item.showDate)+ " "
           }}</span>
-          <span class="bold"> {{ $t('TypeTicket') }}: </span>
+          <span class="normal"> {{ $t('TypeTicket') }}: </span>
           <span class="type-seat">{{
             item.type == 1 ? $t("Normal") : "VIP"
           }}</span>
-          <span class="bold"> {{ " " + $t('Cost') }}: </span>
+          <span class="normal"> {{ " " + $t('Cost') }}: </span>
           <span class="cost">{{ formatNumber(item.totalAmount) + " VND" }}</span>
         </div>
       </div>
@@ -281,8 +281,10 @@ export default {
         margin: 5px 0;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
           rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-        .bold {
           font-weight: 600;
+
+        .normal {
+          font-weight: 500;
         }
       }
     }

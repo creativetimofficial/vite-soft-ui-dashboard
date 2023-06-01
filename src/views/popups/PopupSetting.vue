@@ -34,6 +34,12 @@
           <div class="item-icon shadow me-3 rounded-2">
             <i class="fas fa-laptop-house"></i>
           </div>
+          <div class="item-content">{{ $t('Data') }}</div>
+        </div>
+        <div class="setting-item" @click="changeOption(4)" :class="selection==4?' selected':''" v-if="$store.state.role == 'admin'">
+          <div class="item-icon shadow me-3 rounded-2">
+            <i class="fas fa-laptop-house"></i>
+          </div>
           <div class="item-content">{{ $t('Cinema') }}</div>
         </div>
       </div>
@@ -51,17 +57,21 @@
       <cinema-setting
         v-if="selection == 3 && $store.state.isShowCinemaSetting"
       ></cinema-setting>
+      <cinema-info-setting
+        v-if="selection == 4 && $store.state.isShowCinemaInfoSetting"
+      ></cinema-info-setting>
     </div>
   </div>
 </template>
 <script>
+import CinemaInfoSetting from "./settingchild/CinemaInfoSetting.vue";
 import CinemaSetting from "./settingchild/CinemaSetting.vue";
 import AccountSetting from "./settingchild/AccountSetting.vue";
 import PasswordSetting from "./settingchild/PasswordSetting.vue";
 import CommonSetting from "./settingchild/CommonSetting.vue";
 export default {
   components: {
-    AccountSetting,PasswordSetting,CommonSetting,CinemaSetting
+    AccountSetting,PasswordSetting,CommonSetting,CinemaSetting,CinemaInfoSetting
   },
   mounted() {
     this.$store.state.isShowCommonSetting = true;
@@ -69,7 +79,7 @@ export default {
   data() {
     return {
       selection: 0,
-      headerName: ["TicketInformation", "AccountInformation","Password","Cinema"],
+      headerName: ["TicketInformation", "AccountInformation","Password","Addnewdata","Cinema"],
     };
   },
   methods: {
@@ -79,6 +89,7 @@ export default {
       if(option === 2) this.$store.state.isShowPasswordSetting = true;
       if(option === 0) this.$store.state.isShowCommonSetting = true;
       if(option === 3) this.$store.state.isShowCinemaSetting = true;
+      if(option === 4) this.$store.state.isShowCinemaInfoSetting = true;
     },
     closeThisPopup(){
         this.$store.state.isShowSetting = false;

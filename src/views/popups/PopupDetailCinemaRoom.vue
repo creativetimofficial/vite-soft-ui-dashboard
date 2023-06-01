@@ -3,10 +3,10 @@
     <div class="cinemaroom-header">
       <div class="cinemaroom-header-left">
         <i class="fas fa-long-arrow-alt-left" @click="closePopup()"></i>
-        <div class="content">{{$t('Back')}}</div>
+        <div class="content">{{ $t("Back") }}</div>
       </div>
       <div class="cinemaroom-header-center">
-        <div class="content-main">{{ $t('Cinemaroom') }} {{ codeRoom }}</div>
+        <div class="content-main">{{ $t("Cinemaroom") }} {{ codeRoom }}</div>
       </div>
     </div>
     <div class="cinemaroom-main">
@@ -23,28 +23,43 @@
               :key="itemCol"
               @click="pushSelectingSeat(item, itemCol)"
             >
-              {{ convertLetter(item) + itemCol }}
+              {{
+                getSeat(item, itemCol) == "none"
+                  ? ""
+                  : convertLetter(item) + itemCol
+              }}
+              <el-tooltip
+                class="box-item"
+                effect="dark"
+                :content="$t('AddSeat')"
+                placement="top"
+                v-if="getSeat(item, itemCol) == 'none'"
+              >
+                <div @click="updateSeatBack(item, itemCol)">
+                  <i class="fas fa-plus"></i>
+                </div>
+              </el-tooltip>
             </div>
           </div>
         </div>
       </div>
       <div class="description-seat">
-        <div class="note">{{$t('Note')}}</div>
+        <div class="note">{{ $t("Note") }}</div>
         <div class="seat-selected">
           <div class="color-vip"></div>
-          <div class="content-selected">{{ $t('VIPseat') }}</div>
+          <div class="content-selected">{{ $t("VIPseat") }}</div>
         </div>
         <div class="seat-unselected">
           <div class="color-normal"></div>
-          <div class="content-unselected">{{ $t('Normalseat') }}</div>
+          <div class="content-unselected">{{ $t("Normalseat") }}</div>
         </div>
         <div class="seat-unuse">
           <div class="color-unuse"></div>
-          <div class="content-unuse">{{ $t('Maintenance') }}</div>
+          <div class="content-unuse">{{ $t("Maintenance") }}</div>
         </div>
         <div class="seat-selecting">
           <div class="color-selecting"></div>
-          <div class="content-selecting">{{ $t('Selecting') }}</div>
+          <div class="content-selecting">{{ $t("Selecting") }}</div>
         </div>
       </div>
     </div>
@@ -155,10 +170,9 @@ export default {
     };
   },
   methods: {
-    showPopupDeleteRealRoom(){
+    showPopupDeleteRealRoom() {
       this.isShowDeletePopupRealRoom = true;
     },
-
 
     /**
      * Hàm thực hiện xóa phòng hiện tại
@@ -170,12 +184,13 @@ export default {
         .post("/CinemaRoom/DeleteRealRoom", { roomID: me.idRoom })
         .then(() => {
           location.reload();
-          me.$store.dispatch("showToast",this.$t('Deletesuccessfully'));
+          me.$store.dispatch("showToast", this.$t("Deletesuccessfully"));
         });
     },
 
     loadDataSeat(id) {
       let me = this;
+      this.$store.state.isShowLoading = true;
       this.$api
         .post("/CinemaRoom/GetListRealSeatByRoom", {
           roomID: id,
@@ -183,6 +198,7 @@ export default {
         .then((data) => {
           me.dataSeat = data;
           this.getLastRowCol(me.dataSeat);
+          me.$store.state.isShowLoading = false;
         });
     },
 
@@ -271,6 +287,25 @@ export default {
         me.seatsSelecting[item].type = 1;
       }
       this.updateRealSeat();
+    },
+
+    updateSeatBack(item, itemCol) {
+      let me = this;
+      let data = [
+        {
+          rowSeat: item,
+          colSeat: itemCol,
+          roomID: this.idRoom,
+          type: 1,
+        },
+      ];
+      this.$store.state.isShowLoading = true;
+      this.$api.post("/CinemaRoom/UpdateRealSeat", data).then(() => {
+        me.loadDataSeat(me.idRoom);
+        me.seatsSelecting = [];
+        this.$store.state.isShowLoading = false;
+        this.$store.dispatch("showToast", this.$t("UpdateSuccessful"));
+      });
     },
 
     deleteSelect() {
@@ -366,8 +401,10 @@ export default {
             }
 
             &.none {
-              opacity: 0;
-              pointer-events: none !important;
+              background: #fff !important;
+              color: #111 !important;
+              border: 1px solid #111;
+              // pointer-events: none !important;
             }
 
             -webkit-user-select: none;

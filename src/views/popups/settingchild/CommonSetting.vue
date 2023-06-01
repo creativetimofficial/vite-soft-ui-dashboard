@@ -8,7 +8,7 @@
             <el-tooltip
               class="box-item"
               effect="dark"
-              :content="$t('Close')"
+              :content="$t('Edit')"
               placement="top"
             >
               <div class="icon-edit" @click="showNormalInput">
@@ -42,7 +42,7 @@
             <el-tooltip
               class="box-item"
               effect="dark"
-              :content="$t('Close')"
+              :content="$t('Edit')"
               placement="top"
             >
               <div class="icon-edit" @click="showVIPInput">

@@ -2,15 +2,24 @@
   <div class="popup-add-showtime">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-title">{{$t('Moremoviescreenings')}} {{ nameMovie }}</div>
-        <div class="popup-icon-close" @click="closeThisPopup()">
-          <i class="fas fa-times"></i>
+        <div class="popup-title">
+          {{ $t("Moremoviescreenings") }} {{ nameMovie }}
         </div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="popup-icon-close" @click="closeThisPopup()">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
       </div>
       <div class="popup-main">
         <div class="popup-row-1 mt-2">
           <div class="popup-input popup-date">
-            <label>{{ $t('Choosedate') }}</label>
+            <label>{{ $t("Choosedate") }}</label>
             <el-date-picker
               v-model="dataMovie.postDate"
               type="date"
@@ -20,29 +29,60 @@
               :disabled-date="disabledDates"
             />
           </div>
-          <div class="popup-input popup-date ">
-            <label>{{ $t('Chooseascreeningroom') }}</label>
-            <v-select
+          <div class="popup-input popup-date">
+            <label>{{ $t("Chooseascreeningroom") }}</label>
+            <!-- <v-select
               label="roomCode"
               :options="dataRoom"
               :placeholder="$t('PTypeMovie')"
               v-model="dataRoomSelected"
               :reduce="(roomCode) => roomCode.roomID"
               @option:deselected="checkHideTemplate()"
-            ></v-select>
+            ></v-select> -->
+
+            <el-select
+              v-model="dataRoomSelected"
+              clearable
+              :placeholder="$t('PTypeMovie')"
+            >
+              <el-option
+                v-for="item in dataRoom"
+                :key="item.roomID"
+                :label="item.roomCode"
+                :value="item.roomID"
+                @change="checkHideTemplate"
+              />
+            </el-select>
           </div>
         </div>
         <div class="popup-row-1" v-if="showTemplate">
           <div class="popup-input group-combobox">
-            <label>{{ $t('Chooseshowtime') }}</label>
-            <v-select
+            <label>{{ $t("Chooseshowtime") }}</label>
+            <!-- <v-select
               label="time"
               :options="dataMovie.templateTime"
               :placeholder="$t('PTypeMovie')"
               v-model="dataMovie.selectTemplateCode"
               :reduce="(time) => time.templateTimeCode"
               multiple
-            ></v-select>
+            ></v-select> -->
+
+            <el-select
+              v-model="dataMovie.selectTemplateCode"
+              multiple
+              collapse-tags
+              collapse-tags-tooltip
+              :placeholder="$t('Selectashowtime')"
+              style="width: 470px"
+              :no-data-text="$t('BlankShowtimeContent')"
+            >
+              <el-option
+                v-for="item in dataMovie.templateTime"
+                :key="item.templateTimeCode"
+                :label="item.time"
+                :value="item.templateTimeCode"
+              />
+            </el-select>
           </div>
         </div>
       </div>
@@ -63,8 +103,8 @@
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import VsudInput from "../../components/VsudInput.vue";
 import BaseButton from "../components/BaseButton.vue";
 import BaseUpload from "../components/BaseUpload.vue";
@@ -93,11 +133,11 @@ export default {
       type: String,
     },
   },
-  watch:{
-    dataRoomSelected(newVal,oldVal){
+  watch: {
+    dataRoomSelected(newVal, oldVal) {
       this.dataMovie.selectTemplateCode = null;
       this.checkHideTemplate();
-    }
+    },
   },
   data() {
     return {
@@ -121,7 +161,7 @@ export default {
           .post("/Movie/GetTemplateTimeCodeByMovieID", {
             movieID: me.idMovie,
             postDate: convertDateTime(me.dataMovie.postDate),
-            roomID: me.dataRoomSelected
+            roomID: me.dataRoomSelected,
           })
           .then((data) => {
             me.dataMovie.templateTime = data;
@@ -138,11 +178,18 @@ export default {
     closeThisPopup() {
       this.$store.state.isOpenPopupAddShowtime = false;
     },
-    createNewRoomCinema(){
-      let me =this;
-      this.$api.post('/Movie/CreateNewRoomCinema',{movieID: me.idMovie,roomID: me.dataRoomSelected,postDate: convertDateTime(me.dataMovie.postDate),listTemplateTimeCode: me.dataMovie.selectTemplateCode }).then(()=>{
-        location.reload();
-      })
+    createNewRoomCinema() {
+      let me = this;
+      this.$api
+        .post("/Movie/CreateNewRoomCinema", {
+          movieID: me.idMovie,
+          roomID: me.dataRoomSelected,
+          postDate: convertDateTime(me.dataMovie.postDate),
+          listTemplateTimeCode: me.dataMovie.selectTemplateCode,
+        })
+        .then(() => {
+          location.reload();
+        });
     },
     disabledDates(time) {
       const today = new Date(); // Lấy ngày hiện tại
@@ -152,8 +199,8 @@ export default {
   },
 };
 </script>
-  
-  <style lang="scss">
+
+<style lang="scss">
 @import "vue-select/dist/vue-select.css";
 .popup-add-showtime {
   input::placeholder {
@@ -164,7 +211,7 @@ export default {
     height: 40px;
   }
 
-  .mt-2{
+  .mt-2 {
     margin-top: 10px;
   }
   position: fixed;
@@ -199,7 +246,11 @@ export default {
         font-weight: 700;
         font-size: 18px;
         color: #111;
+        white-space: nowrap;
         text-align: center;
+        text-overflow: ellipsis;
+        width: 460px;
+        overflow: hidden;
       }
       .popup-icon-close {
         position: absolute;
@@ -281,4 +332,3 @@ export default {
   }
 }
 </style>
-  

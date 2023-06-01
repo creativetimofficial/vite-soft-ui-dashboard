@@ -106,3 +106,7 @@ border: 3px solid transparent;
 
   }
 }
+
+.el-select__popper{
+  z-index: 10000!important;
+}

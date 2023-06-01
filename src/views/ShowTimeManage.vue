@@ -12,6 +12,9 @@
       </div>
     </div>
     <div class="showtime-main">
+      <div class="main-empty" v-if="dataSource.length < 1">
+        {{ $t("Nodata") }}
+      </div>
       <div
         class="showtime-movie"
         v-for="item in dataSource"
@@ -73,7 +76,8 @@ export default {
   setup() {
     return {
       listSeat,
-      convertLetter,Search
+      convertLetter,
+      Search,
     };
   },
   components: {

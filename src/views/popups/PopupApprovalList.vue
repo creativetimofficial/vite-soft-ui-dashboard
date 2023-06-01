@@ -16,6 +16,9 @@
       </div>
       <div class="popup-main">
         <div class="popup-main-container">
+          <div class="main-empty" v-if="!dataAccount.length">
+            {{ $t('Nodata') }}
+          </div>
           <div
             class="account-item"
             v-for="item in dataAccount"

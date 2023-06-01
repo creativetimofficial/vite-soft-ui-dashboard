@@ -3,24 +3,32 @@
     <div class="seatroom-header">
       <div class="seatroom-header-left">
         <i class="fas fa-long-arrow-alt-left" @click="closePopup()"></i>
-        <div class="content">{{$t('Back')}}</div>
+        <div class="content">{{ $t("Back") }}</div>
       </div>
       <div class="seatroom-header-center">
-        <div class="content-main">{{ $t('Screeningsofthemovie') }} {{ nameMovie }}</div>
+        <div class="content-main">
+          {{ $t("Screeningsofthemovie") }} {{ nameMovie }}
+        </div>
       </div>
     </div>
     <div class="template-time-code-main">
-      <div
-        class="template-time-card"
-        v-for="item in dataTemplateTime"
-        :key="item"
-        :class="isSelectingRoomCinema(item.roomCinemaID) ? ' selecting' : ''"
-        @click="openTemplateSeat(item.roomCinemaID)"
-      >
-        <div class="time-item">{{ convertTimeFormat(item.time) }}</div>
-        <div class="room-item">{{ item.roomCode }}</div>
-        <div class="date-item">{{ convertDateFormat(item.postDate) }}</div>
-      </div>
+      <el-scrollbar>
+        <div class="scrollbar-flex-content">
+          <div
+            class="template-time-card"
+            v-for="item in dataTemplateTime"
+            :key="item"
+            :class="
+              isSelectingRoomCinema(item.roomCinemaID) ? ' selecting' : ''
+            "
+            @click="openTemplateSeat(item.roomCinemaID)"
+          >
+            <div class="time-item">{{ convertTimeFormat(item.time) }}</div>
+            <div class="room-item">{{ item.roomCode }}</div>
+            <div class="date-item">{{ convertDateFormat(item.postDate) }}</div>
+          </div>
+        </div>
+      </el-scrollbar>
     </div>
     <div class="seatroom-main" v-if="isOpenTemplateSeat">
       <div class="screen-select-seat">
@@ -43,60 +51,85 @@
         </div>
       </div>
       <div class="description-seat">
-        <div class="note">Chú thích</div>
+        <div class="note">{{ $t('Note') }}</div>
         <div class="seat-selected">
           <div class="color-selected"></div>
-          <div class="content-selected">Đã được mua</div>
+          <div class="content-selected">{{$t('SeatSold')}}</div>
         </div>
         <div class="seat-unselected">
           <div class="color-unselected"></div>
-          <div class="content-unselected">Ghế thường</div>
+          <div class="content-unselected">{{ $t('Normalseat') }}</div>
         </div>
         <div class="seat-unselected">
           <div class="color-vip"></div>
-          <div class="content-unselected">Ghế VIP</div>
+          <div class="content-unselected">{{$t('VIPseat')}}</div>
         </div>
         <div class="seat-unselected">
           <div class="color-unuse"></div>
-          <div class="content-unselected">Bảo trì</div>
+          <div class="content-unselected">{{ $t('Maintenance') }}</div>
         </div>
         <div class="seat-selecting">
           <div class="color-selecting"></div>
-          <div class="content-selecting">Đang chọn</div>
+          <div class="content-selecting">{{$t('SeatSelecting')}}</div>
         </div>
       </div>
 
       <div class="description-total">
-        <div class="note">Thống kê</div>
+        <div class="note">{{ $t('Statistic') }}</div>
         <div class="total-seat">
-          Tổng số ghế: <span class="bold"> {{ totalSeat }} </span>
+          {{$t('TotalSeat')}}: <span class="bold"> {{ totalSeat }} </span>
         </div>
         <div class="seat-unselected">
-          Ghế đã bán: <span class="bold">{{ totalSelected }}</span>
+          {{$t('SeatSold')}}: <span class="bold">{{ totalSelected }}</span>
         </div>
         <div class="seat-unselected">
-          Ghế đang chọn: <span class="bold">{{ totalSelecting }}</span>
+          {{$t('SeatSelecting')}}: <span class="bold">{{ totalSelecting }}</span>
         </div>
         <div class="seat-unselected">
-          Ghế bảo trì: <span class="bold">{{ totalMaintenance }}</span>
+          {{ $t('Maintenance') }}: <span class="bold">{{ totalMaintenance }}</span>
         </div>
         <div class="seat-selecting">
-          Ghế VIP: <span class="bold">{{ totalVIP }}</span>
+          {{$t('VIPseat')}}: <span class="bold">{{ totalVIP }}</span>
         </div>
         <div class="seat-selecting">
-          Ghế thường: <span class="bold">{{ totalNormal }}</span>
+          {{ $t('Normalseat') }}: <span class="bold">{{ totalNormal }}</span>
         </div>
       </div>
 
       <div class="user-select">
-        <div class="note">{{ $t('Chooseacustomer') }}</div>
-        <v-select
+        <div class="note">{{ $t("Chooseacustomer") }}</div>
+        <!-- <v-select
           label="name"
           :options="dataCustomerTemp"
           v-model="accountSelected"
           :reduce="(typeName) => typeName.accountID"
           :placeholder="$t('Chooseacustomer')"
-        ></v-select>
+        ></v-select> -->
+
+        <el-select
+          v-model="accountSelected"
+          clearable
+          :placeholder="$t('Chooseacustomer')"
+          filterable
+          :filter-method="filterMethod"
+        >
+          <el-option
+            v-for="item in dataCustomerTemp"
+            :key="item.accountID"
+            :label="item.name"
+            :value="item.accountID"
+          >
+            <span style="float: left; margin-right: 10px;">{{ item.name }}</span>
+            <span
+              style="
+                float: right;
+                color: var(--el-text-color-secondary);
+                font-size: 13px;
+              "
+              >{{ item.phoneNumber }}</span
+            >
+          </el-option>
+        </el-select>
       </div>
     </div>
     <div class="seatroom-footer">
@@ -120,7 +153,7 @@
             'button-blue',
             seatsSelecting.length ? '' : ' button-none',
           ]"
-          :titleButton="'Đặt vé'"
+          :titleButton="$t('Buyticket')"
           @bindEvent="SaveState()"
         ></base-button>
         <div class="ml-2"></div>
@@ -202,6 +235,15 @@ export default {
       } else {
         this.dataCustomerTemp = JSON.parse(JSON.stringify(this.dataCustomer));
       }
+    },
+
+    filterMethod(query) {
+      query = query.toLowerCase();
+      this.dataCustomerTemp = this.dataCustomer.filter(
+        (x) =>
+          x.phoneNumber.includes(query) || x.name.toLowerCase().includes(query)
+      );
+      // return option.data.phoneNumber.indexOf(query) > -1;
     },
     openTemplateSeat(id) {
       this.isOpenTemplateSeat = false;
@@ -325,40 +367,50 @@ export default {
       let tempTime = "";
       let postDate = null;
       let roomCode = "";
-      if(this.dataCustomer && me.accountSelected){
-        cusName=this.dataCustomer.find(x=>x.accountID==me.accountSelected).name;
-        phoneNum = this.dataCustomer.find(x=>x.accountID==me.accountSelected).phoneNumber;
+      if (this.dataCustomer && me.accountSelected) {
+        cusName = this.dataCustomer.find(
+          (x) => x.accountID == me.accountSelected
+        ).name;
+        phoneNum = this.dataCustomer.find(
+          (x) => x.accountID == me.accountSelected
+        ).phoneNumber;
       }
 
-      if(this.dataTemplateTime){
-        templateTimeCode = this.dataTemplateTime.find(x=>x.roomCinemaID == me.roomCinmeIDSelected).templateTimeCode;
-        tempTime = this.dataTemplateTime.find(x=>x.roomCinemaID == me.roomCinmeIDSelected).time;
-        postDate = this.dataTemplateTime.find(x=>x.roomCinemaID == me.roomCinmeIDSelected).postDate;
-        roomCode = this.dataTemplateTime.find(x=>x.roomCinemaID == me.roomCinmeIDSelected).roomCode;
+      if (this.dataTemplateTime) {
+        templateTimeCode = this.dataTemplateTime.find(
+          (x) => x.roomCinemaID == me.roomCinmeIDSelected
+        ).templateTimeCode;
+        tempTime = this.dataTemplateTime.find(
+          (x) => x.roomCinemaID == me.roomCinmeIDSelected
+        ).time;
+        postDate = this.dataTemplateTime.find(
+          (x) => x.roomCinemaID == me.roomCinmeIDSelected
+        ).postDate;
+        roomCode = this.dataTemplateTime.find(
+          (x) => x.roomCinemaID == me.roomCinmeIDSelected
+        ).roomCode;
       }
 
-      this.$api.post("/History/InsertIntoHistory",{
-          movieID: me.idMovie,
-          roomCinemaID: me.roomCinmeIDSelected,
-          customerName: cusName,
-          phoneNumber: phoneNum,
-          templateTimeCode: templateTimeCode,
-          time: tempTime,
-          movieName: me.nameMovie,
-          showDate: postDate,
-          dataTicket: JSON.stringify(me.seatsSelecting),
-          createdBy: me.$store.state.accountName,
-          roomCode: roomCode
-        });
+      this.$api.post("/History/InsertIntoHistory", {
+        movieID: me.idMovie,
+        roomCinemaID: me.roomCinmeIDSelected,
+        customerName: cusName,
+        phoneNumber: phoneNum,
+        templateTimeCode: templateTimeCode,
+        time: tempTime,
+        movieName: me.nameMovie,
+        showDate: postDate,
+        dataTicket: JSON.stringify(me.seatsSelecting),
+        createdBy: me.$store.state.accountName,
+        roomCode: roomCode,
+      });
 
       this.$api
         .post("/Movie/UpdateSeatRoomCinema", me.seatsSelecting)
         .then(() => {
-          me.$store.dispatch("showToast", this.$t('Ticketbookingsuccessful'));
+          me.$store.dispatch("showToast", this.$t("Ticketbookingsuccessful"));
           me.loadDataSeat(me.roomCinmeIDSelected);
         });
-
-
     },
 
     closePopup() {
@@ -382,10 +434,10 @@ export default {
         })
         .then((data) => {
           if (data) {
-            me.$store.dispatch("showToast", this.$t('Deleteroomsuccessfully'));
+            me.$store.dispatch("showToast", this.$t("Deleteroomsuccessfully"));
             me.$store.state.isOpenPopupSeat = false;
           } else {
-            me.$store.dispatch("showToast", this.$t('Roomdeletionfailed'));
+            me.$store.dispatch("showToast", this.$t("Roomdeletionfailed"));
           }
           me.$store.state.isShowLoading = false;
         });
@@ -395,6 +447,9 @@ export default {
 </script>
 <style lang="scss">
 .seatroom-manage {
+  .scrollbar-flex-content {
+    display: flex;
+  }
   position: fixed;
   top: 0;
   left: 0;
@@ -615,8 +670,8 @@ export default {
       user-select: none;
       position: absolute;
       right: 20px;
-      top: 20%;
-      transform: translateY(-50%);
+      top: 29%;
+
       font-size: 12px;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
       padding: 10px;

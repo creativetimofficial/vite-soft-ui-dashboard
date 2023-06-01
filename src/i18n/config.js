@@ -252,7 +252,17 @@ const i18n = createI18n({
       TypeCode: "Type code",
       TypeName: "Type name",
       Addnewmovietype: "Add new movie type",
-      Addnewcategorymovie: "Add new category movie"
+      Addnewcategorymovie: "Add new category movie",
+      AddSeat: "Add seat",
+      BlankShowtimeContent: "There are no time slots available at the selected time",
+      Selectashowtime: "Select a showtime",
+      Buyticket: "Buy ticket",
+      SeatSold: "Seat sold",
+      SeatSelecting: "Seat selecting",
+      TotalSeat: "Total seat",
+      Statistic:"Statistic",
+      Data: "Data",
+      Addnewdata: "Add new data"
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -500,7 +510,17 @@ const i18n = createI18n({
       TypeCode: "Mã loại",
       TypeName: "Tên loại",
       Addnewmovietype: "Thêm mới loại phim",
-      Addnewcategorymovie: "Thêm mới thể loại phim"
+      Addnewcategorymovie: "Thêm mới thể loại phim",
+      AddSeat: "Thêm ghế",
+      BlankShowtimeContent: "Không còn khung giờ nào tại thời điểm đang chọn",
+      Selectashowtime: "Chọn một khung giờ chiếu",
+      Buyticket: "Mua vé",
+      SeatSold: "Ghế đã bán",
+      SeatSelecting: "Ghế đang chọn",
+      TotalSeat: "Tổng số ghế",
+      Statistic: "Thống kê",
+      Data: "Dữ liệu",
+      Addnewdata: "Thêm mới dữ liệu"
     },
   },
 });

@@ -10,7 +10,8 @@ export default {
   components: {},
   props: {
     titleButton: String,
-    classButton: String,
+    classButton: {
+      type: [String,Array]},
   },
   data() {
     return {};

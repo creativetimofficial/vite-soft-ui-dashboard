@@ -28,7 +28,7 @@
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center mx-3" v-if="fullName">
-            {{ $t('Hello') }}, <span>{{ " " }}</span> <span class="fw-bold">{{fullName }}</span>
+            {{ $t('Hello') }}, <span style="margin-right: 3px;">{{ " " }}</span> <span class="fw-bold">{{fullName }}</span>
           </li>
           <el-tooltip
             class="box-item"

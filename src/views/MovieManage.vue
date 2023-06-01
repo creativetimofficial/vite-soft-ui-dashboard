@@ -44,7 +44,7 @@
     <div class="movie-manage-container">
       <div class="movie-manage-main">
         <div class="main-empty" v-if="dataSource.length < 1">
-          {{ $t('Nodata') }}
+          {{ $t("Nodata") }}
         </div>
         <div
           class="movie-item"
@@ -191,10 +191,16 @@
                 {{ $t("nActor") }}: {{ item.actor }}
               </div>
             </el-tooltip>
-
-            <div class="movie-direction">
-              {{ $t("Director") }}: {{ item.directions }}
-            </div>
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              :content="$t('Director') + ': ' + item.directions"
+              placement="top"
+            >
+              <div class="movie-direction">
+                {{ $t("Director") }}: {{ item.directions }}
+              </div>
+            </el-tooltip>
             <el-tooltip
               class="box-item"
               effect="dark"
@@ -350,7 +356,7 @@ export default {
       let me = this;
       this.$api.post("/Movie/DeleteMovie", me.rowSelected).then(() => {
         me.loadData();
-        me.$store.dispatch('showToast',me.$t('Deletesuccessfully'))
+        me.$store.dispatch("showToast", me.$t("Deletesuccessfully"));
       });
     },
     loadData() {
@@ -468,7 +474,8 @@ export default {
         }
 
         .movie-category,
-        .movie-actor {
+        .movie-actor,
+        .movie-direction {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
