@@ -172,7 +172,7 @@ export default {
     loadData() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/Account/GetAllAccount").then((data) => {
+      this.$api.get("/Account/GetAllAccount").then((data) => {
         me.dataAccount = data;
         if (me.dataAccount.length) {
           me.dataAccountAdmin = me.dataAccount.filter(

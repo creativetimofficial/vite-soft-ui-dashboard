@@ -117,7 +117,7 @@ export default {
     },
     loadData() {
       let me = this;
-      this.$api.post("/Movie/GetListTypeMovie").then((data) => {
+      this.$api.get("/Movie/GetListTypeMovie").then((data) => {
         this.dataType = data;
       });
     },

@@ -121,7 +121,7 @@ export default {
   },
   created() {
     let me = this;
-    this.$api.post("/Movie/GetListRoom").then((data) => {
+    this.$api.get("/Movie/GetListRoom").then((data) => {
       me.dataRoom = data;
     });
   },

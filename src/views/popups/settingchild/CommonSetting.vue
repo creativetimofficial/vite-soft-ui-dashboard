@@ -108,7 +108,7 @@ export default {
     loadData() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/DBOption/GetAllDBOption").then((data) => {
+      this.$api.get("/DBOption/GetAllDBOption").then((data) => {
         me.dataTicket = data;
         me.ticketNormal = Number(
           data.find((x) => x.keyword == "Default_Seat_Normal").keyValue

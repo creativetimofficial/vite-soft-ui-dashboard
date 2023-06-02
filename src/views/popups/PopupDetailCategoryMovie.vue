@@ -123,7 +123,7 @@ export default {
     },
     loadData() {
       let me = this;
-      this.$api.post("/Movie/GetListCategoryMovie").then((data) => {
+      this.$api.get("/Movie/GetListCategoryMovie").then((data) => {
         this.dataCategory = data;
       });
     },

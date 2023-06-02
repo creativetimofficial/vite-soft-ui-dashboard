@@ -141,3 +141,15 @@ export function convertDateString(dateString) {
 export function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+
+export function validateNumberToString(str) {
+  // Sử dụng biểu thức chính quy để kiểm tra chuỗi
+  var regex = /^\d+$/;
+  
+  // Kiểm tra nếu chuỗi chỉ chứa số
+  if (regex.test(str)) {
+    return true;
+  } else {
+    return false;
+  }
+}

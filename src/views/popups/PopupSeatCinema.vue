@@ -189,7 +189,7 @@ export default {
         me.dataTemplateTime = data;
       });
 
-    this.$api.post("/Account/GetListCustomer").then((data) => {
+    this.$api.get("/Account/GetListCustomer").then((data) => {
       me.dataCustomer = data;
       me.dataCustomerTemp = data;
     });

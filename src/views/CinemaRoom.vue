@@ -78,7 +78,7 @@ export default {
   created() {
     let me = this;
     this.$store.state.isShowLoading = true;
-    this.$api.post("/CinemaRoom/GetListCinemaRoom").then((data) => {
+    this.$api.get("/CinemaRoom/GetListCinemaRoom").then((data) => {
       me.rooms = data;
       me.$store.state.isShowLoading = false;
     });
@@ -100,7 +100,7 @@ export default {
     loadData() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/CinemaRoom/GetListCinemaRoom").then((data) => {
+      this.$api.get("/CinemaRoom/GetListCinemaRoom").then((data) => {
         me.rooms = data;
         me.$store.state.isShowLoading = false;
       });
