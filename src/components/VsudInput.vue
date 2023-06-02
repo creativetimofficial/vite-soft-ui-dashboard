@@ -8,12 +8,28 @@
         :id="id"
         :type="type"
         class="form-control"
+        :class="[getClasses(size, valid),isEmpty?'required':'']"
+        :name="name"
+        :value="modelValue"
+        @input="updateInput"
+        :placeholder="placeholder"
+        v-if="!isMultiple"
+        :readonly="readonly"
+        @blur="checkRequired()"
+        @keydown.enter="checkEnter()"
+        :autocomplete="autocomplete"
+      />
+      <textarea
+        :id="id"
+        :type="type"
+        class="form-control"
         :class="getClasses(size, valid)"
         :name="name"
-        :value="value"
+        :value="modelValue"
+        @input="updateInput"
         :placeholder="placeholder"
-        :isRequired="isRequired"
-      />
+        v-if="isMultiple"
+      ></textarea>
       <span v-if="iconDir === 'right'" class="input-group-text">
         <i :class="getIcon(icon)"></i>
       </span>
@@ -24,6 +40,7 @@
 <script>
 export default {
   name: "VsudInput",
+  emits: ["update:modelValue","enter-event"],
   props: {
     size: {
       type: String,
@@ -35,35 +52,62 @@ export default {
     },
     icon: {
       type: String,
-      default: ""
+      default: "",
     },
     iconDir: {
       type: String,
-      default: ""
+      default: "",
     },
     name: {
       type: String,
-      default: ""
+      default: "",
     },
     id: {
       type: String,
-      default: ""
+      default: "",
     },
-    value: {
-      type: String,
-      default: ""
+    /**
+     * Biến model
+     */
+    modelValue: {
+      type: [String, Object, Array, Number],
     },
     placeholder: {
       type: String,
-      default: ""
+      default: "",
     },
     type: {
       type: String,
-      default: ""
+      default: "",
     },
-    isRequired: Boolean,
+    isRequired: {type: Boolean, default: false},
+    isMultiple: { type: Boolean, default: false },
+    readonly: Boolean,
+    autocomplete: {type: String,default: 'off'},
+    customToast: {
+      type: String,
+      default: ""
+    }
+  },
+  data() {
+    return {
+      inputValue: this.value,
+      isEmpty: false,
+    };
   },
   methods: {
+    /**
+     * Hàm thực hiện binding 2 chiều update lại data trong input và hiển thị icon sau icon
+     * Author: Công Đoàn (26/08/2022)
+     */
+    updateInput(event) {
+      this.$emit("update:modelValue", event.target.value);
+      if (!event.target.value.trim()) {
+        this.isHasIconAfter = false;
+      } else {
+        this.isHasIconAfter = true;
+      }
+    },
     getClasses: (size, valid) => {
       let sizeValue, isValidValue;
 
@@ -75,6 +119,28 @@ export default {
     },
     getIcon: (icon) => (icon ? icon : null),
     hasIcon: (icon) => (icon ? "input-group" : null),
+    updateValue() {
+      this.$emit("input", this.inputValue);
+    },
+
+    checkRequired(){
+      if(this.isRequired && !this.modelValue){
+        this.isEmpty =  true;
+        
+        this.$store.dispatch('showToast',this.customToast?this.customToast:this.$t('Fieldcannotbeleftblank'));
+      }else{
+        this.isEmpty  = false;
+      }
+
+    },
+    checkEnter(){
+      this.$emit('enter-event');
+    }
   },
 };
 </script>
+<style scoped>
+.required{
+  border: 1px solid red !important;
+}
+</style>

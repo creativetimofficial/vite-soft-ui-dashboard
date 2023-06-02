@@ -2,7 +2,7 @@
   "name": "vite-soft-ui-dashboard",
   "private": true,
   "version": "1.0.0",
-  "author": "Creative Tim (https://www.creative-tim.com/)",
+  "author": "vcdoan (https://www.facebook.com/yasolovest/)",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,12 +11,30 @@
     "format": "prettier .  --write"
   },
   "dependencies": {
-    "@popperjs/core": "2.10.2",
+    "apexcharts": "^3.39.0",
+    "axios": "^1.3.4",
     "bootstrap": "5.1.3",
     "chart.js": "3.6.0",
+    "devextreme-vue": "^22.2.5",
+    "element-plus": "^2.3.2",
+    "firebase": "^9.19.1",
+    "fuse.js": "^6.6.2",
+    "html2canvas": "^1.4.1",
     "jkanban": "^1.3.1",
+    "jsbarcode": "^3.11.5",
+    "jsonwebtoken": "^9.0.0",
+    "jspdf": "^2.5.1",
+    "v-calendar": "^3.0.3",
+    "vite-plugin-node-polyfills": "^0.8.1",
     "vue": "^3.2.25",
+    "vue-i18n": "^9.2.2",
+    "vue-multiselect": "^3.0.0-beta.1",
     "vue-router": "^4.0.14",
+    "vue-select": "^4.0.0-beta.6",
+    "vue3-apexcharts": "^1.4.1",
+    "vue3-easy-data-table": "^1.5.42",
+    "vue3-toastify": "^0.1.7",
+    "vuefire": "^3.1.0",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
@@ -24,8 +42,13 @@
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^8.5.0",
+    "node-sass": "^8.0.0",
     "prettier": "2.6.0",
     "sass": "^1.49.9",
+    "sass-loader": "^13.2.2",
+    "style-loader": "^3.3.2",
+    "unplugin-auto-import": "^0.15.2",
+    "unplugin-vue-components": "^0.24.1",
     "vite": "^2.8.0"
   }
 }

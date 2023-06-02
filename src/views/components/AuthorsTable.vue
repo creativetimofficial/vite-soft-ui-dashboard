@@ -30,7 +30,7 @@
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">John Michael</h6>
-                    <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
+                    <p class="text-xs text-secondary mb-0">john</p>
                   </div>
                 </div>
               </td>
@@ -61,7 +61,7 @@
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                    <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
+                    <p class="text-xs text-secondary mb-0">alexa</p>
                   </div>
                 </div>
               </td>
@@ -92,7 +92,7 @@
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                    <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
+                    <p class="text-xs text-secondary mb-0">laurent</p>
                   </div>
                 </div>
               </td>
@@ -123,7 +123,7 @@
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">Michael Levi</h6>
-                    <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
+                    <p class="text-xs text-secondary mb-0">michael</p>
                   </div>
                 </div>
               </td>
@@ -154,7 +154,7 @@
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">Richard Gran</h6>
-                    <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
+                    <p class="text-xs text-secondary mb-0">richard</p>
                   </div>
                 </div>
               </td>
@@ -185,7 +185,7 @@
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                    <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
+                    <p class="text-xs text-secondary mb-0">miriam</p>
                   </div>
                 </div>
               </td>

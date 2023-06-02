@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { toast } from 'vue3-toastify';
 
 export default createStore({
   state: {
@@ -15,6 +16,38 @@ export default createStore({
     showNavbar: true,
     showFooter: true,
     showMain: true,
+    isOutside: true,
+    isVietNamese: true,
+    isOpenPopup: false,
+    isOpenPopupDelete: false,
+    isOpenPopupSeat: false,
+    isOpenPopupAddShowtime: false,
+    isOpenPopupShowContent: false,
+    isOpenPopupAlterMovie: false,
+    isShowLoading: false,
+    isShowPopupAddRealRoom: false,
+    isShowDetailCinemaRoom: false,
+    isShowToast: false,
+    contentToast: "",
+    isLoggedIn: false,
+    role: "",
+    accountName:"",
+    cinemaName: "",
+    isOpenPopupApprovalList: false,
+    isOpenPopupAddAccount: false,
+    isOpenDetailAccount: false,
+    isOpenPopupDetailCategoryMovie: false,
+    isOpenDetailTypeMovie: false,
+    isOpenPopupTemplateTimeCode: false,
+    thisAccountName: "",
+    isShowAccountSetting: false,
+    isShowPasswordSetting: false,
+    isShowSetting: false,
+    isShowCommonSetting: false,
+    isOpenPopupDetailLanguage: false,
+    isShowCinemaSetting: false,
+    isShowCinemaInfoSetting: false
+    
   },
   mutations: {
     toggleConfigurator(state) {
@@ -53,6 +86,20 @@ export default createStore({
     toggleSidebarColor({ commit }, payload) {
       commit("sidebarType", payload);
     },
+    showToast(context,payload){
+      toast(payload, {
+        transition: toast.TRANSITIONS.BOUNCE,
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    },
+    checkRole(context,payload){
+      if(context.state.role == payload || context.state.role == "admin"){
+        return true;
+      }else{
+        context.dispatch("showToast","Tài khoản không có quyền");
+        return false;
+      }
+    }
   },
   getters: {},
 });
