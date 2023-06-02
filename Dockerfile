@@ -1,9 +1,4 @@
-FROM node:lts-alpine
-
-WORKDIR /app
-
-ADD . .
-
-RUN yarn && yarn build
-EXPOSE 8080
-CMD ["yarn", "preview"]
+FROM nginx:1.17-alpine as production-stage
+COPY /dist /usr/share/nginx/html
+COPY nginx.conf etc/nginx/conf.d/default.conf
+CMD ["nginx", "-g", "daemon off;"]
