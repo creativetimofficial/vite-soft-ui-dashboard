@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Tạo một instance của axios với các default config
 const instance = axios.create({
-  baseURL: "https://localhost:7278/api",
+  baseURL: "https://34.96.176.17:8889/api",
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json'
