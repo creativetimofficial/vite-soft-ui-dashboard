@@ -258,7 +258,7 @@ export default {
     },
     async loadCinemaList() {
       let me = this;
-      await this.$api.post("/Account/GetListCinema").then((data) => {
+      await this.$api.get("/Account/GetListCinema").then((data) => {
         me.listCinema = data;
       });
     },

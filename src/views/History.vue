@@ -66,33 +66,44 @@
           v-for="item in dataHistoryTemp"
           :key="item"
           v-show="item.parentID"
+          @mousemove="getMouseMouve(item.checkoutID)"
+          @mouseleave="getMouseLeave()"
         >
-          <span class="normal">{{$t('Day')}}: </span>
+          <div class="item-feature" v-show="checkOpen(item.checkoutID)">
+            <el-button type="primary" :icon="Ticket">{{  $t('ExportTicket') }}</el-button>
+          </div>
+          <div class="item-container" v-show="!checkOpen(item.checkoutID)">
+            <span class="normal">{{ $t("Day") }}: </span>
 
-          <span class="create-date">{{
-            convertDateFormat(item.createdDate) + " "
-          }}</span>
-          <span class="normal"> {{$t('Customer') }}: </span>
-          <span class="name"
-            >{{ item.customerName ? item.customerName : $t("Incognito")
-            }} {{ + " " + item.phoneNumber ? " - " + item.phoneNumber : " " }}</span
-          >
-          <span class="normal"> {{" " + $t('boughtmovietickets')}}: </span>
-          <span class="name-movie">{{ item.movieName + " "}}</span>
-          <span class="normal"> {{$t('Seatposition')}}: </span>
-          <span class="seat-name">{{ item.seatName + " "}}</span>
-          <span class="normal"> {{ $t('Room') }}: </span>
-          <span class="room-code">{{ item.roomCode + " "}}</span
-          ><span class="normal"> {{$t('Showat')}}: </span>
-          <span class="post-date">{{
-            item.time + "-" + convertDateFormat(item.showDate)+ " "
-          }}</span>
-          <span class="normal"> {{ $t('TypeTicket') }}: </span>
-          <span class="type-seat">{{
-            item.type == 1 ? $t("Normal") : "VIP"
-          }}</span>
-          <span class="normal"> {{ " " + $t('Cost') }}: </span>
-          <span class="cost">{{ formatNumber(item.totalAmount) + " VND" }}</span>
+            <span class="create-date">{{
+              convertDateFormat(item.createdDate) + " "
+            }}</span>
+            <span class="normal"> {{ $t("Customer") }}: </span>
+            <span class="name"
+              >{{ item.customerName ? item.customerName : $t("Incognito") }}
+              {{
+                +" " + item.phoneNumber ? " - " + item.phoneNumber : " "
+              }}</span
+            >
+            <span class="normal"> {{ " " + $t("boughtmovietickets") }}: </span>
+            <span class="name-movie">{{ item.movieName + " " }}</span>
+            <span class="normal"> {{ $t("Seatposition") }}: </span>
+            <span class="seat-name">{{ item.seatName + " " }}</span>
+            <span class="normal"> {{ $t("Room") }}: </span>
+            <span class="room-code">{{ item.roomCode + " " }}</span
+            ><span class="normal"> {{ $t("Showat") }}: </span>
+            <span class="post-date">{{
+              item.time + "-" + convertDateFormat(item.showDate) + " "
+            }}</span>
+            <span class="normal"> {{ $t("TypeTicket") }}: </span>
+            <span class="type-seat">{{
+              item.type == 1 ? $t("Normal") : "VIP"
+            }}</span>
+            <span class="normal"> {{ " " + $t("Cost") }}: </span>
+            <span class="cost">{{
+              formatNumber(item.totalAmount) + " VND"
+            }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -100,20 +111,24 @@
 </template>
 <script>
 import VsudInput from "../components/VsudInput.vue";
-import { convertDateFormat,convertDateString,formatNumber } from "@/common/commonFunc";
+import {
+  convertDateFormat,
+  convertDateString,
+  formatNumber,
+} from "@/common/commonFunc";
 import BaseButton from "./components/BaseButton.vue";
 import {
   Check,
   Delete,
   Edit,
   Message,
-  Search,
+  Search,Ticket,
   Star,
 } from "@element-plus/icons-vue";
 export default {
   components: { VsudInput, BaseButton },
   setup() {
-    return { convertDateFormat, Search,formatNumber };
+    return { convertDateFormat, Search, formatNumber,Ticket };
   },
   created() {
     let me = this;
@@ -143,12 +158,15 @@ export default {
         );
       }
 
-      if(this.dateSelected){
+      if (this.dateSelected) {
         this.dataHistoryTemp = this.dataHistoryTemp.filter(
-          (x) => convertDateFormat(x.createdDate) == convertDateFormat(convertDateString(this.dateSelected))
+          (x) =>
+            convertDateFormat(x.createdDate) ==
+            convertDateFormat(convertDateString(this.dateSelected))
         );
       }
     },
+
   },
   data() {
     return {
@@ -160,6 +178,7 @@ export default {
       rooms: [],
       roomSelected: "Tất cả",
       dateSelected: "",
+      idTemp: "",
       shortcuts: [
         {
           text: "Hôm nay",
@@ -188,7 +207,7 @@ export default {
     loadData() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/History/GetHistory").then((data) => {
+      this.$api.get("/History/GetHistory").then((data) => {
         me.dataHistory = data;
         me.dataHistoryTemp = data;
         me.$store.state.isShowLoading = false;
@@ -202,6 +221,17 @@ export default {
           x.customerName.toLowerCase().includes(this.searchValue.toLowerCase())
       );
     },
+    getMouseMouve(id){
+      this.idTemp = id;
+    },
+
+    getMouseLeave(){
+      this.idTemp = "";
+    },
+
+    checkOpen(id){
+      return id == this.idTemp;
+    },
 
     filterByRoom() {
       let me = this;
@@ -212,9 +242,11 @@ export default {
         );
       }
 
-      if(this.dateSelected){
+      if (this.dateSelected) {
         this.dataHistoryTemp = this.dataHistoryTemp.filter(
-          (x) => convertDateFormat(x.createdDate) == convertDateFormat(convertDateString(this.dateSelected))
+          (x) =>
+            convertDateFormat(x.createdDate) ==
+            convertDateFormat(convertDateString(this.dateSelected))
         );
       }
     },
@@ -222,7 +254,7 @@ export default {
     loadCinemaRoom() {
       let me = this;
       this.rooms = [{ roomID: this.ID_ALL, roomCode: "Tất cả" }];
-      this.$api.post("/CinemaRoom/GetListCinemaRoom").then((data) => {
+      this.$api.get("/CinemaRoom/GetListCinemaRoom").then((data) => {
         me.rooms = me.rooms.concat(data);
       });
     },
@@ -281,7 +313,7 @@ export default {
         margin: 5px 0;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
           rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-          font-weight: 600;
+        font-weight: 600;
 
         .normal {
           font-weight: 500;

@@ -232,7 +232,7 @@ export default {
     },
     loadCinemaList() {
       let me = this;
-      this.$api.post("/Account/GetListCinema").then((data) => {
+      this.$api.get("/Account/GetListCinema").then((data) => {
         me.listCinema = data;
       });
     },

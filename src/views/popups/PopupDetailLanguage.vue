@@ -127,7 +127,7 @@ export default {
     loadData() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/Dictionary/GetListLanguage").then((data) => {
+      this.$api.get("/Dictionary/GetListLanguage").then((data) => {
         me.dataTemplate = data;
         me.$store.state.isShowLoading = false;
       });

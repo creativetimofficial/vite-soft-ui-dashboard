@@ -260,15 +260,15 @@ export default {
           (me.dataMovie.timeLine = data.timeLine);
         me.$store.state.isShowLoading = false;
       });
-    this.$api.post("/Movie/GetListTypeMovie").then((data) => {
+    this.$api.get("/Movie/GetListTypeMovie").then((data) => {
       me.dataMovie.typeMovie = data;
     });
 
-    this.$api.post("/Movie/GetListCategoryMovie").then((data) => {
+    this.$api.get("/Movie/GetListCategoryMovie").then((data) => {
       me.dataMovie.categoryMovie = data;
     });
 
-    this.$api.post("/Dictionary/GetListLanguage").then((data) => {
+    this.$api.get("/Dictionary/GetListLanguage").then((data) => {
       me.listLanguage = data;
     });
   },

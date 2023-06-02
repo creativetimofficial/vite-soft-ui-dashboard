@@ -52,7 +52,7 @@
         <div class="info-row">
           <div class="info-label"></div>
           <div class="info-content">
-            <el-button color="#626aef" :dark="true" @click="changePassword()">{{
+            <el-button type="primary" :dark="true" @click="changePassword()">{{
               $t("Save")
             }}</el-button>
           </div>

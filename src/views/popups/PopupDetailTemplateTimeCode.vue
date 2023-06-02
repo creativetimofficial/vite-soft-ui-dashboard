@@ -127,7 +127,7 @@ export default {
       let me = this;
       this.$store.state.isShowLoading = true;
 
-      this.$api.post("/Dictionary/GetTemplateTimeCode").then((data) => {
+      this.$api.get("/Dictionary/GetTemplateTimeCode").then((data) => {
         me.dataTemplate = data;
         me.$store.state.isShowLoading = false;
       });
