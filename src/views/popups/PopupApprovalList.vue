@@ -98,7 +98,7 @@ export default {
     loadData() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/Account/GetAllAccountTemp").then((data) => {
+      this.$api.get("/Account/GetAllAccountTemp").then((data) => {
         me.dataAccount = data;
         me.$store.state.isShowLoading = false;
       });

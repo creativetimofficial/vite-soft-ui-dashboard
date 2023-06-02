@@ -78,7 +78,7 @@ export default {
     loadDataMonth() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/Report/GetDataChartThisMonth").then((data) => {
+      this.$api.get("/Report/GetDataChartThisMonth").then((data) => {
         me.chartThisMonth = getDataChart(data.name, data.amount, "Doanh thu");
         me.$store.state.isShowLoading = false;
       });
@@ -87,7 +87,7 @@ export default {
     loadDataYear() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/Report/GetDateChartThisYearByMonth").then((data) => {
+      this.$api.get("/Report/GetDateChartThisYearByMonth").then((data) => {
         me.chartThisYearByMonth = getDataChart(
           data.month,
           data.amount,
@@ -100,7 +100,7 @@ export default {
     loadDataDay() {
       let me = this;
       this.$store.state.isShowLoading = true;
-      this.$api.post("/Report/GetDataChartDayByMovie").then((data) => {
+      this.$api.get("/Report/GetDataChartDayByMovie").then((data) => {
         me.chartDayByMovie = getDataChart(data.name, data.amount, "Doanh thu");
         me.$store.state.isShowLoading = false;
       });

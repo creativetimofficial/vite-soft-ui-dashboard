@@ -242,20 +242,20 @@ export default {
   created() {
     this.$store.state.isShowLoading = true;
     let me = this;
-    this.$api.post("/Movie/GetListTypeMovie").then((data) => {
+    this.$api.get("/Movie/GetListTypeMovie").then((data) => {
       me.dataMovie.typeMovie = data;
     });
 
-    this.$api.post("/Movie/GetListCategoryMovie").then((data) => {
+    this.$api.get("/Movie/GetListCategoryMovie").then((data) => {
       me.dataMovie.categoryMovie = data;
     });
 
-    this.$api.post("/Movie/GetBiggestMovieCode").then((data) => {
+    this.$api.get("/Movie/GetBiggestMovieCode").then((data) => {
       me.biggestMovieCode = data;
       me.dataMovie.movieCode = increaseString(me.biggestMovieCode);
     });
 
-    this.$api.post("/Dictionary/GetListLanguage").then((data) => {
+    this.$api.get("/Dictionary/GetListLanguage").then((data) => {
       me.listLanguage = data;
       me.$store.state.isShowLoading = false;
     });

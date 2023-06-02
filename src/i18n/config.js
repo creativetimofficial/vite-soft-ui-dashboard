@@ -262,7 +262,20 @@ const i18n = createI18n({
       TotalSeat: "Total seat",
       Statistic:"Statistic",
       Data: "Data",
-      Addnewdata: "Add new data"
+      Addnewdata: "Add new data",
+      Cinemacode: "Cinema code",
+      Cinemaname: "Cinema name",
+      Cinemaaddress: "Address",
+      Hotline: "Hotline",
+      MST: "Tax code",
+      AboutCinema: "About",
+      CinemaInfoSettingContent: "Cinema information, change some cinema information fields",
+      Warningchangeinfocinema: "Are you sure you want to change the information?",
+      Yes: "Yes",
+      Cancle: "Cancle",
+      enterenoughinfo: "You need to enter enough information",
+      formattruenumber : "Hotline needs to enter the correct number format",
+      ExportTicket: "Export ticket"
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -520,7 +533,20 @@ const i18n = createI18n({
       TotalSeat: "Tổng số ghế",
       Statistic: "Thống kê",
       Data: "Dữ liệu",
-      Addnewdata: "Thêm mới dữ liệu"
+      Addnewdata: "Thêm mới dữ liệu",
+      Cinemacode: "Mã rạp phim",
+      Cinemaname: "Tên rạp phim",
+      Cinemaaddress: "Địa chỉ",
+      Hotline: "Hotline",
+      MST: "Mã số thuế",
+      AboutCinema: "Giới thiệu",
+      CinemaInfoSettingContent: "Thông tin rạp chiếu phim, thay đổi một số trường thông tin của rạp chiếu phim",
+      Warningchangeinfocinema: "Bạn có chắc muốn thay đổi thông tin?",
+      Yes: "Đồng ý",
+      Cancle: "Hủy",
+      enterenoughinfo: "Bạn cần nhập đủ thông tin",
+      formattruenumber: "Hotline cần nhập đúng định dạng số",
+      ExportTicket: "Xuất vé"
     },
   },
 });
