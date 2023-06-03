@@ -51,48 +51,50 @@
         </div>
       </div>
       <div class="description-seat">
-        <div class="note">{{ $t('Note') }}</div>
+        <div class="note">{{ $t("Note") }}</div>
         <div class="seat-selected">
           <div class="color-selected"></div>
-          <div class="content-selected">{{$t('SeatSold')}}</div>
+          <div class="content-selected">{{ $t("SeatSold") }}</div>
         </div>
         <div class="seat-unselected">
           <div class="color-unselected"></div>
-          <div class="content-unselected">{{ $t('Normalseat') }}</div>
+          <div class="content-unselected">{{ $t("Normalseat") }}</div>
         </div>
         <div class="seat-unselected">
           <div class="color-vip"></div>
-          <div class="content-unselected">{{$t('VIPseat')}}</div>
+          <div class="content-unselected">{{ $t("VIPseat") }}</div>
         </div>
         <div class="seat-unselected">
           <div class="color-unuse"></div>
-          <div class="content-unselected">{{ $t('Maintenance') }}</div>
+          <div class="content-unselected">{{ $t("Maintenance") }}</div>
         </div>
         <div class="seat-selecting">
           <div class="color-selecting"></div>
-          <div class="content-selecting">{{$t('SeatSelecting')}}</div>
+          <div class="content-selecting">{{ $t("SeatSelecting") }}</div>
         </div>
       </div>
 
       <div class="description-total">
-        <div class="note">{{ $t('Statistic') }}</div>
+        <div class="note">{{ $t("Statistic") }}</div>
         <div class="total-seat">
-          {{$t('TotalSeat')}}: <span class="bold"> {{ totalSeat }} </span>
+          {{ $t("TotalSeat") }}: <span class="bold"> {{ totalSeat }} </span>
         </div>
         <div class="seat-unselected">
-          {{$t('SeatSold')}}: <span class="bold">{{ totalSelected }}</span>
+          {{ $t("SeatSold") }}: <span class="bold">{{ totalSelected }}</span>
         </div>
         <div class="seat-unselected">
-          {{$t('SeatSelecting')}}: <span class="bold">{{ totalSelecting }}</span>
+          {{ $t("SeatSelecting") }}:
+          <span class="bold">{{ totalSelecting }}</span>
         </div>
         <div class="seat-unselected">
-          {{ $t('Maintenance') }}: <span class="bold">{{ totalMaintenance }}</span>
+          {{ $t("Maintenance") }}:
+          <span class="bold">{{ totalMaintenance }}</span>
         </div>
         <div class="seat-selecting">
-          {{$t('VIPseat')}}: <span class="bold">{{ totalVIP }}</span>
+          {{ $t("VIPseat") }}: <span class="bold">{{ totalVIP }}</span>
         </div>
         <div class="seat-selecting">
-          {{ $t('Normalseat') }}: <span class="bold">{{ totalNormal }}</span>
+          {{ $t("Normalseat") }}: <span class="bold">{{ totalNormal }}</span>
         </div>
       </div>
 
@@ -119,7 +121,7 @@
             :label="item.name"
             :value="item.accountID"
           >
-            <span style="float: left; margin-right: 10px;">{{ item.name }}</span>
+            <span style="float: left; margin-right: 10px">{{ item.name }}</span>
             <span
               style="
                 float: right;
@@ -153,19 +155,96 @@
             'button-blue',
             seatsSelecting.length ? '' : ' button-none',
           ]"
-          :titleButton="$t('Buyticket')"
+          :titleButton="$t('BookTickets')"
           @bindEvent="SaveState()"
         ></base-button>
         <div class="ml-2"></div>
       </div>
     </div>
+
+    <el-dialog
+      v-model="isShowDialogBooking"
+      :title="$t('Ticketbookingsuccessful')"
+      width="300"
+      center
+    >
+      <span>
+        {{ $t("IsPrintBookingTicket") }}
+      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="closeDialogPrint">{{ $t("Cancel") }}</el-button>
+          <el-button type="primary" @click="showDialogPrint">
+            {{ $t("Yes") }}
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+
+    <el-dialog
+      v-model="isShowDialogPrint"
+      :title="$t('ExportTicket')"
+      :show-close="false"
+      width="500"
+    >
+      <template #header>
+        <div class="my-header">
+          <div class="popup-title">{{ $t("ExportTicket") }}</div>
+          <el-tooltip
+            class="box-item"
+            effect="dark"
+            :content="$t('Close')"
+            placement="top"
+          >
+            <div class="popup-icon-close" @click="closeThisTicket">
+              <i class="fas fa-times"></i>
+            </div>
+          </el-tooltip>
+        </div>
+      </template>
+      <el-form :model="form">
+        <el-form-item>
+          <div class="ticket-base-container">
+            <el-scrollbar>
+              <div class="scrollbar-flex-content" v-if="isShowDialogPrint">
+                <BaseTicketCard
+                  v-for="(item, index) in seatsSelecting"
+                  :key="item"
+                  :dataTicket="{
+                    roomCode: roomCodePrint,
+                    movieName: nameMovie,
+                    seatName: item.SeatName,
+                    type: item.Type,
+                    totalAmount: item.Type == 1 ? normalCost : vipCost,
+                    movieID: idMovie,
+                  }"
+                  :ref="'booking' + index"
+                  :classCustom="'me-2'"
+                ></BaseTicketCard>
+              </div>
+            </el-scrollbar>
+          </div>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="closeThisTicket">{{ $t("Cancle") }}</el-button>
+          <el-button type="primary" @click="exportToPDF">
+            {{ $t("Export") }}
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { listSeat, convertLetter } from "@/constants/constantsdefaults";
 import BaseButton from "@/views/components/BaseButton.vue";
 import { convertDateFormat, convertTimeFormat } from "@/common/commonFunc";
+import BaseTicketCard from "../components/BaseTicketCard.vue";
 
 export default {
   name: "PopupSeatRoomManage",
@@ -177,9 +256,10 @@ export default {
       convertTimeFormat,
     };
   },
-  components: { BaseButton },
+  components: { BaseButton, BaseTicketCard },
   created() {
     let me = this;
+    this.$store.state.isShowLoading = true;
     this.$api
       .post("/Movie/GetListRoomCinemaByMovieID", {
         movieID: me.idMovie,
@@ -192,7 +272,19 @@ export default {
     this.$api.get("/Account/GetListCustomer").then((data) => {
       me.dataCustomer = data;
       me.dataCustomerTemp = data;
+      me.$store.state.isShowLoading = false;
     });
+    this.loadDataTicket();
+  },
+  watch: {
+    roomCinmeIDSelected(newVal) {
+      this.normalCost = this.templateDataTicket.find(
+        (x) => (x.movieID = newVal && x.type == 1)
+      ).cost;
+      this.vipCost = this.templateDataTicket.find(
+        (x) => (x.movieID = newVal && x.type == 2)
+      ).cost;
+    },
   },
   props: {
     idMovie: {
@@ -206,7 +298,10 @@ export default {
   },
   data() {
     return {
+      normalCost: 0,
+      vipCost: 0,
       dataSeat: [],
+      isShowDialogBooking: false,
       seatsSelecting: [],
       maxRow: 0,
       maxCol: 0,
@@ -222,9 +317,58 @@ export default {
       dataCustomer: [],
       dataCustomerTemp: [],
       accountSelected: "",
+      isShowDialogPrint: false,
+      roomCodePrint: "",
+      templateDataTicket: [],
     };
   },
   methods: {
+    closeDialogPrint() {
+      this.isShowDialogBooking = false;
+      this.loadDataSeat(this.roomCinmeIDSelected);
+    },
+
+    closeThisTicket() {
+      this.isShowDialogPrint = false;
+      this.loadDataSeat(this.roomCinmeIDSelected);
+    },
+
+    showDialogPrint() {
+      this.isShowDialogBooking = false;
+      this.isShowDialogPrint = true;
+    },
+
+    async exportToPDF() {
+      this.$store.state.isShowLoading = true;
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      for (let i = 0; i < this.seatsSelecting.length; i++) {
+        const componentToPrint = this.$refs["booking" + i][0].$el;
+        const canvas = await html2canvas(componentToPrint);
+        const imageData = canvas.toDataURL("image/png");
+
+        const imgWidth = pdf.internal.pageSize.getWidth();
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        pdf.addPage();
+        pdf.addImage(imageData, "PNG", 0, 0, imgWidth, imgHeight);
+
+        const contentWidth = pdf.internal.pageSize.getWidth();
+        const contentHeight = pdf.internal.pageSize.getHeight();
+
+        const positionX = (contentWidth - imgWidth) / 2;
+        const positionY = (contentHeight - imgHeight) / 2 - 25.4;
+
+        // Thêm nội dung text căn giữa vào tệp PDF
+      }
+
+      // Xuất ra file PDF
+      pdf.save("file.pdf");
+      this.loadDataSeat(this.roomCinmeIDSelected);
+      this.isShowDialogPrint = false;
+      this.$store.state.isShowLoading = false;
+
+    },
+
     filterSearch() {
       if (search) {
         this.dataCustomerTemp = this.dataCustomerTemp.filter(
@@ -251,13 +395,28 @@ export default {
       this.roomCinmeIDSelected = id;
       this.loadDataSeat(id);
     },
+
+    loadDataTicket() {
+      let me = this;
+      this.$store.state.isShowLoading = true;
+
+      this.$api.get("/Ticket/GetListTemplateTicket").then((data) => {
+        me.templateDataTicket = data;
+        console.log(data);
+        this.$store.state.isShowLoading = false;
+      });
+    },
+
     loadDataSeat(id) {
       let me = this;
+      this.$store.state.isShowLoading = true;
       this.$api
         .post("/Movie/GetListSeatCinemaRoom", {
           roomCinemaID: id,
         })
         .then((data) => {
+          me.$store.state.isShowLoading = false;
+
           me.dataSeat = data;
           this.getLastRowCol(me.dataSeat);
           me.isOpenTemplateSeat = true;
@@ -351,9 +510,6 @@ export default {
     },
 
     isSelecting(row, col) {
-      console.log(
-        this.seatsSelecting.find((x) => x.rowSeat == row && x.colSeat == col)
-      );
       return this.seatsSelecting.find(
         (x) => x.rowSeat == row && x.colSeat == col
       );
@@ -389,6 +545,7 @@ export default {
         roomCode = this.dataTemplateTime.find(
           (x) => x.roomCinemaID == me.roomCinmeIDSelected
         ).roomCode;
+        this.roomCodePrint = roomCode;
       }
 
       this.$api.post("/History/InsertIntoHistory", {
@@ -408,8 +565,9 @@ export default {
       this.$api
         .post("/Movie/UpdateSeatRoomCinema", me.seatsSelecting)
         .then(() => {
-          me.$store.dispatch("showToast", this.$t("Ticketbookingsuccessful"));
-          me.loadDataSeat(me.roomCinmeIDSelected);
+          // me.$store.dispatch("showToast", this.$t("Ticketbookingsuccessful"));
+          this.isShowDialogBooking = true;
+          // me.loadDataSeat(me.roomCinmeIDSelected);
         });
     },
 

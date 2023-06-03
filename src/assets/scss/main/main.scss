@@ -118,7 +118,10 @@ border: 3px solid transparent;
 .el-dialog{
   border-radius: 10px!important;
   .el-dialog__header{
-    
+    .el-dialog__title{
+      font-weight: 700;
+
+    }
 
     height: 60px;
     position: relative;

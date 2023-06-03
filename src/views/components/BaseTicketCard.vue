@@ -1,5 +1,5 @@
 <template>
-  <div class="template-ticket-container">
+  <div class="template-ticket-container" :class="classCustom">
     <div class="ticket-item">
       <div class="item-header">
         <div class="name-cinema">{{ dataCinema.cinemaName }}</div>
@@ -74,6 +74,7 @@ export default {
       type: Object,
       required: true,
     },
+    classCustom: String
   },
   data() {
     return {
