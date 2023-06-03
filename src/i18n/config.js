@@ -275,7 +275,10 @@ const i18n = createI18n({
       Cancle: "Cancle",
       enterenoughinfo: "You need to enter enough information",
       formattruenumber : "Hotline needs to enter the correct number format",
-      ExportTicket: "Export ticket"
+      ExportTicket: "Export ticket",
+      Export: "Export",
+      BookTickets: "Book tickets",
+      IsPrintBookingTicket: "Do you want to print the ticket you just booked?"
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -546,7 +549,10 @@ const i18n = createI18n({
       Cancle: "Hủy",
       enterenoughinfo: "Bạn cần nhập đủ thông tin",
       formattruenumber: "Hotline cần nhập đúng định dạng số",
-      ExportTicket: "Xuất vé"
+      ExportTicket: "Xuất vé",
+      Export: "Xuất",
+      BookTickets: "Đặt vé",
+      IsPrintBookingTicket: "Bạn có muốn thực hiện in vé vừa đặt?"
     },
   },
 });

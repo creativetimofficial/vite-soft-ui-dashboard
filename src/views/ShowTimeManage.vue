@@ -54,6 +54,7 @@
     :nameMovie="movieNameSelected"
     :idMovie="movieIDSelected"
   ></popup-add-showtime>
+
 </template>
 
 <script>
@@ -89,8 +90,11 @@ export default {
   },
   created() {
     let me = this;
+    this.$store.state.isShowLoading = true;
     this.$api.post("/Movie/GetListMovie", { TypeFilter: 1 }).then((data) => {
       me.dataSource = data;
+    me.$store.state.isShowLoading = false;
+
     });
   },
   data() {
