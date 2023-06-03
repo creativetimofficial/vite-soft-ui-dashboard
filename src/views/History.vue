@@ -68,9 +68,10 @@
           v-show="item.parentID"
           @mousemove="getMouseMouve(item.checkoutID)"
           @mouseleave="getMouseLeave()"
+         
         >
           <div class="item-feature" v-show="checkOpen(item.checkoutID)">
-            <el-button type="primary" :icon="Ticket">{{  $t('ExportTicket') }}</el-button>
+            <el-button type="primary" :icon="Ticket"  @click="getItemSelect(item)">{{  $t('ExportTicket') }}</el-button>
           </div>
           <div class="item-container" v-show="!checkOpen(item.checkoutID)">
             <span class="normal">{{ $t("Day") }}: </span>
@@ -108,9 +109,48 @@
       </div>
     </div>
   </div>
+
+  <el-dialog v-model="isShowDialog" :title="$t('ExportTicket')" :show-close="false" width="500">
+    <template #header>
+      <div class="my-header">
+        <div class="popup-title">{{ $t("ExportTicket") }}</div>
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          :content="$t('Close')"
+          placement="top"
+        >
+          <div class="popup-icon-close" @click="closeThisTicket">
+            <i class="fas fa-times"></i>
+          </div>
+        </el-tooltip>
+      </div>
+    </template>
+    <el-form :model="form">
+
+      <el-form-item>
+        <div class="ticket-base-container">
+          <BaseTicketCard :dataTicket="itemSelect" ref="componentToPrint"></BaseTicketCard>
+        </div>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button  @click="closeThisTicket">{{ $t('Cancle') }}</el-button>
+        <el-button type="primary" @click="exportToPDF">
+          {{ $t('Export') }}
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+
 </template>
 <script>
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import VsudInput from "../components/VsudInput.vue";
+import BaseTicketCard from "./components/BaseTicketCard.vue";
 import {
   convertDateFormat,
   convertDateString,
@@ -126,10 +166,10 @@ import {
   Star,
 } from "@element-plus/icons-vue";
 export default {
-  components: { VsudInput, BaseButton },
+  components: { VsudInput, BaseButton,BaseTicketCard },
   setup() {
     return { convertDateFormat, Search, formatNumber,Ticket };
-  },
+  }, 
   created() {
     let me = this;
     this.loadData();
@@ -179,6 +219,8 @@ export default {
       roomSelected: "Tất cả",
       dateSelected: "",
       idTemp: "",
+      itemSelect: {},
+      isShowDialog: false,
       shortcuts: [
         {
           text: "Hôm nay",
@@ -204,6 +246,54 @@ export default {
     };
   },
   methods: {
+    print() {
+      const componentToPrint = this.$refs.componentToPrint.$el;
+
+      html2canvas(componentToPrint).then(canvas => {
+        const imageData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4'); // Tạo tệp PDF với kích thước A4
+
+        const imgWidth = pdf.internal.pageSize.getWidth();
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imageData, 'PNG', 0, 0, imgWidth, imgHeight); // Thêm hình ảnh vào tệp PDF
+
+        const contentWidth = pdf.internal.pageSize.getWidth();
+        const contentHeight = pdf.internal.pageSize.getHeight();
+
+        const positionX = (contentWidth - imgWidth) / 2; // Tính toán vị trí căn giữa theo trục X
+        const positionY = (contentHeight - imgHeight) / 2 - 25.4; // Thêm cách lề trên 1 inch (25.4 mm)
+
+ // Thêm nội dung text căn giữa vào tệp PDF
+
+        pdf.save('filename.pdf'); // Tải xuống tệp PDF
+      });
+    },
+
+    exportToPDF() {
+    const pdf = new jsPDF();
+
+    // Lấy đối tượng HTML của component
+    const component = this.$refs.componentToPrint.$el;
+
+    // Sử dụng html2canvas để chụp ảnh của component
+    html2canvas(component).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+
+      // Thiết lập kích thước của PDF theo kích thước của ảnh chụp
+      const pdfWidth = canvas.width * 0.75;
+      const pdfHeight = canvas.height * 0.75;
+
+      // Thêm ảnh vào PDF
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+      // Xuất ra file PDF
+      pdf.save('file.pdf');
+    });
+  },
+    closeThisTicket(){
+      this.isShowDialog = false;
+    },
     loadData() {
       let me = this;
       this.$store.state.isShowLoading = true;
@@ -231,6 +321,11 @@ export default {
 
     checkOpen(id){
       return id == this.idTemp;
+    },
+
+    getItemSelect(item){
+      this.itemSelect = item;
+      this.isShowDialog = true;
     },
 
     filterByRoom() {
@@ -263,6 +358,7 @@ export default {
 </script>
 <style lang="scss">
 .history-manage {
+
   padding: 30px 28px 0;
   .history-manage-header {
     height: 60px;
