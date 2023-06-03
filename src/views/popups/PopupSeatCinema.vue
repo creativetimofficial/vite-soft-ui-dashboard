@@ -98,6 +98,13 @@
         </div>
       </div>
 
+      <div class="checkout-total">
+        <div class="note">{{ $t("Statistic") }}</div>
+        <div class="seat-selecting">
+          {{ $t("TotalAmount") }}: <span class="bold">{{ formatNumber(totalAmountSelected) + " VNĐ" }}</span>
+        </div>
+      </div>
+
       <div class="user-select">
         <div class="note">{{ $t("Chooseacustomer") }}</div>
         <!-- <v-select
@@ -243,7 +250,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { listSeat, convertLetter } from "@/constants/constantsdefaults";
 import BaseButton from "@/views/components/BaseButton.vue";
-import { convertDateFormat, convertTimeFormat } from "@/common/commonFunc";
+import { convertDateFormat, convertTimeFormat,formatNumber } from "@/common/commonFunc";
 import BaseTicketCard from "../components/BaseTicketCard.vue";
 
 export default {
@@ -253,7 +260,7 @@ export default {
       listSeat,
       convertLetter,
       convertDateFormat,
-      convertTimeFormat,
+      convertTimeFormat,formatNumber
     };
   },
   components: { BaseButton, BaseTicketCard },
@@ -320,6 +327,8 @@ export default {
       isShowDialogPrint: false,
       roomCodePrint: "",
       templateDataTicket: [],
+      totalAmountSelected: 0
+
     };
   },
   methods: {
@@ -425,6 +434,7 @@ export default {
           me.totalSelecting = 0;
           me.totalMaintenance = 0;
           me.totalVIP = 0;
+          me.totalAmountSelected = 0;
           me.totalNormal = 0;
           me.seatsSelecting = [];
           me.dataSeat.forEach((item) => {
@@ -495,6 +505,8 @@ export default {
           this.seatsSelecting = this.seatsSelecting.filter(
             (item) => item.rowSeat !== row || item.colSeat !== col
           );
+          this.totalAmountSelected -=typeSeat==1? this.normalCost:this.vipCost;
+
         } else {
           this.seatsSelecting.push({
             rowSeat: row,
@@ -503,6 +515,7 @@ export default {
             Type: typeSeat,
             SeatName: convertLetter(row) + col,
           });
+          this.totalAmountSelected +=typeSeat==1? this.normalCost:this.vipCost;
         }
       }
 
@@ -806,6 +819,30 @@ export default {
       position: absolute;
       left: 20px;
       top: 65%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      padding: 10px;
+      border-radius: 4px;
+      .note {
+        font-size: 14px;
+        color: #111;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .bold {
+        font-weight: 600;
+        color: #111;
+      }
+    }
+
+    .checkout-total {
+      -webkit-user-select: none;
+      user-select: none;
+      position: absolute;
+      left: 20px;
+      top: 80%;
+      width: 180px;
       transform: translateY(-50%);
       font-size: 12px;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

@@ -278,7 +278,9 @@ const i18n = createI18n({
       ExportTicket: "Export ticket",
       Export: "Export",
       BookTickets: "Book tickets",
-      IsPrintBookingTicket: "Do you want to print the ticket you just booked?"
+      IsPrintBookingTicket: "Do you want to print the ticket you just booked?",
+      TotalAmount: "Total amount"
+
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -552,7 +554,9 @@ const i18n = createI18n({
       ExportTicket: "Xuất vé",
       Export: "Xuất",
       BookTickets: "Đặt vé",
-      IsPrintBookingTicket: "Bạn có muốn thực hiện in vé vừa đặt?"
+      IsPrintBookingTicket: "Bạn có muốn thực hiện in vé vừa đặt?",
+      TotalAmount: "Tổng tiền"
+
     },
   },
 });
