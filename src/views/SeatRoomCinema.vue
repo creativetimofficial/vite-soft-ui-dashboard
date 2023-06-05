@@ -91,9 +91,7 @@
       },
   
       isSelecting(row, col) {
-        console.log(
-          this.seatsSelecting.find((x) => x.rowSeat == row && x.colSeat == col)
-        );
+
         return this.seatsSelecting.find(
           (x) => x.rowSeat == row && x.colSeat == col
         );

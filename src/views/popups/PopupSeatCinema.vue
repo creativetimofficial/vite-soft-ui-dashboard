@@ -99,7 +99,7 @@
       </div>
 
       <div class="checkout-total">
-        <div class="note">{{ $t("Statistic") }}</div>
+        <div class="note">{{ $t("Payment") }}</div>
         <div class="seat-selecting">
           {{ $t("TotalAmount") }}: <span class="bold">{{ formatNumber(totalAmountSelected) + " VNĐ" }}</span>
         </div>
@@ -411,7 +411,6 @@ export default {
 
       this.$api.get("/Ticket/GetListTemplateTicket").then((data) => {
         me.templateDataTicket = data;
-        console.log(data);
         this.$store.state.isShowLoading = false;
       });
     },
