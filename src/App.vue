@@ -61,7 +61,6 @@ export default {
       const decodedToken = jwt.decode(token);
       this.$store.state.role = jwt.decode(token).role;
       this.$store.state.thisAccountName = jwt.decode(token).name;
-      console.log( this.$store.state.thisAccountName);
       this.$store.state.isLoggedIn = true;
       this.$store.state.cinemaName = decodedToken.cinemaName;
     }

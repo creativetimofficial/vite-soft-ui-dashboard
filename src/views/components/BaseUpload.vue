@@ -40,7 +40,6 @@ export default {
      * @param {} e 
      */
     onFileChange(e) {
-      console.log(e.target.files);
       this.fileUploader(e);
     },
 
@@ -52,7 +51,6 @@ export default {
       let me = this;
       let files = e.target.files;
       this.file = files[0];
-      console.log(this.file);
       const reader = new FileReader();
       reader.readAsDataURL(this.file);
 
@@ -76,7 +74,6 @@ export default {
           body: image
         });
 
-        console.log('Image saved to public folder.');
       };
 
       reader.readAsArrayBuffer(file);
