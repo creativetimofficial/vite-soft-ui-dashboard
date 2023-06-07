@@ -35,7 +35,7 @@
                     <label>{{ $t('password') }}</label>
                     <vsud-input
                       type="password"
-                      placeholder="Password"
+                      :placeholder="$t('password')"
                       name="password"
                       v-model="password"
                       :id="'user_login'"

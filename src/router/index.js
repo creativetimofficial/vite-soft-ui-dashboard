@@ -21,6 +21,7 @@ import RoomCinema from "@/views/SeatRoomCinema.vue";
 import CinemaRoom from "@/views/CinemaRoom.vue";
 import Account from "@/views/Account.vue";
 import DictionaryMovie from "@/views/DictionaryMovie.vue";
+import CheckoutVnpay from "@/views/vnpay/CheckoutVnPay.vue";
 
 const routes = [
   {
@@ -143,6 +144,12 @@ const routes = [
     name: "Dictionary",
     meta: { requiresAuth: true },
 
+  },
+  {
+    path: "/create-payment",
+    name: "Checkout Vnpay",
+    component: CheckoutVnpay,
+    meta: { requiresAuth: true },
   },
   { path: '/:pathMatch(.*)*', redirect: "/movie-manage"},
 ];

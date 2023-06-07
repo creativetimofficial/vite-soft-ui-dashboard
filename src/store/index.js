@@ -46,7 +46,10 @@ export default createStore({
     isShowCommonSetting: false,
     isOpenPopupDetailLanguage: false,
     isShowCinemaSetting: false,
-    isShowCinemaInfoSetting: false
+    isShowCinemaInfoSetting: false,
+    customeNameCheckout: "",
+    phonenumberCheckout: "",
+    dataCheckout: []
     
   },
   mutations: {
