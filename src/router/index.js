@@ -22,6 +22,7 @@ import CinemaRoom from "@/views/CinemaRoom.vue";
 import Account from "@/views/Account.vue";
 import DictionaryMovie from "@/views/DictionaryMovie.vue";
 import CheckoutVnpay from "@/views/vnpay/CheckoutVnPay.vue";
+import CheckoutFailed from "@/views/vnpay/CheckoutFailed.vue";
 
 const routes = [
   {
@@ -150,6 +151,11 @@ const routes = [
     name: "Checkout Vnpay",
     component: CheckoutVnpay,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/checkout-failed",
+    name: "Checkout Failed",
+    component: CheckoutFailed,
   },
   { path: '/:pathMatch(.*)*', redirect: "/movie-manage"},
 ];

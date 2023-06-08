@@ -101,7 +101,10 @@
       <div class="checkout-total">
         <div class="note">{{ $t("Payment") }}</div>
         <div class="seat-selecting">
-          {{ $t("TotalAmount") }}: <span class="bold">{{ formatNumber(totalAmountSelected) + " VNĐ" }}</span>
+          {{ $t("TotalAmount") }}:
+          <span class="bold">{{
+            formatNumber(totalAmountSelected) + " VNĐ"
+          }}</span>
         </div>
       </div>
 
@@ -250,7 +253,11 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { listSeat, convertLetter } from "@/constants/constantsdefaults";
 import BaseButton from "@/views/components/BaseButton.vue";
-import { convertDateFormat, convertTimeFormat,formatNumber } from "@/common/commonFunc";
+import {
+  convertDateFormat,
+  convertTimeFormat,
+  formatNumber,
+} from "@/common/commonFunc";
 import BaseTicketCard from "../components/BaseTicketCard.vue";
 
 export default {
@@ -260,7 +267,8 @@ export default {
       listSeat,
       convertLetter,
       convertDateFormat,
-      convertTimeFormat,formatNumber
+      convertTimeFormat,
+      formatNumber,
     };
   },
   components: { BaseButton, BaseTicketCard },
@@ -327,8 +335,7 @@ export default {
       isShowDialogPrint: false,
       roomCodePrint: "",
       templateDataTicket: [],
-      totalAmountSelected: 0
-
+      totalAmountSelected: 0,
     };
   },
   methods: {
@@ -375,7 +382,6 @@ export default {
       this.loadDataSeat(this.roomCinmeIDSelected);
       this.isShowDialogPrint = false;
       this.$store.state.isShowLoading = false;
-
     },
 
     filterSearch() {
@@ -504,8 +510,8 @@ export default {
           this.seatsSelecting = this.seatsSelecting.filter(
             (item) => item.rowSeat !== row || item.colSeat !== col
           );
-          this.totalAmountSelected -=typeSeat==1? this.normalCost:this.vipCost;
-
+          this.totalAmountSelected -=
+            typeSeat == 1 ? this.normalCost : this.vipCost;
         } else {
           this.seatsSelecting.push({
             rowSeat: row,
@@ -514,7 +520,8 @@ export default {
             Type: typeSeat,
             SeatName: convertLetter(row) + col,
           });
-          this.totalAmountSelected +=typeSeat==1? this.normalCost:this.vipCost;
+          this.totalAmountSelected +=
+            typeSeat == 1 ? this.normalCost : this.vipCost;
         }
       }
 
@@ -560,6 +567,27 @@ export default {
         this.roomCodePrint = roomCode;
       }
 
+      this.$store.state.dataCheckout.history = {
+        movieID: me.idMovie,
+        roomCinemaID: me.roomCinmeIDSelected,
+        customerName: cusName,
+        phoneNumber: phoneNum,
+        templateTimeCode: templateTimeCode,
+        time: tempTime,
+        movieName: me.nameMovie,
+        showDate: postDate,
+        dataTicket: JSON.stringify(me.seatsSelecting),
+        createdBy: me.$store.state.accountName,
+        roomCode: roomCode,
+      };
+
+      this.$store.state.dataCheckout.seat = me.seatsSelecting;
+      this.$store.state.dataCheckout.ticket = {
+        normalCost: this.normalCost,
+        vipCost: this.vipCost,
+        totalAmount: this.totalAmountSelected
+      }
+
       this.$api.post("/History/InsertIntoHistory", {
         movieID: me.idMovie,
         roomCinemaID: me.roomCinmeIDSelected,
@@ -581,6 +609,8 @@ export default {
           this.isShowDialogBooking = true;
           // me.loadDataSeat(me.roomCinmeIDSelected);
         });
+
+        console.log(this.$store.state.dataCheckout);
     },
 
     closePopup() {

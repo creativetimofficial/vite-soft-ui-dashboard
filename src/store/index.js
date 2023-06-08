@@ -49,7 +49,7 @@ export default createStore({
     isShowCinemaInfoSetting: false,
     customeNameCheckout: "",
     phonenumberCheckout: "",
-    dataCheckout: []
+    dataCheckout: {}
     
   },
   mutations: {

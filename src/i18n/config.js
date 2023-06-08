@@ -279,7 +279,16 @@ const i18n = createI18n({
       Export: "Export",
       BookTickets: "Book tickets",
       IsPrintBookingTicket: "Do you want to print the ticket you just booked?",
-      TotalAmount: "Total amount"
+      TotalAmount: "Total amount",
+      Homepage: "Home",
+      CustomerName: "Customer Name",
+      MovieNamel: "Movie name",
+      SeatCode: "Seat Code",
+      Selectapaymentmethod: "Select a payment method",
+      Domesticcardandbankaccount: "Domestic card and bank account",
+      Internationalpaymentcards: "International payment cards",
+      Electronicwallet: "Electronic wallet",
+      Checkout: "Checkout"
 
     },
     vi: {
@@ -555,8 +564,16 @@ const i18n = createI18n({
       Export: "Xuất",
       BookTickets: "Đặt vé",
       IsPrintBookingTicket: "Bạn có muốn thực hiện in vé vừa đặt?",
-      TotalAmount: "Tổng tiền"
-
+      TotalAmount: "Tổng tiền",
+      Homepage: "Trang chủ",
+      CustomerName: "Tên khách hàng",
+      MovieNamel: "Tên phim",
+      SeatCode: "Mã ghế",
+      Selectapaymentmethod: "Chọn phương thức thanh toán",
+      Domesticcardandbankaccount: "Thẻ nội địa và tài khoản ngân hàng",
+      Internationalpaymentcards: "Thẻ thanh toán quốc tế",
+      Electronicwallet: "Ví điện tử",
+      Checkout: "Thanh toán"
     },
   },
 });
