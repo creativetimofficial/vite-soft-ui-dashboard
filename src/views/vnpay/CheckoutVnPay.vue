@@ -70,7 +70,7 @@
         <div class="payment-title">{{ $t("Selectapaymentmethod") }}</div>
         <div class="payment-chose">
           <el-radio-group v-model="bankCode">
-            <el-radio label="" size="large" border>
+            <el-radio label="VNPAYQR" size="large" border>
               <div class="d-flex align-items-center justify-content-between">
                 <div class="qr-code vnpay-radio">
                   Ứng dụng thanh toán hỗ trợ
@@ -85,7 +85,7 @@
                 </div>
               </div>
             </el-radio>
-            <el-radio label="VNPAYQR" size="large" border>
+            <el-radio label="VNBANK" size="large" border>
               <div class="d-flex align-items-center justify-content-between">
                 <div class="qr-code vnpay-radio">
                   {{ $t("Domesticcardandbankaccount") }}
@@ -95,7 +95,7 @@
                 </div>
               </div>
             </el-radio>
-            <el-radio label="VNBANK" size="large" border>
+            <el-radio label="INTCARD" size="large" border>
               <div class="d-flex align-items-center justify-content-between">
                 <div class="qr-code vnpay-radio">
                   {{ $t("Internationalpaymentcards") }}
@@ -105,7 +105,7 @@
                 </div>
               </div>
             </el-radio>
-            <el-radio label="INTCARD" size="large" border>
+            <el-radio label="" size="large" border>
               <div class="d-flex align-items-center justify-content-between">
                 <div class="qr-code vnpay-radio">
                   {{ $t("Electronicwallet") }}
@@ -123,7 +123,7 @@
           </el-radio-group>
         </div>
         <div class="payment-footer">
-          <el-button type="primary" :icon="Money">{{
+          <el-button type="primary" :icon="Money" @click="checkoutVnpay()">{{
             $t("Checkout")
           }}</el-button>
         </div>
@@ -143,8 +143,9 @@
 const body = document.getElementsByTagName("body")[0];
 import router from "@/router/index";
 import vnpayImage from "@/assets/img/Logo-VNPAY-QR.png";
-import axios from "axios";
+
 import urlConfig from "@/vnpay/config/default.json";
+
 import {
   convertDateFormat,
   convertDateString,
@@ -178,67 +179,52 @@ export default {
   },
   data() {
     return {
-      dataCheckout: {
-        history: {
-          movieID: "cef32a5e-21e4-4633-b241-9fab2fab1939",
-          roomCinemaID: "30c024e4-01e6-11ee-b204-0242ac130002",
-          customerName: "",
-          phoneNumber: "",
-          templateTimeCode: "01",
-          time: "17:30:00",
-          movieName: "NHỮNG KẺ THAO TÚNG",
-          showDate: "2023-06-03T00:00:00",
-          dataTicket:
-            '[{"rowSeat":3,"colSeat":6,"roomCinemaID":"30c024e4-01e6-11ee-b204-0242ac130002","Type":1,"SeatName":"C6"},{"rowSeat":3,"colSeat":5,"roomCinemaID":"30c024e4-01e6-11ee-b204-0242ac130002","Type":1,"SeatName":"C5"}]',
-          createdBy: "",
-          roomCode: "A4",
-        },
-        seat: [
-          {
-            rowSeat: 3,
-            colSeat: 6,
-            roomCinemaID: "30c024e4-01e6-11ee-b204-0242ac130002",
-            Type: 1,
-            SeatName: "C6",
-          },
-          {
-            rowSeat: 3,
-            colSeat: 5,
-            roomCinemaID: "30c024e4-01e6-11ee-b204-0242ac130002",
-            Type: 1,
-            SeatName: "C5",
-          },
-        ],
-        ticket: {
-          normalCost: 10000,
-          vipCost: 10000,
-          totalAmount: 20000,
-        },
-      },
-      bankCode: "",
+      dataCheckout: {},
+      bankCode: "VNPAYQR",
       vnpayConfig: urlConfig,
+      urlCreatePayment: "",
     };
   },
   methods: {
     checkData() {
-      //   if (!this.$store.state.dataCheckout.history) {
-      //     console.log(1);
-      //     router.push("./checkout-failed");
-      //   }else{
-      //   }
+        if (!this.$store.state.dataCheckout.history) {
+          router.push("./checkout-failed");
+        }else{
+          this.dataCheckout.history = this.$store.state.dataCheckout.history;
+          this.dataCheckout.seat = this.$store.state.dataCheckout.seat;
+          this.dataCheckout.ticket = this.$store.state.dataCheckout.ticket;
+        }
     },
     rollbackHome() {
       router.push("./");
     },
-    buildUrlCheckout(){
-        process.env.TZ = 'Asia/Ho_Chi_Minh';
-        let date = new Date();
-    let createDate = moment(date).format('YYYYMMDDHHmmss');
-    let ipAddr = req.headers['x-forwarded-for'] ||
-        req.connection.remoteAddress ||
-        req.socket.remoteAddress ||
-        req.connection.socket.remoteAddress;
-    }
+
+
+    checkoutVnpay(){
+      let me = this;
+      this.$api
+        .post("/VnPay/GetUrlCreatePayment", {
+          orderType: "other",
+          amount: this.dataCheckout.ticket.totalAmount,
+          orderDescription: "THANH TOAN VE",
+          name: "GD",
+          bankCode: this.bankCode
+        })
+        .then((x) => {
+          me.urlCreatePayment = x;
+          window.location.href = this.urlCreatePayment;
+        });
+    },
+    getDateMomentString() {
+      let date = new Date();
+
+      let day = ("0" + date.getDate()).slice(-2); // Lấy ngày trong tháng và thêm '0' nếu cần
+      let hour = ("0" + date.getHours()).slice(-2); // Lấy giờ trong ngày và thêm '0' nếu cần
+      let minute = ("0" + date.getMinutes()).slice(-2); // Lấy phút trong giờ và thêm '0' nếu cần
+      let second = ("0" + date.getSeconds()).slice(-2); // Lấy giây trong phút và thêm '0' nếu cần
+
+      return day + hour + minute + second;
+    },
   },
 
   beforeMount() {

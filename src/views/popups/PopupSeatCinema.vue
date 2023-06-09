@@ -258,6 +258,8 @@ import {
   convertTimeFormat,
   formatNumber,
 } from "@/common/commonFunc";
+import router from "@/router/index";
+
 import BaseTicketCard from "../components/BaseTicketCard.vue";
 
 export default {
@@ -274,6 +276,7 @@ export default {
   components: { BaseButton, BaseTicketCard },
   created() {
     let me = this;
+    localStorage.removeItem("checkout");
     this.$store.state.isShowLoading = true;
     this.$api
       .post("/Movie/GetListRoomCinemaByMovieID", {
@@ -588,27 +591,31 @@ export default {
         totalAmount: this.totalAmountSelected
       }
 
-      this.$api.post("/History/InsertIntoHistory", {
-        movieID: me.idMovie,
-        roomCinemaID: me.roomCinmeIDSelected,
-        customerName: cusName,
-        phoneNumber: phoneNum,
-        templateTimeCode: templateTimeCode,
-        time: tempTime,
-        movieName: me.nameMovie,
-        showDate: postDate,
-        dataTicket: JSON.stringify(me.seatsSelecting),
-        createdBy: me.$store.state.accountName,
-        roomCode: roomCode,
-      });
+      localStorage.setItem("checkout",JSON.stringify(this.$store.state.dataCheckout));
 
-      this.$api
-        .post("/Movie/UpdateSeatRoomCinema", me.seatsSelecting)
-        .then(() => {
-          // me.$store.dispatch("showToast", this.$t("Ticketbookingsuccessful"));
-          this.isShowDialogBooking = true;
-          // me.loadDataSeat(me.roomCinmeIDSelected);
-        });
+      router.push("./create-payment")
+
+      // this.$api.post("/History/InsertIntoHistory", {
+      //   movieID: me.idMovie,
+      //   roomCinemaID: me.roomCinmeIDSelected,
+      //   customerName: cusName,
+      //   phoneNumber: phoneNum,
+      //   templateTimeCode: templateTimeCode,
+      //   time: tempTime,
+      //   movieName: me.nameMovie,
+      //   showDate: postDate,
+      //   dataTicket: JSON.stringify(me.seatsSelecting),
+      //   createdBy: me.$store.state.accountName,
+      //   roomCode: roomCode,
+      // });
+
+      // this.$api
+      //   .post("/Movie/UpdateSeatRoomCinema", me.seatsSelecting)
+      //   .then(() => {
+      //     // me.$store.dispatch("showToast", this.$t("Ticketbookingsuccessful"));
+      //     this.isShowDialogBooking = true;
+      //     // me.loadDataSeat(me.roomCinmeIDSelected);
+      //   });
 
         console.log(this.$store.state.dataCheckout);
     },

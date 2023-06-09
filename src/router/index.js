@@ -23,6 +23,7 @@ import Account from "@/views/Account.vue";
 import DictionaryMovie from "@/views/DictionaryMovie.vue";
 import CheckoutVnpay from "@/views/vnpay/CheckoutVnPay.vue";
 import CheckoutFailed from "@/views/vnpay/CheckoutFailed.vue";
+import CheckoutSuccessfully from "@/views/vnpay/CheckoutSuccessfully.vue";
 
 const routes = [
   {
@@ -157,6 +158,11 @@ const routes = [
     name: "Checkout Failed",
     component: CheckoutFailed,
   },
+  {
+    path: "/checkout-success",
+    name: "Checkout Success",
+    component: CheckoutSuccessfully,
+  },
   { path: '/:pathMatch(.*)*', redirect: "/movie-manage"},
 ];
 
@@ -184,10 +190,10 @@ router.beforeEach((to, from, next) => {
 
 // Hàm check login với token
 function isLoggedIn() {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   store.state.isLoggedIn = true;
 
-  // Kiểm tra xem token đã được lưu trong sessionStorage chưa
+  // Kiểm tra xem token đã được lưu trong localStorage chưa
   if (token) {
     // Giải mã token để kiểm tra tính hợp lệ của nó
     const decodedToken = jwt.decode(token);
@@ -197,22 +203,22 @@ function isLoggedIn() {
     // Kiểm tra xem token có hết hạn hay không
     const expirationDate = new Date(decodedToken.exp * 1000);
     if (expirationDate <= new Date()) {
-      // Nếu token đã hết hạn, xóa nó khỏi sessionStorage và trả về false
-      sessionStorage.removeItem("token");
+      // Nếu token đã hết hạn, xóa nó khỏi localStorage và trả về false
+      localStorage.removeItem("token");
       return false;
     } else {
       // Nếu token hợp lệ, trả về true
       return true;
     }
   } else {
-    // Nếu token không tồn tại trong sessionStorage, trả về false
+    // Nếu token không tồn tại trong localStorage, trả về false
     return false;
   }
 }
 
 // Hàm check role
 function requireAdmin(to, from, next) {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   if (!isLoggedIn(token)) {
     next("/sign-in");

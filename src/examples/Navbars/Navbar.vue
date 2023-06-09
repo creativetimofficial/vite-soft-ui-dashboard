@@ -72,7 +72,7 @@
           </li>
           <li
             class="px-3 nav-item d-flex align-items-center"
-            v-if="sessionStorage"
+            v-if="localStorage"
           >
             <a
               class="p-0 nav-link"
@@ -104,8 +104,8 @@ export default {
   },
   mounted() {
     let me = this;
-    if (jwt.decode(sessionStorage.getItem("token"))) {
-      this.fullName = jwt.decode(sessionStorage.getItem("token")).name;
+    if (jwt.decode(localStorage.getItem("token"))) {
+      this.fullName = jwt.decode(localStorage.getItem("token")).name;
     }
   },
   props: {
@@ -145,9 +145,9 @@ export default {
     let me = this;
     this.minNav;
     // this.loadListCinema();
-    if (sessionStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       this.cinemaSelected = jwt.decode(
-        sessionStorage.getItem("token")
+        localStorage.getItem("token")
       ).cinemaName;
     }
   },
