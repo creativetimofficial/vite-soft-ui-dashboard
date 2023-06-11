@@ -132,6 +132,10 @@ export default {
       );
     },
   },
+  beforeUnmount(){
+    this.$store.state.isOpenPopupSeat = false;
+    this.$store.state.isOpenPopupAddShowtime = false;
+  }
 };
 </script>
 <style lang="scss">
