@@ -15,32 +15,44 @@
       <div class="main-empty" v-if="dataSource.length < 1">
         {{ $t("Nodata") }}
       </div>
-      <div
-        class="showtime-movie"
-        v-for="item in dataSource"
-        :key="item.movieID"
-      >
-        <div
-          class="card-movie"
-          @click="showPopup(item.movieID)"
-          v-show="isShowMovie(item)"
+      <div class="showtime-item-container">
+        <el-row
+          :gutter="24"
+          v-for="(group, index) in groupedItems"
+          :key="index"
         >
-          <base-image-download :linkImg="item.posterLink"></base-image-download>
-          <div class="feature-container">
-            <base-button
-              :classButton="'button-blue'"
-              :titleButton="$t('Morescreenings')"
-              @bindEvent="openPopupAddShowTime(item.movieID, item.movieName)"
-            ></base-button>
-            <div class="mt-2"></div>
-            <base-button
-              :classButton="'button-blue'"
-              :titleButton="$t('Seeshowtimes')"
-              @bindEvent="openPopupSeatCinema(item.movieID, item.movieName)"
-            ></base-button>
-          </div>
-          <div class="name-movie">{{ item.movieName }}</div>
-        </div>
+          <el-col :span="6" v-for="item in group" :key="item.movieID">
+            <div class="showtime-movie">
+              <div
+                class="card-movie"
+                @click="showPopup(item.movieID)"
+                v-show="isShowMovie(item)"
+              >
+                <base-image-download
+                  :linkImg="item.posterLink"
+                ></base-image-download>
+                <div class="feature-container">
+                  <base-button
+                    :classButton="'button-blue'"
+                    :titleButton="$t('Morescreenings')"
+                    @bindEvent="
+                      openPopupAddShowTime(item.movieID, item.movieName)
+                    "
+                  ></base-button>
+                  <div class="mt-2"></div>
+                  <base-button
+                    :classButton="'button-blue'"
+                    :titleButton="$t('Seeshowtimes')"
+                    @bindEvent="
+                      openPopupSeatCinema(item.movieID, item.movieName)
+                    "
+                  ></base-button>
+                </div>
+                <div class="name-movie">{{ item.movieName }}</div>
+              </div>
+            </div></el-col
+          >
+        </el-row>
       </div>
     </div>
   </div>
@@ -54,7 +66,6 @@
     :nameMovie="movieNameSelected"
     :idMovie="movieIDSelected"
   ></popup-add-showtime>
-
 </template>
 
 <script>
@@ -88,13 +99,32 @@ export default {
     BaseImageDownload,
     PopupAddShowtime,
   },
+  computed: {
+    groupedItems() {
+      const groupSize = 4; // Số lượng bản ghi trong mỗi nhóm
+      const grouped = [];
+      let group = [];
+
+      this.dataSource.forEach((item, index) => {
+        group.push(item);
+        if (
+          (index + 1) % groupSize === 0 ||
+          index === this.dataSource.length - 1
+        ) {
+          grouped.push(group);
+          group = [];
+        }
+      });
+
+      return grouped;
+    },
+  },
   created() {
     let me = this;
     this.$store.state.isShowLoading = true;
     this.$api.post("/Movie/GetListMovie", { TypeFilter: 1 }).then((data) => {
       me.dataSource = data;
-    me.$store.state.isShowLoading = false;
-
+      me.$store.state.isShowLoading = false;
     });
   },
   data() {
@@ -132,15 +162,17 @@ export default {
       );
     },
   },
-  beforeUnmount(){
+  beforeUnmount() {
     this.$store.state.isOpenPopupSeat = false;
     this.$store.state.isOpenPopupAddShowtime = false;
-  }
+  },
 };
 </script>
 <style lang="scss">
 .showtime-manage {
   .showtime-header {
+    min-width: 1400px;
+
     .header-left {
       height: 60px;
       display: flex;
@@ -180,11 +212,9 @@ export default {
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background: #fff;
     border-radius: 10px;
-    padding: 20px 10px;
+    padding: 40px 20px;
     margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    min-width: 500px;
+    min-width: 1400px;
 
     .showtime-movie {
       .card-movie {
@@ -195,7 +225,10 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        padding: 10px 0 5px 0;
         width: 250px;
         .posterLink {
           height: 250px;
