@@ -288,8 +288,10 @@ const i18n = createI18n({
       Domesticcardandbankaccount: "Domestic card and bank account",
       Internationalpaymentcards: "International payment cards",
       Electronicwallet: "Electronic wallet",
-      Checkout: "Checkout"
-
+      Checkout: "Checkout",
+      Cash: "Cash",
+      Card: "Card",
+      Transfer: "Transfer"
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -573,7 +575,10 @@ const i18n = createI18n({
       Domesticcardandbankaccount: "Thẻ nội địa và tài khoản ngân hàng",
       Internationalpaymentcards: "Thẻ thanh toán quốc tế",
       Electronicwallet: "Ví điện tử",
-      Checkout: "Thanh toán"
+      Checkout: "Thanh toán",
+      Cash: "Tiền mặt",
+      Card: "Thẻ",
+      Transfer: "Chuyển khoản"
     },
   },
 });

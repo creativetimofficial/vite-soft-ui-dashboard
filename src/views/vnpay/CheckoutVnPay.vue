@@ -248,6 +248,9 @@ export default {
 </script>
 <style lang="scss">
 .vnpay-checkout {
+  .el-button {
+        font-weight: 600;
+      }
   color: #111;
   .checkout-header {
     height: 80px;

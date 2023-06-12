@@ -160,14 +160,35 @@
           @bindEvent="closePopup()"
         ></base-button>
         <div class="ml-2"></div>
-        <base-button
+        <el-dropdown :disabled="!seatsSelecting.length">
+          <el-button type="primary">
+            {{ $t("Checkout")
+            }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item
+                style="font-weight: 600"
+                @click="SaveState(1)"
+                >{{ $t("Cash") }}</el-dropdown-item
+              >
+              <el-dropdown-item style="font-weight: 600" @click="SaveState(2)"
+                >{{ $t("Card") }} | {{ $t("Transfer") }}</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+        <!-- <el-button type="primary" @click="SaveState()" :disabled="!seatsSelecting.length">Primary</el-button>
+        <div class="ml-2"></div>
+        <el-button type="primary" @click="SaveState()" :disabled="!seatsSelecting.length" plain>Primary</el-button> -->
+        <!-- <base-button
           :classButton="[
             'button-blue',
             seatsSelecting.length ? '' : ' button-none',
           ]"
           :titleButton="$t('BookTickets')"
           @bindEvent="SaveState()"
-        ></base-button>
+        ></base-button> -->
         <div class="ml-2"></div>
       </div>
     </div>
@@ -537,7 +558,7 @@ export default {
       );
     },
 
-    SaveState() {
+    SaveState(id) {
       let me = this;
       let cusName = "";
       let phoneNum = "";
@@ -570,54 +591,56 @@ export default {
         this.roomCodePrint = roomCode;
       }
 
-      this.$store.state.dataCheckout.history = {
-        movieID: me.idMovie,
-        roomCinemaID: me.roomCinmeIDSelected,
-        customerName: cusName,
-        phoneNumber: phoneNum,
-        templateTimeCode: templateTimeCode,
-        time: tempTime,
-        movieName: me.nameMovie,
-        showDate: postDate,
-        dataTicket: JSON.stringify(me.seatsSelecting),
-        createdBy: me.$store.state.accountName,
-        roomCode: roomCode,
-      };
+      if (id == 2) {
+        this.$store.state.dataCheckout.history = {
+          movieID: me.idMovie,
+          roomCinemaID: me.roomCinmeIDSelected,
+          customerName: cusName,
+          phoneNumber: phoneNum,
+          templateTimeCode: templateTimeCode,
+          time: tempTime,
+          movieName: me.nameMovie,
+          showDate: postDate,
+          dataTicket: JSON.stringify(me.seatsSelecting),
+          createdBy: me.$store.state.accountName,
+          roomCode: roomCode,
+        };
 
-      this.$store.state.dataCheckout.seat = me.seatsSelecting;
-      this.$store.state.dataCheckout.ticket = {
-        normalCost: this.normalCost,
-        vipCost: this.vipCost,
-        totalAmount: this.totalAmountSelected
+        this.$store.state.dataCheckout.seat = me.seatsSelecting;
+        this.$store.state.dataCheckout.ticket = {
+          normalCost: this.normalCost,
+          vipCost: this.vipCost,
+          totalAmount: this.totalAmountSelected,
+        };
+
+        localStorage.setItem(
+          "checkout",
+          JSON.stringify(this.$store.state.dataCheckout)
+        );
+        router.push("./create-payment");
+      } else {
+        this.$api.post("/History/InsertIntoHistory", {
+          movieID: me.idMovie,
+          roomCinemaID: me.roomCinmeIDSelected,
+          customerName: cusName,
+          phoneNumber: phoneNum,
+          templateTimeCode: templateTimeCode,
+          time: tempTime,
+          movieName: me.nameMovie,
+          showDate: postDate,
+          dataTicket: JSON.stringify(me.seatsSelecting),
+          createdBy: me.$store.state.accountName,
+          roomCode: roomCode,
+        });
+
+        this.$api
+          .post("/Movie/UpdateSeatRoomCinema", me.seatsSelecting)
+          .then(() => {
+            // me.$store.dispatch("showToast", this.$t("Ticketbookingsuccessful"));
+            this.isShowDialogBooking = true;
+            // me.loadDataSeat(me.roomCinmeIDSelected);
+          });
       }
-
-      localStorage.setItem("checkout",JSON.stringify(this.$store.state.dataCheckout));
-
-      router.push("./create-payment")
-
-      // this.$api.post("/History/InsertIntoHistory", {
-      //   movieID: me.idMovie,
-      //   roomCinemaID: me.roomCinmeIDSelected,
-      //   customerName: cusName,
-      //   phoneNumber: phoneNum,
-      //   templateTimeCode: templateTimeCode,
-      //   time: tempTime,
-      //   movieName: me.nameMovie,
-      //   showDate: postDate,
-      //   dataTicket: JSON.stringify(me.seatsSelecting),
-      //   createdBy: me.$store.state.accountName,
-      //   roomCode: roomCode,
-      // });
-
-      // this.$api
-      //   .post("/Movie/UpdateSeatRoomCinema", me.seatsSelecting)
-      //   .then(() => {
-      //     // me.$store.dispatch("showToast", this.$t("Ticketbookingsuccessful"));
-      //     this.isShowDialogBooking = true;
-      //     // me.loadDataSeat(me.roomCinmeIDSelected);
-      //   });
-
-        console.log(this.$store.state.dataCheckout);
     },
 
     closePopup() {
@@ -926,6 +949,13 @@ export default {
 
     .footer-right {
       display: flex;
+      .el-button--primary {
+        height: 36px;
+      }
+
+      .el-button {
+        font-weight: 600;
+      }
     }
     position: absolute;
     right: 0;
