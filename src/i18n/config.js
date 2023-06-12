@@ -291,7 +291,9 @@ const i18n = createI18n({
       Checkout: "Checkout",
       Cash: "Cash",
       Card: "Card",
-      Transfer: "Transfer"
+      Transfer: "Transfer",
+      VIP: "VIP"
+
     },
     vi: {
       welcome: "Chào mừng trở lại",
@@ -578,7 +580,8 @@ const i18n = createI18n({
       Checkout: "Thanh toán",
       Cash: "Tiền mặt",
       Card: "Thẻ",
-      Transfer: "Chuyển khoản"
+      Transfer: "Chuyển khoản",
+      VIP: "VIP"
     },
   },
 });

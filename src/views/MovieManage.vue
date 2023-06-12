@@ -2,19 +2,13 @@
   <div class="movie-manage">
     <div class="movie-manage-header">
       <div class="header-left">
-        <!-- <vsud-input
-          type="text"
-          :placeholder="$t('Search')"
-          name="search_movie"
-          v-model="searchValue"
-          :id="'search_movie'"
-        /> -->
         <el-input
           v-model="searchValue"
           class="w-200 m-2"
           size="large"
           :placeholder="$t('Search')"
           :suffix-icon="Search"
+          @input="searchMovie"
         />
         <div class="filter-movie">
           <el-select
@@ -51,13 +45,9 @@
             :gutter="24"
             v-for="(group, index) in groupedItems"
             :key="index"
-            
           >
             <el-col :span="8" v-for="item in group" :key="item.movieID">
-              <div
-                class="movie-item"
-                v-show="isShowMovie(item)"
-              >
+              <div class="movie-item" >
                 <base-image-download
                   :linkImg="item.posterLink"
                   v-if="!isOpenTrailer(item.movieID)"
@@ -318,6 +308,7 @@ export default {
       .post("/Movie/GetListMovie", { TypeFilter: me.typeFilter })
       .then((data) => {
         me.dataSource = data;
+        me.dataSourceTemp = data;
         this.$store.state.isShowLoading = false;
       });
   },
@@ -325,6 +316,7 @@ export default {
     return {
       dataField: [],
       dataSource: [],
+      dataSourceTemp: [],
       itemsSelected: {},
       searchValue: "",
       rowSelected: "",
@@ -398,6 +390,8 @@ export default {
         .post("/Movie/GetListMovie", { TypeFilter: me.typeFilter })
         .then((data) => {
           me.dataSource = data;
+          me.dataSourceTemp = data;
+          me.searchMovie();
           me.$store.state.isShowLoading = false;
         });
     },
@@ -415,6 +409,16 @@ export default {
       this.contentSelected = content;
       this.$store.state.isOpenPopupShowContent = true;
     },
+
+    searchMovie(){
+      if(this.searchValue){
+        this.dataSource = this.dataSource.filter(item=>item.movieName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        item.movieCode.toLowerCase().includes(this.searchValue.toLowerCase()));
+      }else{
+        this.dataSource = this.dataSourceTemp;
+      }
+
+    }
   },
 };
 </script>

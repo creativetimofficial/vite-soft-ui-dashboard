@@ -8,6 +8,7 @@
           size="large"
           :placeholder="$t('Search')"
           :suffix-icon="Search"
+          @input="searchMovie"
         />
       </div>
     </div>
@@ -17,17 +18,13 @@
       </div>
       <div class="showtime-item-container">
         <el-row
-          :gutter="24"
+          :gutter="25"
           v-for="(group, index) in groupedItems"
           :key="index"
         >
-          <el-col :span="6" v-for="item in group" :key="item.movieID">
+          <el-col :span="5" class="width-5" v-for="item in group" :key="item.movieID">
             <div class="showtime-movie">
-              <div
-                class="card-movie"
-                @click="showPopup(item.movieID)"
-                v-show="isShowMovie(item)"
-              >
+              <div class="card-movie" @click="showPopup(item.movieID)">
                 <base-image-download
                   :linkImg="item.posterLink"
                 ></base-image-download>
@@ -101,7 +98,7 @@ export default {
   },
   computed: {
     groupedItems() {
-      const groupSize = 4; // Số lượng bản ghi trong mỗi nhóm
+      const groupSize = 5; // Số lượng bản ghi trong mỗi nhóm
       const grouped = [];
       let group = [];
 
@@ -124,6 +121,8 @@ export default {
     this.$store.state.isShowLoading = true;
     this.$api.post("/Movie/GetListMovie", { TypeFilter: 1 }).then((data) => {
       me.dataSource = data;
+      me.dataSourceTemp = data;
+
       me.$store.state.isShowLoading = false;
     });
   },
@@ -133,6 +132,7 @@ export default {
       dataSource: [],
       roomCinmeIDSelected: "ca589116-d5b2-11ed-a44f-907841e9040c",
       movieIDSelected: "",
+      dataSourceTemp: [],
       movieNameSelected: "",
       searchValue: "",
     };
@@ -140,8 +140,12 @@ export default {
   methods: {
     loadData() {
       let me = this;
+      this.$store.state.isShowLoading = true;
       this.$api.post("/Movie/GetListMovie", { TypeFilter: 0 }).then((data) => {
         me.dataSource = data;
+        me.dataSourceTemp = data;
+        me.searchMovie();
+        me.$store.state.isShowLoading = false;
       });
     },
     showPopup() {},
@@ -160,6 +164,21 @@ export default {
         item.movieName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
         item.movieCode.toLowerCase().includes(this.searchValue.toLowerCase())
       );
+    },
+    searchMovie() {
+      if (this.searchValue) {
+        this.dataSource = this.dataSource.filter(
+          (item) =>
+            item.movieName
+              .toLowerCase()
+              .includes(this.searchValue.toLowerCase()) ||
+            item.movieCode
+              .toLowerCase()
+              .includes(this.searchValue.toLowerCase())
+        );
+      } else {
+        this.dataSource = this.dataSourceTemp;
+      }
     },
   },
   beforeUnmount() {
@@ -207,12 +226,20 @@ export default {
   }
   padding: 30px 28px 0;
   .showtime-main {
+
+    .width-5 {
+      width: 20% !important;
+      &.el-col-5 {
+      width: 20% !important;
+        max-width: 20%!important;
+      }
+    }
     min-height: calc(100vh - 275px);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background: #fff;
     border-radius: 10px;
-    padding: 40px 20px;
+    padding: 20px 20px;
     margin-top: 30px;
     min-width: 1400px;
 

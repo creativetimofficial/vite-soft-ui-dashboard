@@ -180,6 +180,7 @@ export default {
     },
     createNewRoomCinema() {
       let me = this;
+      this.$store.state.isShowLoading = true;
       this.$api
         .post("/Movie/CreateNewRoomCinema", {
           movieID: me.idMovie,
@@ -188,6 +189,8 @@ export default {
           listTemplateTimeCode: me.dataMovie.selectTemplateCode,
         })
         .then(() => {
+          this.$store.state.isShowLoading = false;
+
           location.reload();
         });
     },

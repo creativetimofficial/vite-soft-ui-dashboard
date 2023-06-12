@@ -755,7 +755,8 @@ export default {
   }
 
   .seatroom-main {
-    height: calc(100vh - 230px);
+    height: calc(100vh - 240px);
+    overflow: auto;
     padding: 20px 200px;
     .screen-select-seat {
       .seat-container {

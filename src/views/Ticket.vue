@@ -8,88 +8,113 @@
           size="large"
           :placeholder="$t('Search')"
           :suffix-icon="Search"
+          @change="searchMovie"
         />
         <div class="container-radio">
-          <el-radio-group v-model="filterTicket">
-            <el-radio-button label="0">{{ $t('All') }}</el-radio-button>
-            <el-radio-button label="1">{{ $t('VIP') }}</el-radio-button>
-            <el-radio-button label="2">{{ $t('Normal') }}</el-radio-button>
+          <el-radio-group v-model="filterTicket" @change="searchMovie">
+            <el-radio-button label="0">{{ $t("All") }}</el-radio-button>
+            <el-radio-button label="1">{{ $t("VIP") }}</el-radio-button>
+            <el-radio-button label="2">{{ $t("Normal") }}</el-radio-button>
           </el-radio-group>
         </div>
       </div>
     </div>
     <div class="ticket-manage-main">
-      <div
-        class="ticket-container"
-        v-for="(item, index) in listTicket"
-        :key="index"
-        v-show="isShowTicket(item) && isFilterItem(item)"
-      >
-        <div class="ticket-item">
-          <div class="item-header">
-            <div class="name-cinema">{{ item.cinemaName }}</div>
-            <div class="address">{{ item.cinemaAddress }}</div>
-            <div class="mst">MST: {{ item.mst }}</div>
-            <div class="about">{{ item.about }}</div>
-          </div>
-          <div class="border-dash"></div>
-          <div class="item-main">
-            <div class="name-movie">{{ item.movieName }}</div>
-            <div class="code-movie">{{ $t("No") }}: {{ item.movieCode }}</div>
-            <div class="time-line">{{ $t("Timel") }}: {{ item.timeLine }}</div>
-            <div class="release-date">
-              {{ $t("Releasedate") }}: {{ convertDateFormat(item.releaseDate) }}
-            </div>
-            <div class="language">
-              {{ $t("Languagel") }}: {{ item.language }}
-            </div>
-          </div>
-          <div class="border-dash"></div>
-          <div class="item-footer">
-            <div class="cost">{{ $t("Cost") }}: {{ formatNumber(item.cost) }} VND (VAT)</div>
-            <input
-              type="text"
-              name="cost_ticket"
-              v-model="item.cost"
-              class="cost-ticket"
-              v-if="isShowingChange(item.templateTicketID)"
-            />
-            <div class="type">
-              {{ $t("SeatType") }}: {{ item.type == 1 ? $t("Normal") : "VIP" }}
-            </div>
-          </div>
-          <div class="item-feature" v-if="$store.state.role == 'admin'">
-            <div
-              class="item-change"
-              v-if="!isShowingChange(item.templateTicketID)"
-            >
-              <base-button
-                :classButton="'button-blue'"
-                :titleButton="$t('Exchangeprice')"
-                @bindEvent="showChangeMoney(item.templateTicketID, item.cost)"
-              ></base-button>
-            </div>
-            <div
-              class="item-changing"
-              v-if="isShowingChange(item.templateTicketID)"
-            >
-              <base-button
-                :classButton="'button-white'"
-                :titleButton="$t('Cancel')"
-                @bindEvent="
-                  () => {
-                    item.cost = costSelected;
-                    ticketSelected = '';
-                  }
-                "
-              ></base-button>
-              <base-button
-                :classButton="'button-blue'"
-                :titleButton="$t('Save')"
-                @bindEvent="saveChangeMoney(item.templateTicketID, item.cost)"
-              ></base-button>
-            </div>
-          </div>
+      <div class="main-empty" v-if="listTicket.length < 1">
+        {{ $t("Nodata") }}
+      </div>
+      <div class="ticket-item-container" v-if="checkHide">
+        <div
+          class="d-flex"
+          v-for="(group, index) in groupedItems"
+          :key="index"
+        >
+          <div
+            :span="5"
+            class="width-5"
+            v-for="item in group"
+            :key="item.movieID"
+          >
+            <div class="ticket-container">
+              <div class="ticket-item">
+                <div class="item-header">
+                  <div class="name-cinema">{{ item.cinemaName }}</div>
+                  <div class="address">{{ item.cinemaAddress }}</div>
+                  <div class="mst">MST: {{ item.mst }}</div>
+                  <div class="about">{{ item.about }}</div>
+                </div>
+                <div class="border-dash"></div>
+                <div class="item-main">
+                  <div class="name-movie">{{ item.movieName }}</div>
+                  <div class="code-movie">
+                    {{ $t("No") }}: {{ item.movieCode }}
+                  </div>
+                  <div class="time-line">
+                    {{ $t("Timel") }}: {{ item.timeLine }}
+                  </div>
+                  <div class="release-date">
+                    {{ $t("Releasedate") }}:
+                    {{ convertDateFormat(item.releaseDate) }}
+                  </div>
+                  <div class="language">
+                    {{ $t("Languagel") }}: {{ item.language }}
+                  </div>
+                </div>
+                <div class="border-dash"></div>
+                <div class="item-footer">
+                  <div class="cost">
+                    {{ $t("Cost") }}: {{ formatNumber(item.cost) }} VND (VAT)
+                  </div>
+                  <input
+                    type="text"
+                    name="cost_ticket"
+                    v-model="item.cost"
+                    class="cost-ticket"
+                    v-if="isShowingChange(item.templateTicketID)"
+                  />
+                  <div class="type">
+                    {{ $t("SeatType") }}:
+                    {{ item.type == 1 ? $t("Normal") : "VIP" }}
+                  </div>
+                </div>
+                <div class="item-feature" v-if="$store.state.role == 'admin'">
+                  <div
+                    class="item-change"
+                    v-if="!isShowingChange(item.templateTicketID)"
+                  >
+                    <base-button
+                      :classButton="'button-blue'"
+                      :titleButton="$t('Exchangeprice')"
+                      @bindEvent="
+                        showChangeMoney(item.templateTicketID, item.cost)
+                      "
+                    ></base-button>
+                  </div>
+                  <div
+                    class="item-changing"
+                    v-if="isShowingChange(item.templateTicketID)"
+                  >
+                    <base-button
+                      :classButton="'button-white'"
+                      :titleButton="$t('Cancel')"
+                      @bindEvent="
+                        () => {
+                          item.cost = costSelected;
+                          ticketSelected = '';
+                        }
+                      "
+                    ></base-button>
+                    <base-button
+                      :classButton="'button-blue'"
+                      :titleButton="$t('Save')"
+                      @bindEvent="
+                        saveChangeMoney(item.templateTicketID, item.cost)
+                      "
+                    ></base-button>
+                  </div>
+                </div>
+              </div></div
+          ></div>
         </div>
       </div>
     </div>
@@ -98,7 +123,7 @@
 </template>
 <script>
 import VsudInput from "../components/VsudInput.vue";
-import { convertDateFormat,formatNumber } from "@/common/commonFunc";
+import { convertDateFormat, formatNumber } from "@/common/commonFunc";
 import BaseButton from "./components/BaseButton.vue";
 import {
   Check,
@@ -112,8 +137,30 @@ export default {
   components: { VsudInput, BaseButton },
   setup() {
     return {
-      convertDateFormat,Search,formatNumber
+      convertDateFormat,
+      Search,
+      formatNumber,
     };
+  },
+  computed: {
+    groupedItems() {
+      const groupSize = 5; // Số lượng bản ghi trong mỗi nhóm
+      const grouped = [];
+      let group = [];
+
+      this.listTicket.forEach((item, index) => {
+        group.push(item);
+        if (
+          (index + 1) % groupSize === 0 ||
+          index === this.listTicket.length - 1
+        ) {
+          grouped.push(group);
+          group = [];
+        }
+      });
+
+      return grouped;
+    },
   },
   created() {
     let me = this;
@@ -121,6 +168,7 @@ export default {
 
     this.$api.get("/Ticket/GetListTemplateTicket").then((data) => {
       me.listTicket = data;
+      me.listTicketTemp = data;
       this.$store.state.isShowLoading = false;
     });
   },
@@ -132,6 +180,8 @@ export default {
       costSelected: 0,
       searchValue: "",
       filterTicket: "0",
+      listTicketTemp: [],
+      checkHide: true
     };
   },
   methods: {
@@ -141,26 +191,19 @@ export default {
     },
 
     isFilterItem(item) {
-      if ((this.filterTicket == "0")) {
+      if (this.filterTicket == "0") {
         return true;
       }
 
-      if ((this.filterTicket == "1" && item.type != 1)) {
+      if (this.filterTicket == "1" && item.type != 1) {
         return true;
       }
 
-      if ((this.filterTicket =="2" && item.type == 1)) {
+      if (this.filterTicket == "2" && item.type == 1) {
         return true;
       } else {
         return false;
       }
-    },
-
-    isShowTicket(item) {
-      return (
-        item.movieName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-        item.movieCode.toLowerCase().includes(this.searchValue.toLowerCase())
-      );
     },
 
     isShowingChange(id) {
@@ -177,6 +220,7 @@ export default {
 
       this.$api.get("/Ticket/GetListTemplateTicket").then((data) => {
         me.listTicket = data;
+        me.listTicketTemp = data;
         this.$store.state.isShowLoading = false;
       });
     },
@@ -192,14 +236,45 @@ export default {
           if (data) {
             me.ticketSelected = "";
             me.loadData();
-            me.$store.dispatch("showToast", this.$t('UpdateSuccessful'));
+            me.$store.dispatch("showToast", this.$t("UpdateSuccessful"));
           } else {
             me.$store.dispatch(
               "showToast",
-              this.$t('Updatefailedpleasetryagain')
+              this.$t("Updatefailedpleasetryagain")
             );
           }
         });
+    },
+    searchMovie() {
+      this.checkHide = false;
+      this.listTicket = [];
+      if (this.searchValue) {
+        this.listTicket = this.listTicketTemp.filter(
+          (item) =>
+            (item.movieName
+              .toLowerCase()
+              .includes(this.searchValue.toLowerCase()) ||
+              item.movieCode
+                .toLowerCase()
+                .includes(this.searchValue.toLowerCase())) &&
+            (this.filterTicket == "0" ||
+              (this.filterTicket == "1" && item.type != 1) ||
+              (this.filterTicket == "2" && item.type == 1))
+        );
+      } else {
+        this.listTicket = this.listTicketTemp;
+      }
+
+      if(this.filterTicket == "1"){
+        this.listTicket = this.listTicket.filter(item=>item.type !=1);
+      }
+
+      if(this.filterTicket == "2" ){
+        this.listTicket = this.listTicket.filter(item=>item.type ==1);
+      }
+
+      this.checkHide = true;
+
     },
   },
 };
@@ -208,6 +283,8 @@ export default {
 .ticket-manage {
   padding: 30px 28px 0;
   .ticket-manage-header {
+    min-width: 1500px;
+
     height: 60px;
     display: flex;
     justify-content: space-between;
@@ -243,15 +320,21 @@ export default {
   }
 
   .ticket-manage-main {
+    .width-5 {
+      width: 20% !important;
+      &.el-col-5 {
+        width: 20% !important;
+        max-width: 20% !important;
+      }
+    }
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background: #fff;
     border-radius: 10px;
     padding: 20px 0;
     margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    min-width: 500px;
+
+    min-width: 1500px;
     .ticket-container {
       margin-left: 20px;
       margin-bottom: 20px;

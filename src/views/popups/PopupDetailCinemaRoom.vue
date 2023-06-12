@@ -62,6 +62,27 @@
           <div class="content-selecting">{{ $t("Selecting") }}</div>
         </div>
       </div>
+
+      <div class="description-total">
+        <div class="note">{{ $t("Statistic") }}</div>
+        <div class="total-seat">
+          {{ $t("TotalSeat") }}: <span class="bold"> {{ totalSeat }} </span>
+        </div>
+        <div class="seat-unselected">
+          {{ $t("SeatSelecting") }}:
+          <span class="bold">{{ totalSelecting }}</span>
+        </div>
+        <div class="seat-unselected">
+          {{ $t("Maintenance") }}:
+          <span class="bold">{{ totalMaintenance }}</span>
+        </div>
+        <div class="seat-selecting">
+          {{ $t("VIPseat") }}: <span class="bold">{{ totalVIP }}</span>
+        </div>
+        <div class="seat-selecting">
+          {{ $t("Normalseat") }}: <span class="bold">{{ totalNormal }}</span>
+        </div>
+      </div>
     </div>
     <div class="cinemaroom-footer">
       <div class="cinema-footer-left">
@@ -134,7 +155,7 @@ import PopupDelete from "./PopupDelete.vue";
 import { convertDateFormat, convertTimeFormat } from "@/common/commonFunc";
 import { forEach } from "lodash";
 export default {
-  name: "SeatRoomManage",
+  name: "SeatRoomDetailManage",
   setup() {
     return {
       listSeat,
@@ -167,6 +188,12 @@ export default {
       roomCinmeIDSelected: "",
       dataTemplateTime: [],
       isShowDeletePopupRealRoom: false,
+      totalSeat: 0,
+      totalSelected: 0,
+      totalSelecting: 0,
+      totalMaintenance: 0,
+      totalVIP: 0,
+      totalNormal: 0
     };
   },
   methods: {
@@ -197,6 +224,34 @@ export default {
         })
         .then((data) => {
           me.dataSeat = data;
+          me.totalSeat = 0;
+          me.totalSelected = 0;
+          me.totalSelecting = 0;
+          me.totalMaintenance = 0;
+          me.totalVIP = 0;
+          me.totalNormal = 0;
+
+          me.dataSeat.forEach((item) => {
+            if (item.type != 4) {
+              me.totalSeat++;
+            }
+
+            if (item.type == 3) {
+              me.totalMaintenance++;
+            }
+
+            if (item.type == 2) {
+              me.totalVIP++;
+            }
+
+            if (item.type == 1) {
+              me.totalNormal++;
+            }
+
+            if (item.status == 0) {
+              me.totalSelected++;
+            }
+          });
           this.getLastRowCol(me.dataSeat);
           me.$store.state.isShowLoading = false;
         });
@@ -240,6 +295,8 @@ export default {
           });
         }
       }
+
+      this.totalSelecting = this.seatsSelecting.length;
     },
 
     isSelecting(row, col) {
@@ -366,7 +423,8 @@ export default {
   }
 
   .cinemaroom-main {
-    height: calc(100vh - 230px);
+    height: calc(100vh - 130px);
+    overflow: auto;
     padding: 20px 200px;
     .screen-select-seat {
       .seat-container {
@@ -467,6 +525,29 @@ export default {
 
       .color-unuse {
         background: rgb(202, 202, 202);
+      }
+    }
+
+    .description-total {
+      -webkit-user-select: none;
+      user-select: none;
+      position: absolute;
+      left: 20px;
+      top: 65%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      padding: 10px;
+      border-radius: 4px;
+      .note {
+        font-size: 14px;
+        color: #111;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .bold {
+        font-weight: 600;
+        color: #111;
       }
     }
   }
