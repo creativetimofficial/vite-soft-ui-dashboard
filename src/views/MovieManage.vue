@@ -46,177 +46,189 @@
         <div class="main-empty" v-if="dataSource.length < 1">
           {{ $t("Nodata") }}
         </div>
-        <div
-          class="movie-item"
-          v-for="item in dataSource"
-          :key="item.movieID"
-          v-show="isShowMovie(item)"
-        >
-          <base-image-download
-            :linkImg="item.posterLink"
-            v-if="!isOpenTrailer(item.movieID)"
-          ></base-image-download>
-          <div class="movie-trailer" v-if="isOpenTrailer(item.movieID)">
-            <iframe
-              width="120"
-              height="200"
-              :src="item.trailerLink"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="movie-detail">
-            <div class="movie-name">
-              <el-tooltip
-                class="box-item"
-                effect="dark"
-                :content="item.movieName + ' - ' + item.movieCode"
-                placement="top"
+        <div class="movie-item-container">
+          <el-row
+            :gutter="24"
+            v-for="(group, index) in groupedItems"
+            :key="index"
+            
+          >
+            <el-col :span="8" v-for="item in group" :key="item.movieID">
+              <div
+                class="movie-item"
+                v-show="isShowMovie(item)"
               >
-                <div
-                  class="movie-content"
-                  @click="openContent(item.movieName, item.content)"
-                >
-                  {{ item.movieName }} - {{ item.movieCode }}
+                <base-image-download
+                  :linkImg="item.posterLink"
+                  v-if="!isOpenTrailer(item.movieID)"
+                ></base-image-download>
+                <div class="movie-trailer" v-if="isOpenTrailer(item.movieID)">
+                  <iframe
+                    width="120"
+                    height="200"
+                    :src="item.trailerLink"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
                 </div>
-              </el-tooltip>
+                <div class="movie-detail">
+                  <div class="movie-name">
+                    <el-tooltip
+                      class="box-item"
+                      effect="dark"
+                      :content="item.movieName + ' - ' + item.movieCode"
+                      placement="top"
+                    >
+                      <div
+                        class="movie-content"
+                        @click="openContent(item.movieName, item.content)"
+                      >
+                        {{ item.movieName }} - {{ item.movieCode }}
+                      </div>
+                    </el-tooltip>
 
-              <div class="group-icon">
-                <el-tooltip
-                  class="box-item"
-                  effect="dark"
-                  :content="
-                    isOpenTrailer(item.movieID) ? $t('Close') : $t('Trailer')
-                  "
-                  placement="top"
-                >
-                  <div
-                    class="icon-trailer"
-                    v-if="!isOpenTrailer(item.movieID)"
-                    @click="openTrailer(item.movieID)"
-                  >
-                    <i class="fas fa-film"></i>
-                  </div>
-                  <div
-                    class="icon-trailer"
-                    v-if="isOpenTrailer(item.movieID)"
-                    @click="openTrailer(item.movieID)"
-                  >
-                    <i class="fas fa-times"></i>
-                  </div>
-                </el-tooltip>
+                    <div class="group-icon">
+                      <el-tooltip
+                        class="box-item"
+                        effect="dark"
+                        :content="
+                          isOpenTrailer(item.movieID)
+                            ? $t('Close')
+                            : $t('Trailer')
+                        "
+                        placement="top"
+                      >
+                        <div
+                          class="icon-trailer"
+                          v-if="!isOpenTrailer(item.movieID)"
+                          @click="openTrailer(item.movieID)"
+                        >
+                          <i class="fas fa-film"></i>
+                        </div>
+                        <div
+                          class="icon-trailer"
+                          v-if="isOpenTrailer(item.movieID)"
+                          @click="openTrailer(item.movieID)"
+                        >
+                          <i class="fas fa-times"></i>
+                        </div>
+                      </el-tooltip>
 
-                <div class="icon-context-container">
+                      <div class="icon-context-container">
+                        <el-tooltip
+                          class="box-item"
+                          effect="dark"
+                          :content="
+                            isOpenContext(item.movieID)
+                              ? $t('Close')
+                              : $t('Moreoptions')
+                          "
+                          placement="top"
+                        >
+                          <div
+                            class="icon-trailer"
+                            @click="openContext(item.movieID)"
+                          >
+                            <i
+                              class="fas fa-caret-down"
+                              v-if="!isOpenContext(item.movieID)"
+                            ></i>
+                            <i
+                              class="fas fa-caret-up"
+                              v-if="isOpenContext(item.movieID)"
+                            ></i>
+                          </div>
+                        </el-tooltip>
+
+                        <div
+                          class="group-icon-down"
+                          v-if="isOpenContext(item.movieID)"
+                        >
+                          <el-tooltip
+                            class="box-item"
+                            effect="dark"
+                            :content="$t('Edit')"
+                            placement="top"
+                          >
+                            <div
+                              class="icon-down"
+                              @click="getAlterMovie(item.movieID)"
+                            >
+                              <i class="fas fa-pen"></i>
+                            </div>
+                          </el-tooltip>
+
+                          <el-tooltip
+                            class="box-item"
+                            effect="dark"
+                            :content="$t('Delete')"
+                            placement="top"
+                          >
+                            <div
+                              class="icon-down"
+                              @click="getRowSelected(item.movieID)"
+                            >
+                              <i class="fas fa-trash-alt"></i>
+                            </div>
+                          </el-tooltip>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="movie-time-line">
+                    {{ $t("RunningTime") }}: {{ item.timeLine }} {{ $t("Min") }}
+                  </div>
+                  <div class="movie-from-date">
+                    {{ $t("nShowDate") }}:
+                    {{ convertDateFormat(item.fromDate) }}
+                  </div>
+                  <div class="movie-to-date">
+                    {{ $t("nEndDate") }}: {{ convertDateFormat(item.toDate) }}
+                  </div>
+                  <div class="movie-release-date">
+                    {{ $t("Releasedate") }}:
+                    {{ convertDateFormat(item.releaseDate) }}
+                  </div>
                   <el-tooltip
                     class="box-item"
                     effect="dark"
-                    :content="
-                      isOpenContext(item.movieID)
-                        ? $t('Close')
-                        : $t('Moreoptions')
-                    "
+                    :content="$t('nActor') + ': ' + item.actor"
                     placement="top"
                   >
-                    <div
-                      class="icon-trailer"
-                      @click="openContext(item.movieID)"
-                    >
-                      <i
-                        class="fas fa-caret-down"
-                        v-if="!isOpenContext(item.movieID)"
-                      ></i>
-                      <i
-                        class="fas fa-caret-up"
-                        v-if="isOpenContext(item.movieID)"
-                      ></i>
+                    <div class="movie-actor">
+                      {{ $t("nActor") }}: {{ item.actor }}
+                    </div>
+                  </el-tooltip>
+                  <el-tooltip
+                    class="box-item"
+                    effect="dark"
+                    :content="$t('Director') + ': ' + item.directions"
+                    placement="top"
+                  >
+                    <div class="movie-direction">
+                      {{ $t("Director") }}: {{ item.directions }}
+                    </div>
+                  </el-tooltip>
+                  <el-tooltip
+                    class="box-item"
+                    effect="dark"
+                    :content="$t('CategoryMovie') + ': ' + item.categoryName"
+                    placement="top"
+                  >
+                    <div class="movie-category" :title="item.categoryName">
+                      {{ $t("CategoryMovie") }}: {{ item.categoryName }}
                     </div>
                   </el-tooltip>
 
-                  <div
-                    class="group-icon-down"
-                    v-if="isOpenContext(item.movieID)"
-                  >
-                    <el-tooltip
-                      class="box-item"
-                      effect="dark"
-                      :content="$t('Edit')"
-                      placement="top"
-                    >
-                      <div
-                        class="icon-down"
-                        @click="getAlterMovie(item.movieID)"
-                      >
-                        <i class="fas fa-pen"></i>
-                      </div>
-                    </el-tooltip>
-
-                    <el-tooltip
-                      class="box-item"
-                      effect="dark"
-                      :content="$t('Delete')"
-                      placement="top"
-                    >
-                      <div
-                        class="icon-down"
-                        @click="getRowSelected(item.movieID)"
-                      >
-                        <i class="fas fa-trash-alt"></i>
-                      </div>
-                    </el-tooltip>
+                  <div class="movie-type">
+                    {{ $t("TypeMovie") }}: {{ item.typeName }}
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="movie-time-line">
-              {{ $t("RunningTime") }}: {{ item.timeLine }} {{ $t("Min") }}
-            </div>
-            <div class="movie-from-date">
-              {{ $t("nShowDate") }}: {{ convertDateFormat(item.fromDate) }}
-            </div>
-            <div class="movie-to-date">
-              {{ $t("nEndDate") }}: {{ convertDateFormat(item.toDate) }}
-            </div>
-            <div class="movie-release-date">
-              {{ $t("Releasedate") }}: {{ convertDateFormat(item.releaseDate) }}
-            </div>
-            <el-tooltip
-              class="box-item"
-              effect="dark"
-              :content="$t('nActor') + ': ' + item.actor"
-              placement="top"
-            >
-              <div class="movie-actor">
-                {{ $t("nActor") }}: {{ item.actor }}
-              </div>
-            </el-tooltip>
-            <el-tooltip
-              class="box-item"
-              effect="dark"
-              :content="$t('Director') + ': ' + item.directions"
-              placement="top"
-            >
-              <div class="movie-direction">
-                {{ $t("Director") }}: {{ item.directions }}
-              </div>
-            </el-tooltip>
-            <el-tooltip
-              class="box-item"
-              effect="dark"
-              :content="$t('CategoryMovie') + ': ' + item.categoryName"
-              placement="top"
-            >
-              <div class="movie-category" :title="item.categoryName">
-                {{ $t("CategoryMovie") }}: {{ item.categoryName }}
-              </div>
-            </el-tooltip>
-
-            <div class="movie-type">
-              {{ $t("TypeMovie") }}: {{ item.typeName }}
-            </div>
-          </div>
-          <div class="movie-detail"></div>
+                <div class="movie-detail"></div></div
+            ></el-col>
+          </el-row>
         </div>
       </div>
     </div>
@@ -274,6 +286,26 @@ export default {
     PopupDelete,
     PopupShowContent,
     PopupAlterMovie,
+  },
+  computed: {
+    groupedItems() {
+      const groupSize = 3; // Số lượng bản ghi trong mỗi nhóm
+      const grouped = [];
+      let group = [];
+
+      this.dataSource.forEach((item, index) => {
+        group.push(item);
+        if (
+          (index + 1) % groupSize === 0 ||
+          index === this.dataSource.length - 1
+        ) {
+          grouped.push(group);
+          group = [];
+        }
+      });
+
+      return grouped;
+    },
   },
   setup() {
     return { convertDateFormat, filterMovie, Search };
@@ -390,6 +422,8 @@ export default {
 .movie-manage {
   padding: 30px 28px 0;
   .movie-manage-header {
+    min-width: 1400px;
+
     height: 60px;
     display: flex;
     justify-content: space-between;
@@ -443,16 +477,18 @@ export default {
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background: #fff;
     border-radius: 10px;
+    min-width: 1400px;
     .movie-manage-main {
-      padding: 20px 20px 0 0;
+      padding: 20px;
       margin-top: 30px;
-      display: flex;
+
       flex-wrap: wrap;
       min-width: 500px;
       .movie-item {
         background: #fff;
         position: relative;
-        margin-left: 20px;
+        margin-left: auto;
+        margin-right: auto;
         min-width: 400px;
         width: 420px;
         color: #111;
@@ -496,7 +532,7 @@ export default {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            width: 200px;
+            width: 210px;
           }
 
           .group-icon {
