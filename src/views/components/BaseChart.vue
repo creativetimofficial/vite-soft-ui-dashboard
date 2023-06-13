@@ -22,7 +22,7 @@ export default {
     },
     heightChart:{
       type: String,
-      default: "500"
+      default: "550"
     },
     titleY: {
       type: String,
@@ -90,6 +90,10 @@ export default {
         },
       };
     },
+
+    updateChart(){
+
+    }
   },
 };
 </script>

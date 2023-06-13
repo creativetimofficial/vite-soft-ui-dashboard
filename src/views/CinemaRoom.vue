@@ -12,7 +12,7 @@
         <base-button
           :classButton="'button-blue'"
           :titleButton="'Tra cứu phòng trống'"
-          @bindEvent="openToast('Thử nghiệm')"
+          @bindEvent="openToast('Đang Thi Công')"
         ></base-button>
         <div class="mr-1"></div>
         <base-button
@@ -30,6 +30,7 @@
           v-for="item in rooms"
           :key="item"
           @click="showDetail(item.roomID, item.roomCode)"
+          v-show="isShowRoom(item.roomCode)"
         >
           <div class="room-name">
             {{ item.roomCode }}
@@ -72,7 +73,8 @@ export default {
   },
   setup() {
     return{
-      Search
+      Search,
+      
     }
   },
   created() {
@@ -88,6 +90,7 @@ export default {
       rooms: [],
       idRoomSelected: null,
       codeRoomSelected: null,
+      searchValue: ""
     };
   },
   methods: {
@@ -110,6 +113,13 @@ export default {
       this.codeRoomSelected = code;
       this.$store.state.isShowDetailCinemaRoom = true;
     },
+    isShowRoom(item){
+      if(this.searchValue == item || !this.searchValue){
+        return true;
+      }else{
+        return false;
+      }
+    }
   },
 };
 </script>
@@ -161,7 +171,7 @@ export default {
 
         .room-name {
           color: #fff;
-          background: #93bbfb;
+          background: var(--primary-color);
           font-size: 30px;
           font-weight: 800;
           height: 100px;
@@ -176,7 +186,7 @@ export default {
           user-select: none;
           cursor: pointer;
           &:hover {
-            background: #1a72ff;
+            opacity: 0.6;
           }
 
           &:focus,

@@ -38,7 +38,7 @@
               placement="top"
             >
               <div class="icon-delete" @click="showDeletePopup(item.accountID)">
-                <i class="fas fa-trash-alt" style="color: #ffffff"></i>
+                <i class="fas fa-trash-alt" style="color: #111"></i>
               </div>
             </el-tooltip>
 
@@ -286,13 +286,14 @@ export default {
         .account-item {
           width: 190px;
           height: 254px;
-          background: #17c1e8;
+
           border-radius: 15px;
-          box-shadow: 1px 5px 60px 0px #100a886b;
+          border: 1px solid #111;
           margin: 20px;
           position: relative;
 
           .icon-delete {
+            color: #111;
             position: absolute;
             top: 10px;
             right: 10px;
@@ -326,7 +327,7 @@ export default {
 
         .account-item span {
           font-weight: 600;
-          color: white;
+          color: #111;
           text-align: center;
           display: block;
           padding-top: 10px;
@@ -335,7 +336,7 @@ export default {
 
         .account-item .job {
           font-weight: 400;
-          color: white;
+          color: #111;
           display: block;
           text-align: center;
           padding-top: 3px;
@@ -345,7 +346,7 @@ export default {
         .account-item .img {
           width: 70px;
           height: 80px;
-          background: #1a72ff;
+          background: var(--primary-color);
           border-radius: 15px;
           margin: auto;
           margin-top: 25px;
@@ -358,14 +359,14 @@ export default {
           border-radius: 8px;
           border: none;
           margin-top: 30px;
-          background: #1a72ff;
+          background: var(--primary-color);
           color: white;
           font-weight: 600;
           font-size: 13px;
         }
 
         .account-item button:hover {
-          background: #534bf3;
+           opacity: 0.6;
         }
       }
     }

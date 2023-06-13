@@ -292,7 +292,11 @@ const i18n = createI18n({
       Cash: "Cash",
       Card: "Card",
       Transfer: "Transfer",
-      VIP: "VIP"
+      VIP: "VIP",
+      DayChart: "Statistics by day",
+      MovieByMonth: "Movie statistics by month",
+      MonthByYear: "Statistics month by year",
+      SelectChart: "Select chart"
 
     },
     vi: {
@@ -581,7 +585,11 @@ const i18n = createI18n({
       Cash: "Tiền mặt",
       Card: "Thẻ",
       Transfer: "Chuyển khoản",
-      VIP: "VIP"
+      VIP: "VIP",
+      DayChart: "Thống kê theo ngày",
+      MovieByMonth: "Thống kê phim theo tháng",
+      MonthByYear: "Thống kê tháng theo năm",
+      SelectChart: "Chọn biểu đồ"
     },
   },
 });

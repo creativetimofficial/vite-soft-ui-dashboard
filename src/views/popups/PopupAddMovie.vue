@@ -17,7 +17,7 @@
       <div class="popup-main">
         <div class="popup-row-1 pt-25">
           <div class="popup-input">
-            <label>{{ $t("MovieCode") }}</label>
+            <label>{{ $t("MovieCode") }} *</label>
             <vsud-input
               type="text"
               :placeholder="$t('MovieCode')"

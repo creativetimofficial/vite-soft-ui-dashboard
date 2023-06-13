@@ -97,3 +97,19 @@ export const filterHistory = [
     name: "ComingSoon",
   },
 ];
+
+
+export const filterChart = [
+  {
+    value: 0,
+    name: "DayChart",
+  },
+  {
+    value: 1,
+    name: "MovieByMonth",
+  },
+  {
+    value: 2,
+    name: "MonthByYear",
+  },
+];

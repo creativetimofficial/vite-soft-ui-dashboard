@@ -28,7 +28,7 @@ export default {
 .button-cinema {
   min-width: 30px;
   .button-blue {
-    background: #1a72ff;
+    background: var(--primary-color);
     height: 36px;
     padding: 0px 12px 0px;
     text-align: center;

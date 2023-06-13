@@ -170,7 +170,6 @@ export default {
     async exportToPDF() {
       this.$store.state.isShowLoading = true;
       const pdf = new jsPDF("p", "mm", "a4");
-      console.log(this.dataCheckout.seat);
       for (let i = 0; i < this.dataCheckout.seat.length; i++) {
         const componentToPrint = this.$refs["booking" + i][0].$el;
         const canvas = await html2canvas(componentToPrint);

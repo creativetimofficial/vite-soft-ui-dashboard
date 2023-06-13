@@ -780,7 +780,7 @@ export default {
             cursor: pointer;
             &.selected {
               background: #cb0c9f !important;
-              opacity: 0.5;
+              opacity: 0.2;
               cursor: no-drop;
             }
 
@@ -853,7 +853,7 @@ export default {
 
       .color-selected {
         background: #cb0c9f !important;
-        opacity: 0.5;
+        opacity: 0.2;
       }
 
       .color-unselected {
