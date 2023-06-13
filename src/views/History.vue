@@ -60,57 +60,84 @@
       </div>
     </div>
     <div class="history-manage-main">
-      <div class="history-container">
-        <div
-          class="history-item"
-          v-for="item in dataHistoryTemp"
-          :key="item"
-          v-show="item.parentID"
-          @mousemove="getMouseMouve(item.checkoutID)"
-          @mouseleave="getMouseLeave()"
-         
-        >
-          <div class="item-feature" v-show="checkOpen(item.checkoutID)">
-            <el-button type="primary" :icon="Ticket"  @click="getItemSelect(item)">{{  $t('ExportTicket') }}</el-button>
-          </div>
-          <div class="item-container" v-show="!checkOpen(item.checkoutID)">
-            <span class="normal">{{ $t("Day") }}: </span>
+      <el-scrollbar>
+        <div class="history-container">
+          <div
+            class="history-item"
+            v-for="item in dataHistoryTemp"
+            :key="item"
+            v-show="item.parentID"
+            @mousemove="getMouseMouve(item.checkoutID)"
+            @mouseleave="getMouseLeave()"
+          >
+            <div class="item-feature" v-show="checkOpen(item.checkoutID)">
+              <el-button
+                type="primary"
+                :icon="Ticket"
+                @click="getItemSelect(item)"
+                >{{ $t("ExportTicket") }}</el-button
+              >
+            </div>
+            <div class="item-container" v-show="!checkOpen(item.checkoutID)">
+              <span class="normal">{{ $t("Day") }}: </span>
 
-            <span class="create-date">{{
-              convertDateFormat(item.createdDate) + " "
-            }}</span>
-            <span class="normal"> {{ $t("Customer") }}: </span>
-            <span class="name"
-              >{{ item.customerName ? item.customerName : $t("Incognito") }}
-              {{
-                +" " + item.phoneNumber ? " - " + item.phoneNumber : " "
-              }}</span
-            >
-            <span class="normal"> {{ " " + $t("boughtmovietickets") }}: </span>
-            <span class="name-movie">{{ item.movieName + " " }}</span>
-            <span class="normal"> {{ $t("Seatposition") }}: </span>
-            <span class="seat-name">{{ item.seatName + " " }}</span>
-            <span class="normal"> {{ $t("Room") }}: </span>
-            <span class="room-code">{{ item.roomCode + " " }}</span
-            ><span class="normal"> {{ $t("Showat") }}: </span>
-            <span class="post-date">{{
-              item.time + "-" + convertDateFormat(item.showDate) + " "
-            }}</span>
-            <span class="normal"> {{ $t("TypeTicket") }}: </span>
-            <span class="type-seat">{{
-              item.type == 1 ? $t("Normal") : "VIP"
-            }}</span>
-            <span class="normal"> {{ " " + $t("Cost") }}: </span>
-            <span class="cost">{{
-              formatNumber(item.totalAmount) + " VND"
-            }}</span>
+              <span class="create-date">{{
+                convertDateFormat(item.createdDate) + " "
+              }}</span>
+              <span class="normal"> {{ $t("Customer") }}: </span>
+              <span class="name"
+                >{{ item.customerName ? item.customerName : $t("Incognito") }}
+                {{
+                  +" " + item.phoneNumber ? " - " + item.phoneNumber : " "
+                }}</span
+              >
+              <span class="normal">
+                {{ " " + $t("boughtmovietickets") }}:
+              </span>
+              <span class="name-movie">{{ item.movieName + " " }}</span>
+              <span class="normal"> {{ $t("Seatposition") }}: </span>
+              <span class="seat-name">{{ item.seatName + " " }}</span>
+              <span class="normal"> {{ $t("Room") }}: </span>
+              <span class="room-code">{{ item.roomCode + " " }}</span
+              ><span class="normal"> {{ $t("Showat") }}: </span>
+              <span class="post-date">{{
+                item.time + "-" + convertDateFormat(item.showDate) + " "
+              }}</span>
+              <span class="normal"> {{ $t("TypeTicket") }}: </span>
+              <span class="type-seat">{{
+                item.type == 1 ? $t("Normal") : "VIP"
+              }}</span>
+              <span class="normal"> {{ " " + $t("Cost") }}: </span>
+              <span class="cost">{{
+                formatNumber(item.totalAmount) + " VND"
+              }}</span>
+            </div>
           </div>
         </div>
+      </el-scrollbar>
+      <div class="history-paging">
+        <el-pagination
+          v-model:current-page="pageIndex"
+          v-model:page-size="pageSize"
+          :page-sizes="pageSizes"
+          :small="false"
+          :disabled="false"
+          :background="true"
+          layout="total,  prev, pager, next,sizes, jumper"
+          :total="400"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
       </div>
     </div>
   </div>
 
-  <el-dialog v-model="isShowDialog" :title="$t('ExportTicket')" :show-close="false" width="500">
+  <el-dialog
+    v-model="isShowDialog"
+    :title="$t('ExportTicket')"
+    :show-close="false"
+    width="500"
+  >
     <template #header>
       <div class="my-header">
         <div class="popup-title">{{ $t("ExportTicket") }}</div>
@@ -127,28 +154,28 @@
       </div>
     </template>
     <el-form :model="form">
-
       <el-form-item>
         <div class="ticket-base-container">
-          <BaseTicketCard :dataTicket="itemSelect" ref="componentToPrint"></BaseTicketCard>
+          <BaseTicketCard
+            :dataTicket="itemSelect"
+            ref="componentToPrint"
+          ></BaseTicketCard>
         </div>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button  @click="closeThisTicket">{{ $t('Cancle') }}</el-button>
+        <el-button @click="closeThisTicket">{{ $t("Cancle") }}</el-button>
         <el-button type="primary" @click="exportToPDF">
-          {{ $t('Export') }}
+          {{ $t("Export") }}
         </el-button>
       </span>
     </template>
   </el-dialog>
-
-
 </template>
 <script>
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import VsudInput from "../components/VsudInput.vue";
 import BaseTicketCard from "./components/BaseTicketCard.vue";
 import {
@@ -162,20 +189,26 @@ import {
   Delete,
   Edit,
   Message,
-  Search,Ticket,
+  Search,
+  Ticket,
   Star,
 } from "@element-plus/icons-vue";
 export default {
-  components: { VsudInput, BaseButton,BaseTicketCard },
+  components: { VsudInput, BaseButton, BaseTicketCard },
   setup() {
-    return { convertDateFormat, Search, formatNumber,Ticket };
-  }, 
+    return { convertDateFormat, Search, formatNumber, Ticket };
+  },
   created() {
     let me = this;
     this.loadData();
     this.loadCinemaRoom();
   },
   mounted() {},
+  computed: {
+    startIndex() {
+      return (this.pageIndex - 1) * this.pageSize;
+    },
+  },
   watch: {
     searchValue(newVal, oldVal) {
       this.dataHistoryTemp = this.dataHistory.filter(
@@ -206,7 +239,6 @@ export default {
         );
       }
     },
-
   },
   data() {
     return {
@@ -243,20 +275,31 @@ export default {
           },
         },
       ],
+
+      pageIndex: 1,
+      pageSize: 10,
+      pageSizes: [10, 20, 30, 50, 100],
     };
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`${val} items per page`);
+    },
+    handleCurrentChange(val) {
+      console.log(`current page: ${val}`);
+    },
+
     print() {
       const componentToPrint = this.$refs.componentToPrint.$el;
 
-      html2canvas(componentToPrint).then(canvas => {
-        const imageData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4'); // Tạo tệp PDF với kích thước A4
+      html2canvas(componentToPrint).then((canvas) => {
+        const imageData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4"); // Tạo tệp PDF với kích thước A4
 
         const imgWidth = pdf.internal.pageSize.getWidth();
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-        pdf.addImage(imageData, 'PNG', 0, 0, imgWidth, imgHeight); // Thêm hình ảnh vào tệp PDF
+        pdf.addImage(imageData, "PNG", 0, 0, imgWidth, imgHeight); // Thêm hình ảnh vào tệp PDF
 
         const contentWidth = pdf.internal.pageSize.getWidth();
         const contentHeight = pdf.internal.pageSize.getHeight();
@@ -264,34 +307,34 @@ export default {
         const positionX = (contentWidth - imgWidth) / 2; // Tính toán vị trí căn giữa theo trục X
         const positionY = (contentHeight - imgHeight) / 2 - 25.4; // Thêm cách lề trên 1 inch (25.4 mm)
 
- // Thêm nội dung text căn giữa vào tệp PDF
+        // Thêm nội dung text căn giữa vào tệp PDF
 
-        pdf.save('filename.pdf'); // Tải xuống tệp PDF
+        pdf.save("filename.pdf"); // Tải xuống tệp PDF
       });
     },
 
     exportToPDF() {
-    const pdf = new jsPDF();
+      const pdf = new jsPDF();
 
-    // Lấy đối tượng HTML của component
-    const component = this.$refs.componentToPrint.$el;
+      // Lấy đối tượng HTML của component
+      const component = this.$refs.componentToPrint.$el;
 
-    // Sử dụng html2canvas để chụp ảnh của component
-    html2canvas(component).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
+      // Sử dụng html2canvas để chụp ảnh của component
+      html2canvas(component).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
 
-      // Thiết lập kích thước của PDF theo kích thước của ảnh chụp
-      const pdfWidth = canvas.width * 0.75;
-      const pdfHeight = canvas.height * 0.75;
+        // Thiết lập kích thước của PDF theo kích thước của ảnh chụp
+        const pdfWidth = canvas.width * 0.75;
+        const pdfHeight = canvas.height * 0.75;
 
-      // Thêm ảnh vào PDF
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        // Thêm ảnh vào PDF
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
-      // Xuất ra file PDF
-      pdf.save('file.pdf');
-    });
-  },
-    closeThisTicket(){
+        // Xuất ra file PDF
+        pdf.save("file.pdf");
+      });
+    },
+    closeThisTicket() {
       this.isShowDialog = false;
     },
     loadData() {
@@ -311,19 +354,19 @@ export default {
           x.customerName.toLowerCase().includes(this.searchValue.toLowerCase())
       );
     },
-    getMouseMouve(id){
+    getMouseMouve(id) {
       this.idTemp = id;
     },
 
-    getMouseLeave(){
+    getMouseLeave() {
       this.idTemp = "";
     },
 
-    checkOpen(id){
+    checkOpen(id) {
       return id == this.idTemp;
     },
 
-    getItemSelect(item){
+    getItemSelect(item) {
       this.itemSelect = item;
       this.isShowDialog = true;
     },
@@ -358,9 +401,9 @@ export default {
 </script>
 <style lang="scss">
 .history-manage {
-
   padding: 30px 28px 0;
   .history-manage-header {
+    min-width: 1400px;
     height: 60px;
     display: flex;
     justify-content: space-between;
@@ -398,6 +441,16 @@ export default {
     display: flex;
     flex-wrap: wrap;
     min-width: 1400px;
+    .el-scrollbar {
+      width: 100%;
+      height: calc(100vh - 330px) !important;
+
+      .el-scrollbar__wrap {
+        height: calc(100vh - 330px) !important;
+      }
+    }
+
+    height: calc(100vh - 250px);
     .history-container {
       width: 100%;
       min-width: 1400px;
@@ -413,6 +466,25 @@ export default {
 
         .normal {
           font-weight: 500;
+        }
+      }
+    }
+
+    .history-paging {
+      width: 100%;
+      padding: 10px 20px;
+      .el-pagination {
+        font-weight: 600 !important;
+        justify-content: flex-end;
+
+        .el-pagination__total {
+          font-weight: 600 !important;
+          color: #111 !important;
+        }
+
+        .el-pagination__jump {
+          font-weight: 600 !important;
+          color: #111 !important;
         }
       }
     }

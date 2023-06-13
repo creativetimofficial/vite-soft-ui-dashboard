@@ -1,18 +1,14 @@
 <template>
   <div class="fixed-plugin">
-    <el-tooltip
-      class="box-item"
-      effect="dark"
-      :content="$t('Options')"
-      placement="top"
+    <a
+      class="draggable"
+      :style="{ left: position.x + 'px', top: position.y + 'px' }"
+      @mousedown="startDrag"
+      :class="checkTransaction"
+      @click="toggle"
     >
-      <a
-        class="px-3 py-2 fixed-plugin-button text-dark position-fixed"
-        @click="toggle"
-      >
-        <i class="py-2 fa fa-cog"></i>
-      </a>
-    </el-tooltip>
+      <i class="py-2 fa fa-cog"></i>
+    </a>
 
     <div class="shadow-lg card blur">
       <div class="pt-3 pb-0 bg-transparent card-header">
@@ -150,6 +146,10 @@ export default {
     return {
       fixedKey: "",
       languague: true,
+      isDragging: false,
+      startPosition: { x: 0, y: 0 },
+      position: { x: 0, y: 0 },
+      checkTransaction: "",
     };
   },
 
@@ -162,7 +162,11 @@ export default {
     },
   },
   created() {
-    this.languague = (localStorage.getItem('locale') == 'vi' || !localStorage.getItem('locale'));
+    this.languague =
+      localStorage.getItem("locale") == "vi" || !localStorage.getItem("locale");
+
+    this.position.x = this.calculateWidth90vw();
+    this.position.y = this.calculateHeight90vh();
   },
   beforeMount() {
     this.$store.state.isTransparent = "bg-transparent";
@@ -179,12 +183,56 @@ export default {
       this.$store.state.mcolor = `card-background-mask-${color}`;
     },
 
+    startDrag(event) {
+      this.checkTransaction = "";
+      this.isDragging = true;
+      this.startPosition.x = event.clientX;
+      this.startPosition.y = event.clientY;
+      // this.position.x = event.clientX;
+      // this.position.y = event.clientY;
+      window.addEventListener("mousemove", this.drag);
+      window.addEventListener("mouseup", this.stopDrag);
+    },
+    drag(event) {
+      if (this.isDragging) {
+        const deltaX = event.clientX - this.startPosition.x;
+        const deltaY = event.clientY - this.startPosition.y;
+        this.position.x += deltaX;
+        this.position.y += deltaY;
+        this.startPosition.x = event.clientX;
+        this.startPosition.y = event.clientY;
+      }
+    },
+    stopDrag() {
+      this.isDragging = false;
+      this.checkTransaction = "trans-css";
+      window.removeEventListener("mousemove", this.drag);
+      window.removeEventListener("mouseup", this.stopDrag);
+    },
+
+    calculateHeight90vh() {
+      var viewportHeight = window.innerHeight; // Lấy chiều cao viewport
+      var height90vh = (viewportHeight * 90) / 100; // Tính chiều cao của 80vh
+
+      return height90vh;
+    },
+
+    calculateWidth90vw() {
+      var viewportHeight = window.innerWidth; // Lấy chiều cao viewport
+      var height90vw = (viewportHeight * 95) / 100; // Tính chiều cao của 80vh
+
+      return height90vw;
+    },
+
     /**
      * Hàm thực hiện đổi ngôn ngữ
      */
     setLanguage() {
-
-      if (localStorage.getItem('locale') == 'vi'||(localStorage.getItem('locale') == 'vi' || !localStorage.getItem('locale'))) {
+      if (
+        localStorage.getItem("locale") == "vi" ||
+        localStorage.getItem("locale") == "vi" ||
+        !localStorage.getItem("locale")
+      ) {
         localStorage.locale = "en";
         this.$i18n.locale = "en";
       } else {
@@ -224,6 +272,27 @@ export default {
   }
   .lang {
     margin-left: 12px;
+  }
+
+  .draggable {
+    position: fixed;
+    background-color: #fff;
+    color: #344767 !important;
+    text-align: center;
+    user-select: none;
+    cursor: grab;
+    font-size: 1.25rem;
+    z-index: 5000;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.16);
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    border-radius: 50%;
+  }
+
+  .trans-css {
+    transition: 0.5s;
   }
 }
 </style>
