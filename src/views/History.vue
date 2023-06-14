@@ -115,7 +115,8 @@
           </div>
         </div>
       </el-scrollbar>
-      <div class="history-paging">
+      <div class="history-paging d-flex align-items-center justify-content-between">
+        <div class="total-record" style="color: #111;">Tổng số bản ghi: <span class="fw-bold">{{ totalRecord }}</span> </div>
         <el-pagination
           v-model:current-page="pageIndex"
           v-model:page-size="pageSize"
@@ -123,8 +124,8 @@
           :small="false"
           :disabled="false"
           :background="true"
-          layout="total,  prev, pager, next,sizes, jumper"
-          :total="400"
+          layout=" prev, pager, next,sizes, jumper"
+          :total="totalRecord"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         />
@@ -200,7 +201,7 @@ export default {
   },
   created() {
     let me = this;
-    this.loadData();
+    this.loadHistoryPaging();
     this.loadCinemaRoom();
   },
   mounted() {},
@@ -208,36 +209,27 @@ export default {
     startIndex() {
       return (this.pageIndex - 1) * this.pageSize;
     },
+    datePicker() {
+      if (this.dateSelected) {
+        // Tạo đối tượng Date từ chuỗi thời gian cụ thể
+        const date = new Date(this.dateSelected);
+        return new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+      } else {
+        return this.dateSelected;
+      }
+    },
   },
   watch: {
     searchValue(newVal, oldVal) {
-      this.dataHistoryTemp = this.dataHistory.filter(
-        (x) =>
-          x.phoneNumber.includes(newVal) ||
-          x.movieName.toLowerCase().includes(newVal.toLowerCase()) ||
-          x.customerName.toLowerCase().includes(newVal.toLowerCase())
-      );
-
-      if (!newVal) {
-        this.dataHistoryTemp = this.dataHistory;
-        this.iconSearch = "icon-search";
-      } else {
-        this.iconSearch = "";
+      if (this.searchTimeout) {
+        clearTimeout(this.searchTimeout);
       }
 
-      if (this.roomSelected != "Tất cả") {
-        this.dataHistoryTemp = this.dataHistoryTemp.filter(
-          (x) => x.roomCode == this.roomSelected
-        );
-      }
-
-      if (this.dateSelected) {
-        this.dataHistoryTemp = this.dataHistoryTemp.filter(
-          (x) =>
-            convertDateFormat(x.createdDate) ==
-            convertDateFormat(convertDateString(this.dateSelected))
-        );
-      }
+      // Tạo timeout mới để thực hiện tìm kiếm sau 500ms khi ngừng nhập
+      this.searchTimeout = setTimeout(() => {
+        this.pageIndex = 1;
+        this.loadHistoryPaging();
+      }, 500);
     },
   },
   data() {
@@ -246,10 +238,11 @@ export default {
       dataHistory: [],
       dataHistoryTemp: [],
       searchValue: "",
+      searchTimeout: null,
       iconSearch: "icon-search",
       rooms: [],
       roomSelected: "Tất cả",
-      dateSelected: "",
+      dateSelected: null,
       idTemp: "",
       itemSelect: {},
       isShowDialog: false,
@@ -279,14 +272,17 @@ export default {
       pageIndex: 1,
       pageSize: 10,
       pageSizes: [10, 20, 30, 50, 100],
+      totalRecord: 0,
     };
   },
   methods: {
     handleSizeChange(val) {
-      console.log(`${val} items per page`);
+      this.pageIndex = 1;
+
+      this.loadHistoryPaging();
     },
     handleCurrentChange(val) {
-      console.log(`current page: ${val}`);
+      this.loadHistoryPaging();
     },
 
     print() {
@@ -346,14 +342,6 @@ export default {
         me.$store.state.isShowLoading = false;
       });
     },
-    searchingEvent() {
-      this.dataHistoryTemp = this.dataHistory.filter(
-        (x) =>
-          x.phoneNumber.includes(this.searchValue) ||
-          x.movieName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-          x.customerName.toLowerCase().includes(this.searchValue.toLowerCase())
-      );
-    },
     getMouseMouve(id) {
       this.idTemp = id;
     },
@@ -372,21 +360,27 @@ export default {
     },
 
     filterByRoom() {
-      let me = this;
-      this.searchingEvent();
-      if (this.roomSelected != "Tất cả") {
-        this.dataHistoryTemp = this.dataHistoryTemp.filter(
-          (x) => x.roomCode == this.roomSelected
-        );
-      }
+      this.pageIndex = 1;
+      this.loadHistoryPaging();
+    },
 
-      if (this.dateSelected) {
-        this.dataHistoryTemp = this.dataHistoryTemp.filter(
-          (x) =>
-            convertDateFormat(x.createdDate) ==
-            convertDateFormat(convertDateString(this.dateSelected))
-        );
-      }
+    loadHistoryPaging() {
+      let me = this;
+      me.$store.state.isShowLoading = true;
+      this.$api
+        .post("/History/GetHistoryPaging", {
+          pageIndex: me.pageIndex,
+          pageSize: me.pageSize,
+          dateFilter: me.datePicker,
+          keyword: me.searchValue,
+          roomCode: me.roomSelected
+        })
+        .then((data) => {
+          me.dataHistory = data.history;
+          me.dataHistoryTemp = data.history;
+          me.totalRecord = data.totalRecord;
+          me.$store.state.isShowLoading = false;
+        });
     },
 
     loadCinemaRoom() {
@@ -473,6 +467,9 @@ export default {
     .history-paging {
       width: 100%;
       padding: 10px 20px;
+      .total-record{
+        font-size: 13px;
+      }
       .el-pagination {
         font-weight: 600 !important;
         justify-content: flex-end;

@@ -21,15 +21,19 @@ export function convertDateTime(input) {
 }
 
 export function convertDateFormat(date) {
-  // Tách ngày, tháng và năm từ chuỗi date
-  var year = date.substring(0, 4);
-  var month = date.substring(5, 7);
-  var day = date.substring(8, 10);
+  if (date) {
+    // Tách ngày, tháng và năm từ chuỗi date
+    var year = date.substring(0, 4);
+    var month = date.substring(5, 7);
+    var day = date.substring(8, 10);
 
-  // Tạo chuỗi định dạng mới
-  var newDate = day + "/" + month + "/" + year;
+    // Tạo chuỗi định dạng mới
+    var newDate = day + "/" + month + "/" + year;
 
-  return newDate;
+    return newDate;
+  } else {
+    return date;
+  }
 }
 
 export function convertTimeFormat(time) {
@@ -64,10 +68,12 @@ export function convertToType(a, type) {
 
 export function getDataChart(Xaxis, Yaxis, name) {
   return {
-    series: [{
-      name: name,
-      data: Yaxis,
-    }],
+    series: [
+      {
+        name: name,
+        data: Yaxis,
+      },
+    ],
     xaxis: {
       categories: Xaxis,
     },
@@ -75,16 +81,16 @@ export function getDataChart(Xaxis, Yaxis, name) {
 }
 
 export const initDataChart = {
-   
-    series: [{
+  series: [
+    {
       name: "",
       data: [],
-    }],
-    xaxis: {
-      categories: [],
     },
-  
-}
+  ],
+  xaxis: {
+    categories: [],
+  },
+};
 
 export function validatePassword(password) {
   // Kiểm tra độ dài mật khẩu (ít nhất 8 ký tự)
@@ -115,7 +121,9 @@ export function increaseString(str) {
   let numberPart = str.match(/\d+$/)[0];
   let nonNumberPart = str.slice(0, str.length - numberPart.length);
 
-  let increasedNumber = (parseInt(numberPart) + 1).toString().padStart(numberPart.length, "0");
+  let increasedNumber = (parseInt(numberPart) + 1)
+    .toString()
+    .padStart(numberPart.length, "0");
 
   if (increasedNumber.length > numberPart.length) {
     let firstCharIndex = nonNumberPart.search(/[a-zA-Z]$/);
@@ -131,21 +139,24 @@ export function increaseString(str) {
 export function convertDateString(dateString) {
   var dateObject = new Date(dateString);
   var year = dateObject.getFullYear();
-  var month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-  var day = dateObject.getDate().toString().padStart(2, '0');
-  var formattedDate = year + '-' + month + '-' + day + 'T00:00:00';
+  var month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
+  var day = dateObject.getDate().toString().padStart(2, "0");
+  var formattedDate = year + "-" + month + "-" + day + "T00:00:00";
   return formattedDate;
 }
 
-
 export function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  if (number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  } else {
+    return number;
+  }
 }
 
 export function validateNumberToString(str) {
   // Sử dụng biểu thức chính quy để kiểm tra chuỗi
   var regex = /^\d+$/;
-  
+
   // Kiểm tra nếu chuỗi chỉ chứa số
   if (regex.test(str)) {
     return true;
