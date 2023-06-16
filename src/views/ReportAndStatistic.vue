@@ -49,7 +49,7 @@
             :typeChart="'bar'"
             :widthChart="'1000'"
             :dataValue="chartThisYearByMonth"
-            :titleX="'Tháng'"
+            :titleX="$t('Month')"
             :titleY="'VNĐ'"
           ></BaseChart>
         </div>

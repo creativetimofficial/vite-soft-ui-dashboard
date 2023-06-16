@@ -296,7 +296,8 @@ const i18n = createI18n({
       DayChart: "Statistics by day",
       MovieByMonth: "Movie statistics by month",
       MonthByYear: "Statistics month by year",
-      SelectChart: "Select chart"
+      SelectChart: "Select chart",
+      Month: "Month"
 
     },
     vi: {
@@ -589,7 +590,9 @@ const i18n = createI18n({
       DayChart: "Thống kê theo ngày",
       MovieByMonth: "Thống kê phim theo tháng",
       MonthByYear: "Thống kê tháng theo năm",
-      SelectChart: "Chọn biểu đồ"
+      SelectChart: "Chọn biểu đồ",
+      Month: "Tháng"
+
     },
   },
 });

@@ -10,13 +10,13 @@
           :suffix-icon="Search"
           @change="searchMovie"
         />
-        <div class="container-radio">
+        <!-- <div class="container-radio">
           <el-radio-group v-model="filterTicket" @change="searchMovie">
             <el-radio-button label="0">{{ $t("All") }}</el-radio-button>
             <el-radio-button label="1">{{ $t("VIP") }}</el-radio-button>
             <el-radio-button label="2">{{ $t("Normal") }}</el-radio-button>
           </el-radio-group>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="ticket-manage-main">
@@ -24,11 +24,7 @@
         {{ $t("Nodata") }}
       </div>
       <div class="ticket-item-container" v-if="checkHide">
-        <div
-          class="d-flex"
-          v-for="(group, index) in groupedItems"
-          :key="index"
-        >
+        <div class="d-flex" v-for="(group, index) in groupedItems" :key="index">
           <div
             :span="5"
             class="width-5"
@@ -113,8 +109,9 @@
                     ></base-button>
                   </div>
                 </div>
-              </div></div
-          ></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -166,7 +163,7 @@ export default {
     let me = this;
     this.$store.state.isShowLoading = true;
 
-    this.$api.get("/Ticket/GetListTemplateTicket").then((data) => {
+    this.$api.post("/Ticket/GetListTemplateTicket",{ keyword: this.searchValue }).then((data) => {
       me.listTicket = data;
       me.listTicketTemp = data;
       this.$store.state.isShowLoading = false;
@@ -181,7 +178,7 @@ export default {
       searchValue: "",
       filterTicket: "0",
       listTicketTemp: [],
-      checkHide: true
+      checkHide: true,
     };
   },
   methods: {
@@ -218,7 +215,7 @@ export default {
       let me = this;
       this.$store.state.isShowLoading = true;
 
-      this.$api.get("/Ticket/GetListTemplateTicket").then((data) => {
+      this.$api.post("/Ticket/GetListTemplateTicket",{ keyword: this.searchValue }).then((data) => {
         me.listTicket = data;
         me.listTicketTemp = data;
         this.$store.state.isShowLoading = false;
@@ -246,34 +243,17 @@ export default {
         });
     },
     searchMovie() {
+      let me = this;
       this.checkHide = false;
       this.listTicket = [];
-      if (this.searchValue) {
-        this.listTicket = this.listTicketTemp.filter(
-          (item) =>
-            (item.movieName
-              .toLowerCase()
-              .includes(this.searchValue.toLowerCase()) ||
-              item.movieCode
-                .toLowerCase()
-                .includes(this.searchValue.toLowerCase())) &&
-            (this.filterTicket == "0" ||
-              (this.filterTicket == "1" && item.type != 1) ||
-              (this.filterTicket == "2" && item.type == 1))
-        );
-      } else {
-        this.listTicket = this.listTicketTemp;
-      }
 
-      if(this.filterTicket == "1"){
-        this.listTicket = this.listTicket.filter(item=>item.type !=1);
-      }
-
-      if(this.filterTicket == "2" ){
-        this.listTicket = this.listTicket.filter(item=>item.type ==1);
-      }
-
-      this.checkHide = true;
+        this.$api
+          .post("/Ticket/GetListTemplateTicket", { keyword: this.searchValue })
+          .then((data) => {
+            me.listTicket = data;
+            me.listTicketTemp = data;
+            this.$store.state.isShowLoading = false;
+          });
 
     },
   },

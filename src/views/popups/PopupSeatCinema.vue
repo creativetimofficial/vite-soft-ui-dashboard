@@ -371,6 +371,7 @@ export default {
     closeThisTicket() {
       this.isShowDialogPrint = false;
       this.loadDataSeat(this.roomCinmeIDSelected);
+
     },
 
     showDialogPrint() {
@@ -439,7 +440,7 @@ export default {
       let me = this;
       this.$store.state.isShowLoading = true;
 
-      this.$api.get("/Ticket/GetListTemplateTicket").then((data) => {
+      this.$api.post("/Ticket/GetListTemplateTicket",{keyword: null}).then((data) => {
         me.templateDataTicket = data;
         this.$store.state.isShowLoading = false;
       });
