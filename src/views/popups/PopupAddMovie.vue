@@ -111,7 +111,7 @@
           </div>
           <div class="popup-input">
             <div class="group-typemovie">
-              <label>{{ $t("Poster") }}</label>
+              <label>{{ $t("Poster") }} *</label>
               <base-upload-firebase
                 :idUpload="'image-movie-upload'"
                 @url-bind="catchUrl"
@@ -400,6 +400,19 @@ export default {
       }
     },
 
+    checkDateThan(){
+      if(this.dataMovie.fromdate && this.dataMovie.todate){
+        if(this.dataMovie.fromdate >this.dataMovie.todate){
+          this.$store.dispatch("showToast",this.$t("ValidateDateAdd"));
+          return false;
+        }else{
+          return true;
+        }
+      }
+
+      return false;
+    },
+
     validateMovie() {
       let check = true;
       this.checkEmptyMovieName();
@@ -408,7 +421,7 @@ export default {
       this.checkEmptyPoster();
       this.checkEmptyTypeMovie();
       this.checkEmptyCategoryMovie();
-      check = this.checkRequireMovie();
+      check = this.checkRequireMovie() && this.checkDateThan();
       return check;
     },
   },

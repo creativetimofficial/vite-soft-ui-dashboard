@@ -56,8 +56,8 @@ export default {
     BaseToast,
   },
   created() {
-    if (localStorage.getItem("token")) {
-      const token = localStorage.getItem("token");
+    if (localStorage.getItem("token1")) {
+      const token = localStorage.getItem("token1");
       const decodedToken = jwt.decode(token);
       this.$store.state.role = jwt.decode(token).role;
       this.$store.state.thisAccountName = jwt.decode(token).name;

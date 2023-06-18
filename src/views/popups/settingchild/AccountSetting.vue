@@ -65,7 +65,7 @@ export default {
   methods: {
     loadData() {
       let me = this;
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token1");
       this.$store.state.isShowLoading = true;
       this.$api
         .post("/Account/GetAccountByAccountName", {

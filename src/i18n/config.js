@@ -297,7 +297,11 @@ const i18n = createI18n({
       MovieByMonth: "Movie statistics by month",
       MonthByYear: "Statistics month by year",
       SelectChart: "Select chart",
-      Month: "Month"
+      Month: "Month",
+      Seat: "Seat",
+      Print: "Print",
+      ValidateDateAdd: "The start date cannot be greater than the end date"
+
 
     },
     vi: {
@@ -483,9 +487,9 @@ const i18n = createI18n({
       TicketSettingNote: "Thông tin giá vé mặc định",
       NormalTicket: "Vé thường",
       VIPTicket: "Vé VIP",
-      Enterthefare: "Nhập gía vé",
+      Enterthefare: "Nhập giá vé",
       TicketInformation: "Thông tin vé",
-      UpdateTicketDone: "Cập nhật gía vé thành công",
+      UpdateTicketDone: "Cập nhật giá vé thành công",
       Entercurrentpassword: "Nhập mật khẩu hiện tại",
       Enteryournewpassword: "Nhập mật khẩu mới",
       Reenterthepassword:"Nhập lại mật khẩu",
@@ -591,7 +595,11 @@ const i18n = createI18n({
       MovieByMonth: "Thống kê phim theo tháng",
       MonthByYear: "Thống kê tháng theo năm",
       SelectChart: "Chọn biểu đồ",
-      Month: "Tháng"
+      Month: "Tháng",
+      Seat: "Ghế",
+      Print: "In",
+      ValidateDateAdd: "Ngày bắt đầu không được lớn hơn ngày kết thúc"
+
 
     },
   },

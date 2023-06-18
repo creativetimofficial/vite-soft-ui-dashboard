@@ -47,7 +47,7 @@
             :key="index"
           >
             <el-col :span="8" v-for="item in group" :key="item.movieID">
-              <div class="movie-item" >
+              <div class="movie-item">
                 <base-image-download
                   :linkImg="item.posterLink"
                   v-if="!isOpenTrailer(item.movieID)"
@@ -410,15 +410,27 @@ export default {
       this.$store.state.isOpenPopupShowContent = true;
     },
 
-    searchMovie(){
-      if(this.searchValue){
-        this.dataSource = this.dataSource.filter(item=>item.movieName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-        item.movieCode.toLowerCase().includes(this.searchValue.toLowerCase()));
-      }else{
+    searchMovie() {
+      if (this.searchValue) {
+        this.dataSource = this.dataSourceTemp.filter(
+          (item) =>
+            item.movieName
+              .toLowerCase()
+              .includes(this.searchValue.toLowerCase()) ||
+            item.movieCode
+              .toLowerCase()
+              .includes(this.searchValue.toLowerCase()) ||
+            item.actor
+              ?.toLowerCase()
+              .includes(this.searchValue.toLowerCase()) ||
+            item.directions
+              ?.toLowerCase()
+              .includes(this.searchValue.toLowerCase())
+        );
+      } else {
         this.dataSource = this.dataSourceTemp;
       }
-
-    }
+    },
   },
 };
 </script>

@@ -60,63 +60,73 @@
       </div>
     </div>
     <div class="history-manage-main">
-      <el-scrollbar>
-        <div class="history-container">
-          <div
-            class="history-item"
-            v-for="item in dataHistoryTemp"
-            :key="item"
-            v-show="item.parentID"
-            @mousemove="getMouseMouve(item.checkoutID)"
-            @mouseleave="getMouseLeave()"
+      <div class="history-container">
+        <el-table :data="dataHistoryTemp" style="width: 100%; height: 100%; color: #111;">
+          <el-table-column prop="createdDate" :label="$t('Day')" width="150">
+            <template #default="scope">
+              {{ convertDateFormat(scope.row.createdDate) }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="customerName"
+            :label="$t('Customer')"
+            width="200"
+            :fit="true"
           >
-            <div class="item-feature" v-show="checkOpen(item.checkoutID)">
-              <el-button
-                type="primary"
-                :icon="Ticket"
-                @click="getItemSelect(item)"
-                >{{ $t("ExportTicket") }}</el-button
-              >
-            </div>
-            <div class="item-container" v-show="!checkOpen(item.checkoutID)">
-              <span class="normal">{{ $t("Day") }}: </span>
+            <template #default="scope">
+              {{
+                scope.row.customerName
+                  ? scope.row.customerName
+                  : $t("Incognito")
+              }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="phoneNumber"
+            :label="$t('PhoneNumber')"
+            width="120"
+          />
+          <el-table-column prop="movieName" :label="$t('Movie')" width="350" />
+          <el-table-column prop="roomCode" :label="$t('Room')" width="120" />
+          <el-table-column prop="seatName" :label="$t('Seat')" width="120" />
+          <el-table-column prop="showDate" :label="$t('Showat')" width="120">
+            <template #default="scope">
+              {{ convertDateFormat(scope.row.showDate) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="type" :label="$t('TypeTicket')" width="120">
+            <template #default="scope">
+              {{ scope.row.type == 1 ? $t("Normal") : "VIP" }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="totalAmount" :label="$t('Cost')" width="120">
+            <template #default="scope">
+              {{ formatNumber(scope.row.totalAmount) + " VND" }}
+            </template>
+          </el-table-column>
 
-              <span class="create-date">{{
-                convertDateFormat(item.createdDate) + " "
-              }}</span>
-              <span class="normal"> {{ $t("Customer") }}: </span>
-              <span class="name"
-                >{{ item.customerName ? item.customerName : $t("Incognito") }}
-                {{
-                  +" " + item.phoneNumber ? " - " + item.phoneNumber : " "
-                }}</span
+          <el-table-column fixed="right" :label="$t('Print')" width="80" :align="'center'">
+            <template #default="scope">
+              <el-button
+                link
+                type="primary"
+                size="small"
+                @click.prevent="getItemSelect(scope.row)"
               >
-              <span class="normal">
-                {{ " " + $t("boughtmovietickets") }}:
-              </span>
-              <span class="name-movie">{{ item.movieName + " " }}</span>
-              <span class="normal"> {{ $t("Seatposition") }}: </span>
-              <span class="seat-name">{{ item.seatName + " " }}</span>
-              <span class="normal"> {{ $t("Room") }}: </span>
-              <span class="room-code">{{ item.roomCode + " " }}</span
-              ><span class="normal"> {{ $t("Showat") }}: </span>
-              <span class="post-date">{{
-                item.time + "-" + convertDateFormat(item.showDate) + " "
-              }}</span>
-              <span class="normal"> {{ $t("TypeTicket") }}: </span>
-              <span class="type-seat">{{
-                item.type == 1 ? $t("Normal") : "VIP"
-              }}</span>
-              <span class="normal"> {{ " " + $t("Cost") }}: </span>
-              <span class="cost">{{
-                formatNumber(item.totalAmount) + " VND"
-              }}</span>
-            </div>
-          </div>
+                <el-icon :size="20">
+                  <Printer />
+                </el-icon>
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div
+        class="history-paging d-flex align-items-center justify-content-between"
+      >
+        <div class="total-record" style="color: #111">
+          Tổng số bản ghi: <span class="fw-bold">{{ totalRecord }}</span>
         </div>
-      </el-scrollbar>
-      <div class="history-paging d-flex align-items-center justify-content-between">
-        <div class="total-record" style="color: #111;">Tổng số bản ghi: <span class="fw-bold">{{ totalRecord }}</span> </div>
         <el-pagination
           v-model:current-page="pageIndex"
           v-model:page-size="pageSize"
@@ -192,12 +202,13 @@ import {
   Message,
   Search,
   Ticket,
+  Printer,
   Star,
 } from "@element-plus/icons-vue";
 export default {
   components: { VsudInput, BaseButton, BaseTicketCard },
   setup() {
-    return { convertDateFormat, Search, formatNumber, Ticket };
+    return { convertDateFormat, Search, formatNumber, Ticket, Printer };
   },
   created() {
     let me = this;
@@ -213,7 +224,7 @@ export default {
       if (this.dateSelected) {
         // Tạo đối tượng Date từ chuỗi thời gian cụ thể
         const date = new Date(this.dateSelected);
-        return new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+        return new Date(date.getTime() - date.getTimezoneOffset() * 60000);
       } else {
         return this.dateSelected;
       }
@@ -373,7 +384,7 @@ export default {
           pageSize: me.pageSize,
           dateFilter: me.datePicker,
           keyword: me.searchValue,
-          roomCode: me.roomSelected
+          roomCode: me.roomSelected,
         })
         .then((data) => {
           me.dataHistory = data.history;
@@ -437,11 +448,15 @@ export default {
     min-width: 1400px;
     .el-scrollbar {
       width: 100%;
-      height: calc(100vh - 330px) !important;
+      height: calc(100vh - 370px) !important;
 
       .el-scrollbar__wrap {
         height: calc(100vh - 330px) !important;
       }
+    }
+
+    .el-table__cell{
+      color: #111;
     }
 
     height: calc(100vh - 250px);
@@ -449,6 +464,7 @@ export default {
       width: 100%;
       min-width: 1400px;
       padding: 0 20px;
+      height: calc(100vh - 325px);
       .history-item {
         width: 100%;
         color: #111;
@@ -467,7 +483,7 @@ export default {
     .history-paging {
       width: 100%;
       padding: 10px 20px;
-      .total-record{
+      .total-record {
         font-size: 13px;
       }
       .el-pagination {

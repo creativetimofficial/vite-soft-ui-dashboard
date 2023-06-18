@@ -104,8 +104,8 @@ export default {
   },
   mounted() {
     let me = this;
-    if (jwt.decode(localStorage.getItem("token"))) {
-      this.fullName = jwt.decode(localStorage.getItem("token")).name;
+    if (jwt.decode(localStorage.getItem("token1"))) {
+      this.fullName = jwt.decode(localStorage.getItem("token1")).name;
     }
   },
   props: {
@@ -145,9 +145,9 @@ export default {
     let me = this;
     this.minNav;
     // this.loadListCinema();
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("token1")) {
       this.cinemaSelected = jwt.decode(
-        localStorage.getItem("token")
+        localStorage.getItem("token1")
       ).cinemaName;
     }
   },

@@ -316,7 +316,7 @@ export default {
     },
     postMovie() {
       let me = this;
-      let check = this.validateMovie();
+       let check = this.validateMovie();
       if (check) {
         let dataParam = {
           movieID: this.idMovie,
@@ -413,6 +413,20 @@ export default {
       }
     },
 
+    checkDateThan(){
+      if(this.dataMovie.fromDate && this.dataMovie.toDate){
+        if(new Date(this.dataMovie.fromDate) > new Date(this.dataMovie.toDate)){
+          this.$store.dispatch("showToast",this.$t("ValidateDateAdd"));
+          console.log(11);
+          return false;
+        }else{
+          return true;
+        }
+      }
+
+      return false;
+    },
+
     validateMovie() {
       let check = true;
       this.checkEmptyMovieName();
@@ -421,7 +435,9 @@ export default {
       this.checkEmptyPoster();
       this.checkEmptyTypeMovie();
       this.checkEmptyCategoryMovie();
-      check = this.checkRequireMovie();
+      if(!this.checkRequireMovie() || !this.checkDateThan()){
+        return false;
+      }
       return check;
     },
   },

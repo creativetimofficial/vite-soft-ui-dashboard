@@ -190,7 +190,7 @@ router.beforeEach((to, from, next) => {
 
 // Hàm check login với token
 function isLoggedIn() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token1");
   store.state.isLoggedIn = true;
 
   // Kiểm tra xem token đã được lưu trong localStorage chưa
@@ -204,7 +204,7 @@ function isLoggedIn() {
     const expirationDate = new Date(decodedToken.exp * 1000);
     if (expirationDate <= new Date()) {
       // Nếu token đã hết hạn, xóa nó khỏi localStorage và trả về false
-      localStorage.removeItem("token");
+      localStorage.removeItem("token1");
       return false;
     } else {
       // Nếu token hợp lệ, trả về true
@@ -218,7 +218,7 @@ function isLoggedIn() {
 
 // Hàm check role
 function requireAdmin(to, from, next) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token1");
 
   if (!isLoggedIn(token)) {
     next("/sign-in");
