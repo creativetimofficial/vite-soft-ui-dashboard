@@ -300,7 +300,8 @@ const i18n = createI18n({
       Month: "Month",
       Seat: "Seat",
       Print: "Print",
-      ValidateDateAdd: "The start date cannot be greater than the end date"
+      ValidateDateAdd: "The start date cannot be greater than the end date",
+      Ticketpricechange:"Ticket price change"
 
 
     },
@@ -537,7 +538,7 @@ const i18n = createI18n({
       Notification: "Thông báo",
       BlankStartDate: "Ngày bắt đầu không thể để trống",
       BlankToDate: "Ngày kết thúc không thể để trống",
-      BlankCategoryMovie: "Thể loại phim không thể để tróng",
+      BlankCategoryMovie: "Thể loại phim không thể để trống",
       BlankTypeMovie: "Loại phim không thể để trống",
       BlankMovieName: "Tên phim không thể để trống",
       BlankPoster: "Poster không thể để trống",
@@ -598,7 +599,8 @@ const i18n = createI18n({
       Month: "Tháng",
       Seat: "Ghế",
       Print: "In",
-      ValidateDateAdd: "Ngày bắt đầu không được lớn hơn ngày kết thúc"
+      ValidateDateAdd: "Ngày bắt đầu không được lớn hơn ngày kết thúc",
+      Ticketpricechange: "Thay đổi giá vé"
 
 
     },

@@ -61,23 +61,13 @@
                   <div class="cost">
                     {{ $t("Cost") }}: {{ formatNumber(item.cost) }} VND (VAT)
                   </div>
-                  <input
-                    type="text"
-                    name="cost_ticket"
-                    v-model="item.cost"
-                    class="cost-ticket"
-                    v-if="isShowingChange(item.templateTicketID)"
-                  />
                   <div class="type">
                     {{ $t("SeatType") }}:
                     {{ item.type == 1 ? $t("Normal") : "VIP" }}
                   </div>
                 </div>
                 <div class="item-feature" v-if="$store.state.role == 'admin'">
-                  <div
-                    class="item-change"
-                    v-if="!isShowingChange(item.templateTicketID)"
-                  >
+                  <div class="item-change">
                     <base-button
                       :classButton="'button-blue'"
                       :titleButton="$t('Exchangeprice')"
@@ -86,7 +76,8 @@
                       "
                     ></base-button>
                   </div>
-                  <div
+
+                  <!-- <div
                     class="item-changing"
                     v-if="isShowingChange(item.templateTicketID)"
                   >
@@ -107,7 +98,7 @@
                         saveChangeMoney(item.templateTicketID, item.cost)
                       "
                     ></base-button>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -115,7 +106,29 @@
         </div>
       </div>
     </div>
-    <div class="ticket-manage-footer"></div>
+    <div class="ticket-manage-footer">
+      <el-dialog
+        v-model="isShowDialog"
+        :title="$t('Ticketpricechange')"
+        width="300"
+      >
+        <el-form :model="form">
+          <el-form-item :label="$t('Cost')">
+            <el-input v-model="costSelected" autocomplete="off" type="number" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="isShowDialog = false">{{
+              $t("Cancle")
+            }}</el-button>
+            <el-button type="primary" @click="saveChangeMoney()">
+              {{ $t("Yes") }}
+            </el-button>
+          </span>
+        </template>
+      </el-dialog>
+    </div>
   </div>
 </template>
 <script>
@@ -163,11 +176,13 @@ export default {
     let me = this;
     this.$store.state.isShowLoading = true;
 
-    this.$api.post("/Ticket/GetListTemplateTicket",{ keyword: this.searchValue }).then((data) => {
-      me.listTicket = data;
-      me.listTicketTemp = data;
-      this.$store.state.isShowLoading = false;
-    });
+    this.$api
+      .post("/Ticket/GetListTemplateTicket", { keyword: this.searchValue })
+      .then((data) => {
+        me.listTicket = data;
+        me.listTicketTemp = data;
+        this.$store.state.isShowLoading = false;
+      });
   },
   mounted() {},
   data() {
@@ -179,12 +194,14 @@ export default {
       filterTicket: "0",
       listTicketTemp: [],
       checkHide: true,
+      isShowDialog: false,
     };
   },
   methods: {
     showChangeMoney(id, cost) {
       this.ticketSelected = id;
       this.costSelected = cost;
+      this.isShowDialog = true;
     },
 
     isFilterItem(item) {
@@ -215,46 +232,52 @@ export default {
       let me = this;
       this.$store.state.isShowLoading = true;
 
-      this.$api.post("/Ticket/GetListTemplateTicket",{ keyword: this.searchValue }).then((data) => {
-        me.listTicket = data;
-        me.listTicketTemp = data;
-        this.$store.state.isShowLoading = false;
-      });
+      this.$api
+        .post("/Ticket/GetListTemplateTicket", { keyword: this.searchValue })
+        .then((data) => {
+          me.listTicket = data;
+          me.listTicketTemp = data;
+          this.$store.state.isShowLoading = false;
+        });
     },
 
-    saveChangeMoney(id, cost) {
+    saveChangeMoney() {
       let me = this;
-      this.$api
-        .post("/Ticket/UpdateCostOfTicket", {
-          templateTicketID: id,
-          cost: cost,
-        })
-        .then((data) => {
-          if (data) {
-            me.ticketSelected = "";
-            me.loadData();
-            me.$store.dispatch("showToast", this.$t("UpdateSuccessful"));
-          } else {
-            me.$store.dispatch(
-              "showToast",
-              this.$t("Updatefailedpleasetryagain")
-            );
-          }
-        });
+      if (this.costSelected) {
+        this.$api
+          .post("/Ticket/UpdateCostOfTicket", {
+            templateTicketID: this.ticketSelected,
+            cost: this.costSelected,
+          })
+          .then((data) => {
+            if (data) {
+              me.ticketSelected = "";
+              me.loadData();
+              me.$store.dispatch("showToast", this.$t("UpdateSuccessful"));
+              me.isShowDialog = false;
+            } else {
+              me.$store.dispatch(
+                "showToast",
+                this.$t("Updatefailedpleasetryagain")
+              );
+            }
+          });
+      } else {
+        me.$store.dispatch("showToast", this.$t("Updatefailedpleasetryagain"));
+      }
     },
     searchMovie() {
       let me = this;
       this.checkHide = false;
       this.listTicket = [];
 
-        this.$api
-          .post("/Ticket/GetListTemplateTicket", { keyword: this.searchValue })
-          .then((data) => {
-            me.listTicket = data;
-            me.listTicketTemp = data;
-            this.$store.state.isShowLoading = false;
-          });
-
+      this.$api
+        .post("/Ticket/GetListTemplateTicket", { keyword: this.searchValue })
+        .then((data) => {
+          me.listTicket = data;
+          me.listTicketTemp = data;
+          this.$store.state.isShowLoading = false;
+        });
     },
   },
 };
@@ -367,6 +390,18 @@ export default {
           }
         }
       }
+    }
+  }
+
+  .ticket-manage-footer {
+    label {
+      padding: 0 5px 0 0;
+      margin: 0;
+    }
+
+    .el-form-item {
+      padding: 0;
+      margin: 0;
     }
   }
 }
