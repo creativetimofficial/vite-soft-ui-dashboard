@@ -12,7 +12,11 @@
   >
     <title>shop</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1716.000000, -439.000000)" :fill="iconColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1716.000000, -439.000000)"
+        :fill="iconColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(0.000000, 148.000000)">
             <path
@@ -41,7 +45,11 @@
   >
     <title>box-3d-50</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-2319.000000, -291.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-2319.000000, -291.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(603.000000, 0.000000)">
             <path
@@ -73,7 +81,11 @@
   >
     <title>office</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1869.000000, -293.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1869.000000, -293.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g id="office" transform="translate(153.000000, 2.000000)">
             <path
@@ -102,7 +114,11 @@
   >
     <title>settings</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-2020.000000, -442.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-2020.000000, -442.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(304.000000, 151.000000)">
             <polygon
@@ -137,7 +153,11 @@
   >
     <title>document</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1870.000000, -591.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1870.000000, -591.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(154.000000, 300.000000)">
             <path
@@ -167,7 +187,11 @@
   >
     <title>spaceship</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1720.000000, -592.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1720.000000, -592.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(4.000000, 301.000000)">
             <path
@@ -206,7 +230,11 @@
   >
     <title>credit-card</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-2169.000000, -745.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-2169.000000, -745.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(453.000000, 454.000000)">
             <path
@@ -279,7 +307,12 @@
         color-interpolation-filters="sRGB"
       >
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
-        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="BackgroundImageFix"
+          result="shape"
+        />
         <feGaussianBlur stdDeviation="0.5" result="effect1_foregroundBlur" />
       </filter>
     </defs>
@@ -338,7 +371,12 @@
         color-interpolation-filters="sRGB"
       >
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
-        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="BackgroundImageFix"
+          result="shape"
+        />
         <feGaussianBlur stdDeviation="1" result="effect1_foregroundBlur" />
       </filter>
       <filter
@@ -351,7 +389,12 @@
         color-interpolation-filters="sRGB"
       >
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
-        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="BackgroundImageFix"
+          result="shape"
+        />
         <feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur" />
       </filter>
       <filter
@@ -375,8 +418,17 @@
           type="matrix"
           values="0 0 0 0 0.501961 0 0 0 0 0.501961 0 0 0 0 0.501961 0 0 0 0.302 0"
         />
-        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow"
+          result="shape"
+        />
       </filter>
       <linearGradient
         id="paint0_linear"
@@ -522,7 +574,12 @@
         color-interpolation-filters="sRGB"
       >
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
-        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="BackgroundImageFix"
+          result="shape"
+        />
         <feGaussianBlur stdDeviation="0.5" result="effect1_foregroundBlur" />
       </filter>
     </defs>
@@ -537,7 +594,14 @@
     xmlns="http://www.w3.org/2000/svg"
   >
     <g filter="url(#filter0_f)">
-      <mask mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="301" height="156">
+      <mask
+        mask-type="alpha"
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="301"
+        height="156"
+      >
         <rect width="301" height="156" fill="#C4C4C4" />
       </mask>
       <g mask="url(#mask0)">
@@ -578,7 +642,12 @@
         color-interpolation-filters="sRGB"
       >
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
-        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="BackgroundImageFix"
+          result="shape"
+        />
         <feGaussianBlur stdDeviation="0.5" result="effect1_foregroundBlur" />
       </filter>
       <filter
@@ -591,7 +660,12 @@
         color-interpolation-filters="sRGB"
       >
         <feFlood flood-opacity="0" result="BackgroundImageFix" />
-        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="BackgroundImageFix"
+          result="shape"
+        />
         <feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur" />
       </filter>
     </defs>
@@ -607,7 +681,13 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
   >
     <title>wifi</title>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g
+      id="Page-1"
+      stroke="none"
+      stroke-width="1"
+      fill="none"
+      fill-rule="evenodd"
+    >
       <g id="wifi" transform="translate(3.000000, 3.000000)">
         <path
           d="M7.37102658,14.6156105 C12.9664408,9.02476091 22.0335592,9.02476091 27.6289734,14.6156105"
@@ -616,7 +696,13 @@
           stroke-linecap="round"
           stroke-linejoin="round"
         />
-        <circle id="Oval" fill="currentColor" cx="17.5039082" cy="22.7484921" r="4.9082855" />
+        <circle
+          id="Oval"
+          fill="currentColor"
+          cx="17.5039082"
+          cy="22.7484921"
+          r="4.9082855"
+        />
         <path
           d="M0,7.24718945 C9.66583791,-2.41572982 25.3341621,-2.41572982 35,7.24718945"
           stroke="#FFFFFF"
@@ -643,7 +729,11 @@
   >
     <title>spaceship</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1720.000000, -592.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1720.000000, -592.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(4.000000, 301.000000)">
             <path
@@ -681,7 +771,11 @@
   >
     <title>box-3d-50</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-2319.000000, -291.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-2319.000000, -291.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(603.000000, 0.000000)">
             <path
@@ -712,7 +806,11 @@
   >
     <title>customer-support</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1717.000000, -291.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1717.000000, -291.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(1.000000, 0.000000)">
             <path
@@ -745,7 +843,11 @@
   >
     <title>document</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1870.000000, -591.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1870.000000, -591.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(154.000000, 300.000000)">
             <path
@@ -773,7 +875,11 @@
   >
     <title>switches</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1870.000000, -440.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1870.000000, -440.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(154.000000, 149.000000)">
             <path
@@ -803,7 +909,11 @@
   >
     <title>settings</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-2020.000000, -442.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-2020.000000, -442.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(304.000000, 151.000000)">
             <polygon
@@ -837,7 +947,11 @@
   >
     <title>office</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1869.000000, -293.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1869.000000, -293.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(153.000000, 2.000000)">
             <path
@@ -865,7 +979,11 @@
   >
     <title>spaceship</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1720.000000, -592.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1720.000000, -592.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(4.000000, 301.000000)">
             <path
@@ -904,7 +1022,11 @@
   >
     <title>document</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-1870.000000, -591.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-1870.000000, -591.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(154.000000, 300.000000)">
             <path
@@ -935,7 +1057,11 @@
   >
     <title>box-3d-50</title>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-      <g transform="translate(-2319.000000, -291.000000)" fill="currentColor" fill-rule="nonzero">
+      <g
+        transform="translate(-2319.000000, -291.000000)"
+        fill="currentColor"
+        fill-rule="nonzero"
+      >
         <g transform="translate(1716.000000, 291.000000)">
           <g transform="translate(603.000000, 0.000000)">
             <path
@@ -957,6 +1083,22 @@
       </g>
     </g>
   </svg>
+
+  <i class="fas fa-video" v-if="name === 'movie'"></i>
+
+  <i class="fas fa-calendar-times" v-if="name === 'showtime'"></i>
+
+  <i class="fas fa-ticket-alt" v-if="name === 'tickets'"></i>
+
+  <i class="fas fa-chart-line" v-if="name === 'reports'"></i>
+
+  <i class="fas fa-history" v-if="name === 'historys'"></i>
+
+  <i class="fab fa-buromobelexperte" v-if="name === 'rooms'"></i>
+
+  <i class="fas fa-user" v-if="name === 'users'"></i>
+
+  <i class="fas fa-book" v-if="name === 'dictionarys'"></i>
 </template>
 <script>
 export default {
@@ -972,8 +1114,28 @@ export default {
     },
     iconClass: {
       type: String,
-      default: ""
+      default: "",
     },
   },
 };
 </script>
+
+<style lang="scss">
+#sidenav-collapse-main {
+  .navbar-nav {
+    .nav-link {
+      i {
+        color: #000 !important;
+        display: block;
+        height: 13px;
+        transform: scale(1.2);
+      }
+    }
+    .active.router-link-exact-active {
+      i {
+        color: #fff !important;
+      }
+    }
+  }
+}
+</style>

@@ -1,0 +1,57 @@
+-- Làm chức năng vé
+1: Hiển thị vé theo từng loại phim
+ + Có 2 loại vé là vé vip và vé thường 
+
+2: Chức năng thay đổi giá vé theo loại vé
+3: Xóa vè (Không thể xóa nếu còn phim)
+4: add phân quyền 
+    +_Thay đổi giá: admin
+    + xem vé: All
+    + Xóa:admin
+
+-- làm ảnh hưởng của chức năng vé:
+1: Chọn ghế trong phòng chiếu:
+    + Tự tính tiền theo vé:
+    + HIển thị số ghế đã được mua
+    + Hiển thị số ghế đang chọn
+    + Hiển thị doanh thu phòng
+    + Tự sinh ra lịch sử mua vé
+    + Tự sinh ra vé ảo đã được mua theo khách hàng
+    + (Nâng cao: QR thanh toán)
+
+    -- Làm chức năng lịch sử
+
+1. Hiển thị chi tiết lịch sử của từng vé
+2. Hiển thị dòng cha của chi tiết lịch sử đó (Mua nhiều)
+3. Thêm tính tính năng lưu vào lịch sử bán vé khi mua vé
+
+-- Làm báo cáo thống kê
+1. Thông kê theo phim cụ thể
+ X: Ngày
+ Y: Tiền
+
+3. Thống kê theo danh sách phim đang chiếu
+X; Phim
+Y: Tiền
+
+4: Thống kê theo danh sách phim từ ngày đến ngày
+X: Phim
+Y: Tiềm
+
+5: Hiển thị doanh thu theo tháng
+6: Hiển thị doanh thu theo ngày
+7: Hiển thị doanh thu theo năm
+
+9: Hiển thị danh sách phim có doanh thu cao nhất theo tháng
+10; Hiển thị danh sách phim có doanh thu cao nhất theo năm
+11: Hiển thị danh sách phim có doanh thu cao nhất ngày
+
+-- Quản lí tài khoản
+ admin: Phê duyệt tài khoản (Khi đăng kí ở ngoài)
+ admin: Tạo tài khoản trực tiếp
+
+ user: Tạo tài khoản ở đăng kí => Chờ admin phê duyệt
+
+
+ -- Thanh toán
+

@@ -28,13 +28,22 @@
       ]"
     />
   </main>
+  <base-loading :isLoading="$store.state.isShowLoading"></base-loading>
+  <popup-setting v-if="$store.state.isShowSetting"></popup-setting>
 </template>
 <script>
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import Sidenav from "./examples/Sidenav/index.vue";
 import Configurator from "@/examples/Configurator.vue";
 import Navbar from "@/examples/Navbars/Navbar.vue";
 import AppFooter from "@/examples/Footer.vue";
+import BaseLoading from "./views/components/BaseLoading.vue";
+import BaseToast from "./views/components/BaseToast.vue";
 import { mapMutations } from "vuex";
+import jwt from "jsonwebtoken";
+import PopupSetting from "./views/popups/PopupSetting.vue";
+
 export default {
   name: "App",
   components: {
@@ -42,8 +51,25 @@ export default {
     Configurator,
     Navbar,
     AppFooter,
+    BaseLoading,
+    PopupSetting,
+    BaseToast,
   },
+  created() {
+    if (localStorage.getItem("token1")) {
+      const token = localStorage.getItem("token1");
+      const decodedToken = jwt.decode(token);
+      this.$store.state.role = jwt.decode(token).role;
+      this.$store.state.thisAccountName = jwt.decode(token).name;
+      this.$store.state.isLoggedIn = true;
+      this.$store.state.cinemaName = decodedToken.cinemaName;
+    }
 
+    this.$i18n.locale = localStorage.getItem('locale')??'vi';
+
+
+  
+  },
   computed: {
     navClasses() {
       return {
@@ -63,3 +89,6 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+@import url("@/assets/scss/main/main.scss");
+</style>

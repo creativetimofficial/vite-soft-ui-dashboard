@@ -1,0 +1,176 @@
+:root {
+  --primary-color: #409EFF;
+}
+
+
+
+.vue3-easy-data-table {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 0;
+  border-radius: 4px;
+  border: none !important;
+}
+
+.vue3-easy-data-table__main {
+  border-top-right-radius: 8px 8px;
+  border-top-left-radius: 8px 8px;
+  box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+}
+
+.vue3-easy-data-table__footer {
+  border-bottom-right-radius: 8px 8px;
+  border-bottom-left-radius: 8px 8px;
+  box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+}
+
+.customize-table {
+  --easy-table-border: 1px solid #000;
+  --easy-table-row-border: 1px solid #e9ecef;
+}
+
+.input-group-text {
+  z-index: 999 !important;
+}
+
+.sidenav {
+  z-index: 999 !important;
+}
+
+.vs__dropdown-toggle {
+  border-radius: 10px !important;
+  height: 40px;
+  border: 1px solid #d3d6da;
+}
+
+.multi-sort__number {
+  display: none;
+}
+
+.vs__selected-options {
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #e7e7e7;
+  border: 1px solid #cacaca;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+border: 3px solid transparent;
+ background-clip: content-box;
+  background-color: #a8bbbf;
+}
+
+.main-empty{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-style: italic;
+  color: #000;
+}
+
+.w-200{
+  width: 200px!important;
+}
+
+.w-99{
+  width: 99px!important;
+}
+
+.w-150{
+  width: 150px!important;
+}
+
+.h-opacity{
+  &:hover{
+    opacity: 0.6;
+    cursor: pointer;
+  }
+}
+
+
+.color-black{
+  color: #000;
+
+  input{
+    color: #000!important;
+  }
+
+  .el-input__inner{
+    color: #000!important;
+
+  }
+}
+
+.el-select__popper{
+  z-index: 10000!important;
+}
+
+.el-popper{
+  z-index: 10000!important;
+}
+
+.el-dialog{
+  border-radius: 10px!important;
+  .el-dialog__header{
+    .el-dialog__title{
+      font-weight: 700;
+
+    }
+
+    height: 60px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 18px 0;width: 100%;
+    background: #ddefff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    .popup-title {
+      font-weight: 700;
+      font-size: 18px;
+      color: #111;
+    }
+    .popup-icon-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      height: 20px;
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  
+  }
+}
+
+
+.el-form-item__content{
+  .ticket-base-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+.el-button{
+  font-weight: 600!important;
+}
