@@ -13,6 +13,7 @@
         :value="value"
         :placeholder="placeholder"
         :isRequired="isRequired"
+        @input="$emit('update:value', $event.target.value)"
       />
       <span v-if="iconDir === 'right'" class="input-group-text">
         <i :class="getIcon(icon)"></i>
@@ -63,6 +64,7 @@ export default {
     },
     isRequired: Boolean,
   },
+  emits: ["update:value"],
   methods: {
     getClasses: (size, valid) => {
       let sizeValue, isValidValue;
