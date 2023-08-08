@@ -22,7 +22,7 @@ export default {
     },
     percentage: {
       type: String,
-      default: ""
+      default: "",
     },
   },
   methods: {

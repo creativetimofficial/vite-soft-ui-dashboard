@@ -20,23 +20,23 @@ export default {
   props: {
     name: {
       type: String,
-      default: ""
+      default: "",
     },
     id: {
       type: String,
-      default: ""
+      default: "",
     },
     checked: {
       type: String,
-      default: ""
+      default: "",
     },
     labelClass: {
       type: String,
-      default: ""
+      default: "",
     },
     inputClass: {
       type: String,
-      default: ""
+      default: "",
     },
   },
 };

@@ -23,9 +23,7 @@
             <input
               type="text"
               class="form-control"
-              :placeholder="
-                $store.state.isRTL ? 'أكتب هنا...' : 'Type here...'
-              "
+              :placeholder="$store.state.isRTL ? 'أكتب هنا...' : 'Type here...'"
             />
           </div>
         </div>
@@ -36,8 +34,13 @@
               class="px-0 nav-link font-weight-bold"
               :class="textWhite ? textWhite : 'text-body'"
             >
-              <i class="fa fa-user" :class="$store.state.isRTL ? 'ms-sm-2' : 'me-sm-1'"></i>
-              <span v-if="$store.state.isRTL" class="d-sm-inline d-none">يسجل دخول</span>
+              <i
+                class="fa fa-user"
+                :class="$store.state.isRTL ? 'ms-sm-2' : 'me-sm-1'"
+              ></i>
+              <span v-if="$store.state.isRTL" class="d-sm-inline d-none"
+                >يسجل دخول</span
+              >
               <span v-else class="d-sm-inline d-none">Sign In</span>
             </router-link>
           </li>
@@ -136,7 +139,9 @@
               <li>
                 <a class="dropdown-item border-radius-md" href="javascript:;">
                   <div class="py-1 d-flex">
-                    <div class="my-auto avatar avatar-sm bg-gradient-secondary me-3">
+                    <div
+                      class="my-auto avatar avatar-sm bg-gradient-secondary me-3"
+                    >
                       <svg
                         width="12px"
                         height="12px"
@@ -146,7 +151,12 @@
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
                         <title>credit-card</title>
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g
+                          stroke="none"
+                          stroke-width="1"
+                          fill="none"
+                          fill-rule="evenodd"
+                        >
                           <g
                             transform="translate(-2169.000000, -745.000000)"
                             fill="#FFFFFF"
@@ -170,7 +180,9 @@
                       </svg>
                     </div>
                     <div class="d-flex flex-column justify-content-center">
-                      <h6 class="mb-1 text-sm font-weight-normal">Payment successfully completed</h6>
+                      <h6 class="mb-1 text-sm font-weight-normal">
+                        Payment successfully completed
+                      </h6>
                       <p class="mb-0 text-xs text-secondary">
                         <i class="fa fa-clock me-1"></i>
                         2 days
@@ -199,11 +211,11 @@ export default {
   props: {
     minNav: {
       type: Function,
-      default: () => { }
+      default: () => {},
     },
     textWhite: {
       type: String,
-      default: ""
+      default: "",
     },
   },
   data() {
@@ -232,7 +244,8 @@ export default {
         navbar.classList.remove("shadow-blur");
       }
     });
-  }, methods: {
+  },
+  methods: {
     ...mapMutations(["navbarMinimize", "toggleConfigurator"]),
     ...mapActions(["toggleSidebarColor"]),
 
